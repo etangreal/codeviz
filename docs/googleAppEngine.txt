@@ -1,0 +1,31 @@
+
+# -------------------------------------------------------------------------------------------------
+# Google App Engine
+# 	URL: developers.google.com/appengine
+# -------------------------------------------------------------------------------------------------
+
+	# Google App Engine SDK download location
+	#		URL: developers.google.com/appengine/downloads
+
+	_________________________________________________________________________________________________
+	# Download && Install: Google App Engine SDK for Python appengine
+
+	apt-get update
+	apt-get install wget
+	apt-get install unzip
+
+	/usr/bin/env python -V
+
+	wget https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.6.zip
+	unzip google_appengine_1.9.6.zip
+
+	export PATH=$PATH:/vagrant/assets/appEngine/google_appengine
+
+	_________________________________________________________________________________________________
+	# appengine-python image from docker hub
+	
+	mattmoor/python-appengine
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

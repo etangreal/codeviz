@@ -1,0 +1,139 @@
+
+# -------------------------------------------------------------------------------------------------
+# GENERAL
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# install VIRTUALBOX & VAGRANT using: brew install
+	#
+	#	TITLE: Docker Cheat Sheet
+	# 	URL: gist.github.com/wsargent/7049221
+
+# -------------------------------------------------------------------------------------------------
+# VIRTUALBOX
+# -------------------------------------------------------------------------------------------------
+
+	www.virtualbox.org
+	www.virtualbox.org/wiki/Downloads
+
+	CMD/> VBoxManage --version
+
+# -------------------------------------------------------------------------------------------------
+# VAGRANT
+# -------------------------------------------------------------------------------------------------
+
+	www.vagrantup.com
+	www.vagrantup.com/downloads.html
+
+	CMD\> vagrant --version
+
+# -------------------------------------------------------------------------------------------------
+# GOOGLE APPENGINE
+# -------------------------------------------------------------------------------------------------
+
+	developers.google.com/appengine
+	developers.google.com/appengine/downloads
+
+	registry.hub.docker.com/u/turnkeylinux/appengine-python-13.0
+	www.turnkeylinux.org/appengine-python
+
+# -------------------------------------------------------------------------------------------------
+# PYTHON
+# -------------------------------------------------------------------------------------------------
+
+	www.python.org
+
+		www.python.org/download/releases/3.4.1
+		www.python.org/downloads/release/python-341
+
+		www.python.org/download/releases/2.7.8
+
+# -------------------------------------------------------------------------------------------------
+# COREOS
+# -------------------------------------------------------------------------------------------------
+
+	coreos.com
+	coreos.com/docs/running-coreos/platforms/vagrant
+
+	github.com/coreos/coreos-vagrant
+	
+		CMD\> git clone https://github.com/coreos/coreos-vagrant.git
+
+# -------------------------------------------------------------------------------------------------
+# DOCKER
+# -------------------------------------------------------------------------------------------------
+
+	www.docker.com
+
+	CMD\> sudo docker version
+
+	docs.docker.com/installation/mac
+	github.com/boot2docker/osx-installer/releases
+
+# -------------------------------------------------------------------------------------------------
+# DOCKER-BASH TOOL
+# -------------------------------------------------------------------------------------------------
+
+	github.com/phusion/passenger-docker#docker_bash
+
+	mkdir docker-bash
+	cd dockerbash
+
+	curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz
+	tar xzf master.tar.gz
+
+	# From inside CoreOS, run:
+	sudo ./baseimage-docker-master/install-tools.sh
+
+# -------------------------------------------------------------------------------------------------
+# PHUSION-PASSENGER-DOCKER
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________
+	Phusion-Passenger on Docker Hub
+
+		hub.docker.com/u/phusion
+
+		1) registry.hub.docker.com/u/phusion/baseimage
+		2) registry.hub.docker.com/u/phusion/passenger-full
+		3) registry.hub.docker.com/u/phusion/passenger-nodejs
+		4) registry.hub.docker.com/u/phusion/passenger-customizable
+
+	_________________________________________________________
+	1) Passenger-BaseImage-Docker
+
+			registry.hub.docker.com/u/phusion/baseimage
+
+		phusion.github.io/baseimage-docker
+		github.com/phusion/baseimage-docker
+			CMD\> git clone https://github.com/phusion/baseimage-docker.git
+		
+	_________________________________________________________
+	2) Passenger-Docker | A Docker base image for Ruby, Python, Node.js and Meteor web apps
+
+		registry.hub.docker.com/u/phusion/passenger-full
+
+		github.com/phusion/passenger-docker
+			CMD\> git clone https://github.com/phusion/passenger-docker.git
+
+		NOTE: See Version Info
+			github.com/phusion/passenger-docker/blob/master/Changelog.md
+
+	_________________________________________________________
+	3) Node.js and Meteor images
+
+		registry.hub.docker.com/u/phusion/passenger-nodejs
+
+		github.com/phusion/passenger-docker
+
+	_________________________________________________________
+	4) phusion / passenger-customizable
+
+		registry.hub.docker.com/u/phusion/passenger-customizable
+
+		github.com/phusion/passenger-docker
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------
+

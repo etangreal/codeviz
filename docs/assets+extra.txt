@@ -1,0 +1,20 @@
+# -------------------------------------------------------------------------------------------------
+# PHUSION-PASSANGER
+# -------------------------------------------------------------------------------------------------
+
+	www.phusionpassenger.com
+	www.phusionpassenger.com/download
+
+	Mac-OSX: www.phusionpassenger.com/documentation/Users%20guide%20Standalone.html#install_osx_homebrew
+	Ubuntu: www.phusionpassenger.com/documentation/Users%20guide%20Standalone.html#install_on_debian_ubuntu
+
+# -------------------------------------------------------------------------------------------------
+# PHYTHON
+# -------------------------------------------------------------------------------------------------
+
+	dockerfile.github.io/#/python
+	registry.hub.docker.com/u/dockerfile/python
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

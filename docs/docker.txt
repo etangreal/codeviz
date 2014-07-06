@@ -1,0 +1,235 @@
+
+# -------------------------------------------------------------------------------------------------
+# BASIC COMMANDS
+#		URL: docs.docker.com/reference/commandline/cli
+#		URL: docs.docker.com/userguide/usingdocker
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# list containers 													  
+	#		ref: docs.docker.com/reference/commandline/cli/#ps
+
+	docker ps
+	docker ps -a
+
+	_________________________________________________________________________________________________
+	# A Network Port Shortcut
+
+	sudo docker port nostalgic_morse 5000
+
+	_________________________________________________________________________________________________
+	# reference the pwd (present working directory)
+
+	$(pwd)
+
+	_________________________________________________________________________________________________
+	# list docker images
+
+	docker images
+
+	_________________________________________________________________________________________________
+	# remove docker image
+
+	docker rmi <IMAGE-ID>
+
+	# remove all images
+
+	docker rmi $(docker images -q)
+
+# -------------------------------------------------------------------------------------------------
+# BUILD
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# 	URL: docs.docker.com/reference/commandline/cli/#build
+
+	(pytut => etangreal/phusion-baseimage-python-tutor)
+
+	docker build -t pytut build/docker/baseimage/python-tutor
+
+	docker run --rm -t -i -P -v $(pwd):/vagrant pytut bash -l
+	docker run -t -i -P -v $(pwd):/vagrant pytut bash -l
+
+	sudo docker run --rm -t -i -P -p 8080:8080 -v $(pwd):/vagrant pytut-gae bash -l
+
+	sudo docker run -d -p 8080:5000 training/webapp python app.py
+	sudo docker run --rm -t -i -p 8080:5000 training/webapp python app.py
+
+	sudo docker run --rm -it -p 8080:8080 -v $(pwd):/vagrant mattmoor/python-appengine
+
+		docker inspect --format='{{.NetworkSettings.IPAddress}}' bad88ac8fe49
+
+# -------------------------------------------------------------------------------------------------
+# VOLUMES
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Docker Volumes (DOCKERFILE)
+	# 	URL: docs.docker.com/reference/builder/#VOLUME
+
+		$ VOLUME ["/data"]
+
+	_________________________________________________________________________________________________
+	#	ARTICLE: Managing data in containers
+	#		NOTE: In addition to creating a volume using the -v flag you can also mount a directory from your own host into a container.
+	#		 URL: docs.docker.com/userguide/dockervolumes/#volume-def
+
+		# Adding a data volume
+
+		$ sudo docker run -d -P --name web -v /webapp training/webapp python app.py
+
+		# Mount a Host Directory as a Data Volume
+		#
+		#		DESC: Mount a Host Directory as a Data Volume
+		#					In addition to creating a volume using the -v flag you can also mount a directory from 
+		#					your own host into a container.
+		#
+		#		NOTE: This is not available from a Dockerfile due the portability and sharing purpose of it. 
+		#					As the host directory is, by its nature, host-dependent it might not work all hosts.
+
+		-v <HOST-DIR>:<CONTAINER-DIR>
+
+
+		$ sudo docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
+
+# -------------------------------------------------------------------------------------------------
+# NETEORKING
+#		URL: docs.docker.com/reference/commandline/cli
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________	
+	# DOCKER-CLI: port
+	# 	URL: docs.docker.com/reference/commandline/cli/#port
+
+	_________________________________________________________________________________________________
+	# DOCKERFILE: EXPOSE
+	#		URL: docs.docker.com/reference/builder/#expose
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Working with Containers : A Network Port Shortcut
+	# 	URL: docs.docker.com/userguide/usingdocker/#a-network-port-shortcut
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Linking containers together
+	#		URL: docs.docker.com/userguide/dockerlinks
+
+	$ sudo docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
+
+	But we can also specify a binding to a specific interface, for example only to the localhost.
+	i.e: 
+
+		interface => ip-address
+
+	This would bind port 5000 inside the container to port 5000 on the localhost or 127.0.0.1 interface on the host machine.
+	i.e:
+
+		<host-interface><host-port>:<container-port>
+
+	n.b: we are all ways going form 
+
+		host-machine => docker-container
+
+	i.e:
+
+		host:container
+
+	Or to bind port 5000 of the container to a dynamic port but only on the localhost we could:
+
+	$ sudo docker run -d -p 127.0.0.1::5000 training/webapp python app.py
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Advanced networking
+	#		URL: docs.docker.com/articles/networking
+
+	# When Docker starts, it creates a virtual interface named docker0 on the host machine.
+
+	# use:
+
+		ip link show
+
+	# on the host - to see the available interfaces
+	# It is a virtual Ethernet bridge that automatically forwards packets between any other 
+	# network interfaces that are attached to it.
+
+	_________________________________________________________________________________________________
+	# ARTICLE: DOCKER CONTAINERS CAN HAZ NETWORKING NOW!
+	#		URL: blog.docker.com/2013/03/docker-containers-can-haz-networking-now
+
+	# Publish all exposed ports to the host interfaces
+	-P, --publish-all=false
+
+	_________________________________________________________________________________________________
+	# use 'docker port' to see the actual mapping
+	# 	Usage: docker port CONTAINER PRIVATE_PORT
+	# 	Lookup the public-facing port which is NAT-ed to PRIVATE_PORT
+
+	$ docker port
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Network Settings
+	#		URL: docs.docker.com/reference/run/#network-settings
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Linux: Show / Display Available Network Interfaces
+	#		URL: www.cyberciti.biz/faq/linux-list-network-interfaces-names-command
+
+	$ ip link show
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Docker run: EXPOSE (Incoming Ports)
+	# 	URL: docs.docker.com/reference/run/#expose-incoming-ports
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Exposing a port on a live Docker container
+	#		URL: stackoverflow.com/questions/19897743/exposing-a-port-on-a-live-docker-container
+
+		docker ps
+		docker inspect container_name | grep IPAddress
+
+		wget http://container_ip:8000
+
+		docker inspect | grep IPAddress
+
+# -------------------------------------------------------------------------------------------------
+# RUNTIME CONSTRAINTS
+#		URL: docs.docker.com/reference/run
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Runtime Constraints on CPU and Memory
+	#		URL: docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory
+
+		# The operator can constrain the memory available to a container easily with
+		-m="": Memory limit (format: <number><optional unit>, where unit = b, k, m or g)
+
+		$ docker run -m
+
+		# Similarly the operator can increase the priority of this container with the -c option.
+		# By default, all containers run at the same priority and get the same proportion of CPU cycles, 
+		# but you can tell the kernel to give more shares of CPU time to one or more containers when you
+		# start them via Docker.
+
+		-c=0 : CPU shares (relative weight)
+		$ docker run -c
+
+# -------------------------------------------------------------------------------------------------
+# ARTICLES
+# -------------------------------------------------------------------------------------------------
+
+	# ARTICLE: How Docker Helped Us Achieve the (Near) Impossible
+	# 	URL: blog.iron.io/2014/04/how-docker-helped-us-achieve-near.html
+
+	# ARTICLE: What does Docker add to just plain LXC?
+	# 	URL: stackoverflow.com/questions/17989306/what-does-docker-add-to-just-plain-lxc
+
+	# ARTICLE: My DockerCon 2014 talk: Thoughts on interoperable containers
+	# 	URL: fabiokung.com/2014/06/11/my-dockercon-2014-talk
+
+	# ARTICLE: DOCKER CONTAINERS CAN HAZ NETWORKING NOW!
+	#		URL: blog.docker.com/2013/03/docker-containers-can-haz-networking-now
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------
+
+

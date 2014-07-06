@@ -1,0 +1,35 @@
+
+# -------------------------------------------------------------------------------------------------
+# ONLINE PYTHON TUTOR
+#		URL: pythontutor.com
+#		URL: github.com/pgbovine/OnlinePythonTutor
+#
+# DOCS
+#		URL: github.com/pgbovine/OnlinePythonTutor/tree/master/v3/docs
+# -------------------------------------------------------------------------------------------------
+
+	# INSTALL PYTHON (python.txt)
+	# INSTALL GOOGLE-APP-ENGINE (GoogleAppEngine.txt)
+
+	_________________________________________________________________________________________________
+	# ARTICLE: Overview for Developers
+	#		SUBSECTION: Getting Started: Running OPT locally on your machine
+	# 	URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
+
+	_________________________________________________________________________________________________
+	# download && run: Python Tutor
+
+	cd ~/codeviz/related
+
+	git clone https://github.com/pgbovine/OnlinePythonTutor.git PythonTutor
+
+	cd PythonTutor
+
+	dev_appserver.py v3/
+
+	dev_appserver.py --host=0.0.0.0 v3/
+
+# -------------------------------------------------------------------------------------------------
+#		URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
+#		URL: https://github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/opt-trace-format.md
+# -------------------------------------------------------------------------------------------------
