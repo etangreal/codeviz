@@ -1,0 +1,28 @@
+application: google.com:pythontutor
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+libraries:
+- name: jinja2
+  version: latest
+
+handlers:
+- url: /OPT/js
+  static_dir: OPT/js
+
+- url: /VIZ
+  static_dir: VIZ
+
+- url: /OPT/css
+  static_dir: OPT/css
+
+- url: /OPT/example-code
+  static_dir: OPT/example-code
+
+- url: /OPT/lessons
+  static_dir: lessons
+
+- url: /.*
+  script: index.app

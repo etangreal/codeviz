@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Ernst Salzmann">
+        <title>Code Visualizer</title>
+
+<!-------------------------------------------------- CSS DEFINITIONS -------------------------------------------------->
+
+        <!-- jQuery UI -->
+        <link rel="stylesheet" href="VIZ/jquery-ui/jquery-ui-1.10.3.custom.css" />
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="VIZ/bootstrap/bootstrap.css" />
+
+        <!-- Visualizer -->
+        <link rel="stylesheet" href="VIZ/css/style.css">
+
+<!--------------------------------------------------- CUSTOM CSS ------------------------------------------------------>
+
+        <!-- Add custom CSS here -->
+        <style type="text/css">
+
+            body { }
+            .container { margin: 0; padding: 0; width:100%; }
+            #_visualizerContainer { display: inline-block; }
+
+        </style>
+
+<!-------------------------------------------------- CUSTOM JAVASCRIPT ------------------------------------------------>
+
+        <script type="text/javascript">
+
+        </script>
+
+    </head>
+<!-------------------------------------------------- HTML BODY -------------------------------------------------------->
+
+    <body onload="onTestPageLoad()">
+
+<!-------------------------------------------------- NAVIGATION AREA -------------------------------------------------->
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+
+            <div id="_visualizerHeader">
+                <div id="_slider" class=""></div>
+            </div>
+
+        </div><!-- /.container -->
+    </nav>
+
+<!-------------------------------------------------- CONTENT AREA ----------------------------------------------------->
+
+  <!-- VISUALIZER -->
+  <div id="_visualizerContainer"></div>
+
+<!-------------------------------------------------- JAVASCRIPT ---------------------------------------------------->
+
+        <!-- jQuery -->
+        <script src="VIZ/jquery/jquery-1.10.2.js"></script>
+
+        <!-- bootstrap -->
+        <script src="VIZ/bootstrap/bootstrap.js"></script>
+
+        <!-- jQuery UI  -->
+        <script src="VIZ/jquery-ui/jquery-ui-1.10.3.custom.js"></script>
+
+        <!-- jsPlumb -->
+        <!--<script src="VIZ/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>-->
+
+        <!-- webGL -->
+        <script src="VIZ/webGL/RequestAnimationFrame.js"></script>
+        <script src="VIZ/webGL/Stats.js"></script>
+        <script src="VIZ/webGL/threejs-interaction.js"></script>
+        <script src="VIZ/webGL/three.js"></script>
+        <script src="VIZ/webGL/tween.min.js"></script>
+        <script src="VIZ/webGL/TrackballControls.js"></script>
+        <script src="VIZ/webGL/CSS3DRenderer.js"></script>
+
+        <!-- Visualizer -->
+        <script src="VIZ/js/Visualizer.js"></script>
+        <script src="VIZ/js/Visualizer.Graph.js"></script>
+        <script src="VIZ/js/Visualizer.TraceProcessor.js"></script>
+        <script src="VIZ/js/Visualizer.DebugInfo.js"></script>
+        <script src="VIZ/js/Visualizer.RenderText.js"></script>
+        <script src="VIZ/js/Visualizer.RenderHtml.js"></script>
+        <script src="VIZ/js/Visualizer.RenderGL.js"></script>
+        <script src="VIZ/js/DrawGL.js"></script>
+        <script src="VIZ/js/Visualizer.Layout.js"></script>
+
+        <!-- Index Page's CodeBehind -->
+        <script src="VIZ/js/test.js"></script>
+
+    </body>
+</html>
+
+

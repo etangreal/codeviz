@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Ernst Salzmann">
+        <title>Code Visualizer</title>
+
+<!-------------------------------------------------- CSS DEFINITIONS -------------------------------------------------->
+
+        <!-- Python Tutor | Dependencies -->
+        <!--<link rel="stylesheet" href="OPT/css/ui-lightness/jquery-ui-1.8.24.custom.css" />-->
+
+        <!-- jQuery UI -->
+        <link rel="stylesheet" href="VIZ/jquery-ui/jquery-ui-1.10.3.custom.css" />
+
+        <!-- jQuery Layout -->
+        <link rel="stylesheet" href="VIZ/jquery-layout/layout-default-1.3.0.RC.css" />
+
+        <!-- CodeMirror -->
+        <link rel="stylesheet" href="VIZ/codemirror/codemirror.css" />
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="VIZ/bootstrap/bootstrap.css" />
+
+        <!-- Visualizer -->
+        <link rel="stylesheet" href="VIZ/css/style.css">
+
+        <!-- Python Tutor -->
+        <link rel="stylesheet" href="OPT/css/pytutor.css"/>
+
+<!--------------------------------------------------- CUSTOM CSS ------------------------------------------------------>
+
+        <!-- Add custom CSS here -->
+        <style type="text/css">
+            body { margin-top: 0; }
+            .container { margin: 0; padding: 0; width:100%; }
+            .ui-layout-pane { padding: 1px 2px 2px; }
+
+            #_layoutContainer { width: 100%; height: auto; min-height: 2000px; }
+            #_editorHeader, #_editorContainer { display: inline-block; }
+            #_visualizerHeader, #_visualizerContainer { display: inline-block; }
+        </style>
+
+<!-------------------------------------------------- CUSTOM JAVASCRIPT ------------------------------------------------>
+
+        <script type="text/javascript">
+
+            function unloadPage() { return "Oops!"; }
+            //window.onbeforeunload = unloadPage;
+
+        </script>
+
+    </head>
+    
+<!-------------------------------------------------- HTML BODY -------------------------------------------------------->
+    
+    <body onload="onIndexPageLoad()">
+
+        <!-- LAYOUT -->
+        <div id="_layoutContainer">
+
+<!-------------------------------------------------- NAVIGATION AREA -------------------------------------------------->
+
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+
+                    <!-- HEADER -->
+                    <div id="_header">
+
+                        <div id="_editorHeader">
+
+                            <button id="_editButton" class="btn btn-default navbar-btn">Edit Code</button>
+                            <button id="_executeCodeButton" class="btn btn-default navbar-btn">Execute Code</button>
+                            <select id="_exampleSelection"></select>
+
+                        </div>
+
+                        <div id="_visualizerHeader">
+                            <div id="_slider" class=""></div>
+                        </div>
+                    </div>
+
+                    <div id="_debugTabNav" class="nav navbar-btn navbar-right">
+                        <!-- Debug Tab Navigation -->
+                        <ul class="nav nav-pills">
+                            <li class="active"><a href="#_traceInfoContainer" data-toggle="tab">Trace</a></li>
+                            <li ><a href="#_stackInfoContainer" data-toggle="tab">Stack</a></li>
+                            <li ><a href="#_stackHtmlInfoContainer" data-toggle="tab">{html}</a></li>
+                            <li ><a href="#_heapInfoContainer" data-toggle="tab">Heap</a></li>
+                            <li ><a href="#_heapHtmlInfoContainer" data-toggle="tab">{html}</a></li>
+                            <li ><a href="#_layoutInfoContainer" data-toggle="tab">Layout</a></li>
+                            <li ><a href="#_referencesInfoContainer" data-toggle="tab">Refs</a></li>
+                        </ul>
+                    </div>
+
+                </div><!-- /.container -->
+            </nav>
+
+<!-------------------------------------------------- CONTENT AREA ----------------------------------------------------->
+
+            <!-- TOP | SPACER -->
+            <div class="ui-layout-north"></div>
+
+            <div class="ui-layout-west">
+
+                <!-- EDITOR -->
+                <div id="_editorContainer"></div>
+
+            </div>
+
+            <!-- CONTENT | CENTER -->
+            <div class="ui-layout-center">
+
+                <!-- VISUALIZER -->
+                <div id="_visualizerContainer"></div>
+
+            </div>
+
+            <!-- DEBUG | EAST -->
+            <div class="ui-layout-east">
+
+                <!-- Debug Tab Content -->
+                <div id="_debugContainer" class="tab-content affix">
+
+                    <!-- TRACE INFO -->
+                    <div id="_traceInfoContainer" class="_debugInfoContainer wrap tab-pane active">
+                        <textarea id="_traceInfoTextArea" class="textarea">Trace</textarea>
+                    </div>
+
+                    <!-- STACK INFO -->
+                    <div id="_stackInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_stackInfoTextArea" class="textarea">Stack</textarea>
+                    </div>
+
+                    <!-- STACK HTML INFO -->
+                    <div id="_stackHtmlInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_stackHtmlInfoTextArea" class="textarea">Stack Html</textarea>
+                    </div>
+
+                    <!-- HEAP INFO -->
+                    <div id="_heapInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_heapInfoTextArea" class="textarea">Heap</textarea>
+                    </div>
+
+                    <!-- HEAP HTML INFO -->
+                    <div id="_heapHtmlInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_heapHtmlInfoTextArea" class="textarea">Heap Html</textarea>
+                    </div>
+
+                    <!-- LAYOUT INFO -->
+                    <div id="_layoutInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_layoutInfoTextArea" class="textarea">Layout</textarea>
+                    </div>
+
+                    <!-- REFERENCES INFO -->
+                    <div id="_referencesInfoContainer" class="_debugInfoContainer wrap tab-pane">
+                        <textarea id="_referencesInfoTextArea" class="textarea">References</textarea>
+                    </div>
+
+                </div><!-- /debug tab content-->
+
+            </div><!-- /DEBUG | EAST -->
+
+            <!-- PYTHON TUTOR | SOUTH -->
+            <div class="ui-layout-south">
+                <div id="_pythonTutorContainer">Python Tutor</div>
+            </div>
+
+        </div><!-- /layout -->
+
+<!-------------------------------------------------- JAVASCRIPT ---------------------------------------------------->
+
+        <!-- Python Tutor | Dependencies -->
+        <script src="OPT/js/d3.v2.min.js"></script>
+        <script src="OPT/js/jquery-1.8.2.min.js"></script>
+        <!--<script src="OPT/js/jquery-ui-1.8.24.custom.min.js"></script>-->
+        <script src="OPT/js/jquery.ba-bbq.min.js"></script>
+        <!-- DO NOT UPGRADE ABOVE 1.3.10 OR ELSE BREAKAGE WILL OCCUR -->
+        <script src="OPT/js/jquery.jsPlumb-1.3.10-all-min.js"></script>
+
+        <!-- jQuery -->
+        <!--<script src="VIZ/jquery/jquery-1.10.2.js"></script>-->
+
+        <!-- bootstrap -->
+        <script src="VIZ/bootstrap/bootstrap.js"></script>
+
+        <!-- jQuery UI  -->
+        <script src="VIZ/jquery-ui/jquery-ui-1.10.3.custom.js"></script>
+
+        <!-- jQuery.UI.Touch-Punch -->
+        <!--<script src="VIZ/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>-->
+
+        <!-- jQuery.Layout -->
+        <script src="VIZ/jquery-layout/jquery.layout-1.3.0.RC.js"></script>
+
+        <!-- jsPlumb -->
+        <!--<script src="VIZ/jsPlumb/jquery.jsPlumb-1.5.5.js"></script>-->
+
+        <!-- CodeMirror.net (online code editor) -->
+        <script src="VIZ/codemirror/codemirror.js"></script>
+        <script src="VIZ/codemirror/python.js"></script>
+
+        <!-- D3.js -->
+        <!--<script src="VIZ/d3/d3.v3.js"></script>-->
+
+        <!-- webGL -->
+        <script src="VIZ/webGL/RequestAnimationFrame.js"></script>
+        <script src="VIZ/webGL/Stats.js"></script>
+        <script src="VIZ/webGL/threejs-interaction.js"></script>
+        <script src="VIZ/webGL/three.js"></script>
+        <script src="VIZ/webGL/tween.min.js"></script>
+        <script src="VIZ/webGL/TrackballControls.js"></script>
+        <script src="VIZ/webGL/CSS3DRenderer.js"></script>
+
+        <!-- Visualizer -->
+        <script src="VIZ/js/Visualizer.js"></script>
+        <script src="VIZ/js/Visualizer.Graph.js"></script>
+        <script src="VIZ/js/Visualizer.TraceProcessor.js"></script>
+        <script src="VIZ/js/Visualizer.DebugInfo.js"></script>
+        <script src="VIZ/js/Visualizer.RenderText.js"></script>
+        <script src="VIZ/js/Visualizer.RenderHtml.js"></script>
+        <script src="VIZ/js/Visualizer.RenderGL.js"></script>
+        <script src="VIZ/js/DrawGL.js"></script>
+        <script src="VIZ/js/Visualizer.Layout.js"></script>
+
+        <!-- Python Tutor -->
+        <script src="OPT/js/pytutor.js"></script>
+        <script src="OPT/js/opt-frontend-common.js"></script>
+
+        <!-- Index Page's CodeBehind -->
+        <script src="VIZ/js/index.js"></script>
+
+    </body>
+</html>
+
+
