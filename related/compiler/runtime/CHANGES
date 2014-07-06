@@ -1,0 +1,13 @@
+7 Dec 2012
+
+Added get_fun_ptr_from_attr. See a use of it in test4.c.
+
+Added a call to a method with two arguments to test4.c.
+
+create_xxx and inject_xxx can now both be used with boxing or tagging runtime
+implementations. create_xxx now calls inject_xxx, which does boxing or tagging
+depending on if RTFLAGS=-DTAGGING is passed to make.
+
+Changed project_int to coerce bools and floats to ints.
+Changed project_bool to coerce ints and floats to bools.
+Changed project_float to coerce ints and bools to floats.

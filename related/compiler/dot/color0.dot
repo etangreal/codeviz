@@ -1,0 +1,8 @@
+graph colored {
+
+	%eax	 [style=filled fillcolor=red];
+	%ecx	 [style=filled fillcolor=green];
+	%edx	 [style=filled fillcolor=cyan];
+	True	 [style=filled fillcolor=red];
+
+}

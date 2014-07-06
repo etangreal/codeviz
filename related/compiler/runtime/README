@@ -1,0 +1,58 @@
+This is the runtime system for your compiler.
+
+You can build the library to use boxing or tagging, depending on what
+code your compiler generates. You are free to modify the library as
+needed.
+
+To build with tagging support:
+
+    make RTFLAGS=-DTAGGING runtime
+
+To build without tagging support (i.e, with boxing only):
+
+    make runtime
+
+If you want to rebuild from scratch (e.g., to change from a boxing
+implementation to a tagging implementation), do the following before
+rebuilding:
+
+    make clean
+
+To test that everything built correctly, do one of the following:
+
+    make RTFLAGS=-DTAGGING test
+    make test
+
+The runtime system is more general than you need--it supports language
+features you aren't required to support.
+
+Look at test4.c for examples of how to create objects, access fields,
+and call methods. Your compiler will need to create the class objects in
+your generated 'main' function for later use. See 'setup_classes' in
+test4.c for examples how to do this.
+
+Garbage collection
+------------------
+
+The library uses malloc to allocate objects. To use garbage collection,
+download the BDW collector from:
+
+http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc.tar.gz
+
+To build:
+
+    tar xfz gc.tar.gz
+    cd gc-7.2
+    CFLAGS=-m32 ./configure --prefix=$DIR
+    CFLAGS=-m32 make
+    CFLAGS=-m32 make check
+    CFLAGS=-m32 make install
+
+This will create $DIR/lib/libgc.a
+
+To use with your generated code, simply add it to the link command. For example:
+
+    gcc -m32 test.s \
+      hashtable.o hashtable_itr.o hashtable_utility.o runtime.o \
+      $DIR/lib/libgc.a \
+      -o test

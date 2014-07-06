@@ -164,6 +164,8 @@ Visualizer.prototype.doPlumbing = function(snapshots) { var self = this, me = Vi
 
 };//doPlumbing
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.doPlumbingForSnapshot = function(snapshot) { var self = this, me = Visualizer.prototype;
 
   jsPlumb.ready(function() {
@@ -183,6 +185,8 @@ Visualizer.prototype.doPlumbingForSnapshot = function(snapshot) { var self = thi
   });//ready
 
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.connectPlumbing = function(from, to) { var self = this; var me = Visualizer.prototype;
   if (from == undefined || to == undefined) {
@@ -229,6 +233,8 @@ Visualizer.prototype.initPlumber = function() { var self = this; var me = Visual
 
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getPlumber = function() { var self = this; var me = Visualizer.prototype;
 
   if (self._plumber == undefined) {
@@ -238,6 +244,8 @@ Visualizer.prototype.getPlumber = function() { var self = this; var me = Visuali
 
   return self._plumber;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getPlumbingConnector = function() {
   var stateMachineConnector = {
@@ -425,6 +433,8 @@ Visualizer.prototype.renderEmptyNodeAsHtml = function() {
   return '<div id="'+uid+'" class="'+cls+'">Unknown Node</div>'+ Br;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
   var Br = "\n";
@@ -457,6 +467,8 @@ Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) { var self = thi
 
   return nodeHtml;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
@@ -494,6 +506,8 @@ Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) { var self = th
 
   return nodeHtml;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
@@ -536,6 +550,8 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) { var self = t
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
   var Br = "\n";
@@ -570,6 +586,8 @@ Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) { var self 
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
   var Br = "\n";
@@ -600,6 +618,8 @@ Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) { var self = th
 
   return nodeHtml;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
@@ -654,6 +674,8 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) { var self = t
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
   var Br = "\n";
@@ -685,6 +707,8 @@ Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) { var self = thi
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) { var self = this; var me = Visualizer.prototype;
   TB = TB || "";
   var Br = "\n";
@@ -715,6 +739,8 @@ Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) { var self = th
 
   return nodeHtml;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderUnknownNodeAsHtml = function( node, TB ) {
   console.error("ERROR: renderUnknownNodeAsHtml => Unknown Node type.");
@@ -768,6 +794,8 @@ Visualizer.prototype.nodeValuesAsHtmlTable = function( values, TB ) {
   return {asTable: table, asRow: row};
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.recurseValueRefsToHtmlUID = function(values, verbose) { var self = this; var me = Visualizer.prototype;
   verbose = verbose || self.isVerbose();
   var isArr = (values instanceof Array);
@@ -786,6 +814,8 @@ Visualizer.prototype.recurseValueRefsToHtmlUID = function(values, verbose) { var
   return values;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.uidAsHtmlUID = function(uid, verbose) { var self = this; var me = Visualizer.prototype;
   verbose = verbose || self.isVerbose();
 
@@ -794,6 +824,8 @@ Visualizer.prototype.uidAsHtmlUID = function(uid, verbose) { var self = this; va
 
   return self.asHtmlUID(uid/*=>uid*/,uid/*=>to-display*/, verbose);
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.asHtmlUID = function(uid, values, verbose) { var self = this; var me = Visualizer.prototype;
   verbose = verbose || self.isVerbose();

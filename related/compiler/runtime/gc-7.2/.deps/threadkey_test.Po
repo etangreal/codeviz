@@ -1,0 +1,54 @@
+threadkey_test.o threadkey_test.o: tests/threadkey_test.c \
+  include/private/config.h include/gc.h include/gc_version.h \
+  include/gc_config_macros.h \
+  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h \
+  include/gc_pthread_redirects.h /usr/include/pthread.h \
+  /usr/include/_types.h /usr/include/sys/_types.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h /usr/include/pthread_impl.h \
+  /usr/include/sched.h /usr/include/time.h /usr/include/_structs.h \
+  /usr/include/sys/_structs.h /usr/include/Availability.h \
+  /usr/include/AvailabilityInternal.h
+
+include/private/config.h:
+
+include/gc.h:
+
+include/gc_version.h:
+
+include/gc_config_macros.h:
+
+/usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h:
+
+include/gc_pthread_redirects.h:
+
+/usr/include/pthread.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_symbol_aliasing.h:
+
+/usr/include/sys/_posix_availability.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/pthread_impl.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/_structs.h:
+
+/usr/include/sys/_structs.h:
+
+/usr/include/Availability.h:
+
+/usr/include/AvailabilityInternal.h:

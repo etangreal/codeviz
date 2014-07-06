@@ -6,15 +6,25 @@
 #
 # DOCS
 #		URL: github.com/pgbovine/OnlinePythonTutor/tree/master/v3/docs
+#		
+#		TITLE: Overview for Developers
+#		  URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
+#
+#		TITLE: 
+#		  URL: https://github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/opt-trace-format.md
 # -------------------------------------------------------------------------------------------------
 
-	# INSTALL PYTHON (python.txt)
-	# INSTALL GOOGLE-APP-ENGINE (GoogleAppEngine.txt)
-
-	_________________________________________________________________________________________________
-	# ARTICLE: Overview for Developers
-	#		SUBSECTION: Getting Started: Running OPT locally on your machine
-	# 	URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
+# -------------------------------------------------------------------------------------------------
+# INDEX
+#
+# 	install: PYTHON (python.txt)
+# 	install: GOOGLE-APP-ENGINE (GoogleAppEngine.txt)
+# <OR>
+# 	Running OPT locally using bottle
+# <OR>
+# 	USE PREBUILT DOCKER IMAGE: mattmoor/python-appengine
+#
+# -------------------------------------------------------------------------------------------------
 
 	_________________________________________________________________________________________________
 	# download && run: Python Tutor
@@ -29,7 +39,30 @@
 
 	dev_appserver.py --host=0.0.0.0 v3/
 
+	_________________________________________________________________________________________________
+	# ARTICLE: Installing Online Python Tutor on your laptop - localhost:8080
+	#		URL: theworldsoldestintern.wordpress.com/2012/10/15/installing-online-python-tutor-on-your-laptop-localhost8080
+
+	_________________________________________________________________________________________________
+	# DOCKER PYTHON
+	#		URL: registry.hub.docker.com/u/dockerfile/python
+
+	docker run -it --rm dockerfile/python
+
 # -------------------------------------------------------------------------------------------------
+#	Alternative Setup: : Running OPT locally using bottle
+#
+#		URL: bottlepy.org
 #		URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
-#		URL: https://github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/opt-trace-format.md
 # -------------------------------------------------------------------------------------------------
+
+	# Bottle Installation
+	#		ULR: bottlepy.org/docs/dev/tutorial.html#installation
+	
+	sudo apt-get install python-bottle
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------
+
+

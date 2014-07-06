@@ -1,0 +1,113 @@
+atomic_ops.lo atomic_ops.o: libatomic_ops/src/atomic_ops.c \
+  libatomic_ops/src/config.h /usr/include/pthread.h /usr/include/_types.h \
+  /usr/include/sys/_types.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h /usr/include/pthread_impl.h \
+  /usr/include/sched.h /usr/include/time.h /usr/include/_structs.h \
+  /usr/include/sys/_structs.h /usr/include/Availability.h \
+  /usr/include/AvailabilityInternal.h /usr/include/signal.h \
+  /usr/include/sys/signal.h /usr/include/sys/appleapiopts.h \
+  /usr/include/machine/signal.h /usr/include/i386/signal.h \
+  /usr/include/i386/_structs.h /usr/include/machine/_structs.h \
+  /usr/include/mach/i386/_structs.h /usr/include/sys/select.h \
+  /usr/include/sys/_select.h libatomic_ops/src/atomic_ops.h \
+  /usr/include/assert.h \
+  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/x86.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../all_aligned_atomic_load_store.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../aligned_atomic_load_store.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../char_atomic_load_store.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../short_aligned_atomic_load_store.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../int_aligned_atomic_load_store.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../ordered_except_wr.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../read_ordered.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../test_and_set_t_is_char.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../standard_ao_double_t.h \
+  libatomic_ops/src/atomic_ops/sysdeps/gcc/../ao_t_is_int.h \
+  libatomic_ops/src/atomic_ops/generalize.h \
+  libatomic_ops/src/atomic_ops/generalize-small.h
+
+libatomic_ops/src/config.h:
+
+/usr/include/pthread.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_symbol_aliasing.h:
+
+/usr/include/sys/_posix_availability.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/pthread_impl.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/_structs.h:
+
+/usr/include/sys/_structs.h:
+
+/usr/include/Availability.h:
+
+/usr/include/AvailabilityInternal.h:
+
+/usr/include/signal.h:
+
+/usr/include/sys/signal.h:
+
+/usr/include/sys/appleapiopts.h:
+
+/usr/include/machine/signal.h:
+
+/usr/include/i386/signal.h:
+
+/usr/include/i386/_structs.h:
+
+/usr/include/machine/_structs.h:
+
+/usr/include/mach/i386/_structs.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/sys/_select.h:
+
+libatomic_ops/src/atomic_ops.h:
+
+/usr/include/assert.h:
+
+/usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/x86.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../all_aligned_atomic_load_store.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../aligned_atomic_load_store.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../char_atomic_load_store.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../short_aligned_atomic_load_store.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../int_aligned_atomic_load_store.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../ordered_except_wr.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../read_ordered.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../test_and_set_t_is_char.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../standard_ao_double_t.h:
+
+libatomic_ops/src/atomic_ops/sysdeps/gcc/../ao_t_is_int.h:
+
+libatomic_ops/src/atomic_ops/generalize.h:
+
+libatomic_ops/src/atomic_ops/generalize-small.h:

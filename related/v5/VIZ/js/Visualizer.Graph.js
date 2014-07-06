@@ -219,6 +219,8 @@ Visualizer.prototype.getFrameHashCode = function(frame) {
   return frameStr.hashCode();
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getNodeHashCode = function(node) {
 
   var nodeStr =
@@ -229,6 +231,8 @@ Visualizer.prototype.getNodeHashCode = function(node) {
 
   return nodeStr.hashCode();
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 String.prototype.hashCode = function() {
   //http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/

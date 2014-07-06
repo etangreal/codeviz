@@ -1,3 +1,4 @@
+
 // --------------------------------------------------------------------------------------------------------------------
 // LAYOUT //
 // --------------------------------------------------------------------------------------------------------------------
@@ -64,6 +65,8 @@ Visualizer.prototype.calcLayout = function(snapshot) { var self = this, me = Vis
   self.calcCoordinates(snapshot);
 
 };//calcLayout
+
+// --------------------------------------------------------------------------------------------------------------------
 
 
 Visualizer.prototype.calcCoordinates = function(snapshot) { var self = this, me = Visualizer.prototype;

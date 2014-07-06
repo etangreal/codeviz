@@ -15,6 +15,8 @@ Visualizer.prototype.updateTrace = function(data) { var self = this;
   self.setCurrentSnapshotNo(0);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.processTrace = function(trace) { var self = this, me = Visualizer.prototype;
   var snapshots = self.getSnapshots();
 
@@ -53,6 +55,8 @@ Visualizer.prototype.setTrace = function(trace) { var self = this, me = Visualiz
   return true;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getTrace = function() { var self = this, me = Visualizer.prototype;
   if (self._trace == undefined) {
     console.error("ERROR: getTrace => Trace is undefined.");
@@ -73,6 +77,8 @@ Visualizer.prototype.setCode = function(code) { var self = this, me = Visualizer
   self._code = code.rtrim();
   return true;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getCode = function() { var self = this, me = Visualizer.prototype;
   if (self._code == undefined) {
@@ -118,6 +124,8 @@ Visualizer.prototype.processHeap = function(traceEntry,sid) { var self = this, m
 
   return heap;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.recursivelyProcessNodeRefs = function(values) { var self = this, me = Visualizer.prototype;
   var pointers = [];
@@ -196,6 +204,8 @@ Visualizer.prototype.processStack = function(traceEntry,sid) { var self = this, 
   return frames;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.processFrame = function(frameToProcess,sid) { var self = this, me = Visualizer.prototype;
 
   var order = frameToProcess.ordered_varnames;
@@ -210,6 +220,8 @@ Visualizer.prototype.processFrame = function(frameToProcess,sid) { var self = th
 
   return frame;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.processFrameLocals = function(localsToProcess, order) { var self = this, me = Visualizer.prototype;
 
@@ -230,6 +242,8 @@ Visualizer.prototype.processFrameLocals = function(localsToProcess, order) { var
 
   return nodes;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractFrameMeta = function(frame) {
   return {
@@ -322,6 +336,8 @@ Visualizer.prototype.registerSnapshotPlumbing = function(snapshot) { var self = 
   me.extractPlumbingInfo( snapshot );
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.registerNodePointerPlumbing = function(node, references, plumbing) { var self = this, me = Visualizer.prototype;
   if (node.pointer == undefined || node.pointerUID == undefined || references == undefined || plumbing == undefined) {
     console.error("ERROR: registerNodePlumbingReferences => undefined pointers/references/plumbing");
@@ -348,6 +364,8 @@ Visualizer.prototype.registerNodePointerPlumbing = function(node, references, pl
 
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.registerNodeInheritsPlumbing = function(node, references, plumbing) { var self = this, me = Visualizer.prototype;
   if (node.inherits == undefined || references == undefined || plumbing == undefined) {
     console.error("ERROR: registerNodePlumbingReferences => undefined pointers/references/plumbing");
@@ -372,6 +390,8 @@ Visualizer.prototype.registerNodeInheritsPlumbing = function(node, references, p
     }
   });//pointer
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.addReferenceToPlumbing = function (from, to, plumbing) {
   if (from == undefined || to == undefined || plumbing == undefined) {
@@ -468,12 +488,16 @@ Visualizer.prototype.newHeapNode = function( heapObj, id, sid ) { var self = thi
   return self.errorNode(node,values);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.emptyNode = function(id,sid) { var self = this, me = Visualizer.prototype;
   var node = self.newNode( id, sid );
       node.type = NodeTypeEnum.NONE;
 
   return node;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.refNode = function( node, values ) {
   node.value = values;
@@ -482,6 +506,8 @@ Visualizer.prototype.refNode = function( node, values ) {
   return node;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.funcNode = function( node, values ) {
   node.name = values[0];
   values.shift();
@@ -489,6 +515,8 @@ Visualizer.prototype.funcNode = function( node, values ) {
 
   return node;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.classNode = function( node, values ) { var self = this, me = Visualizer.prototype;
 
@@ -503,6 +531,8 @@ Visualizer.prototype.classNode = function( node, values ) { var self = this, me 
   return node;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.instanceNode = function( node, values ) { var self = this, me = Visualizer.prototype;
 
   node.inherits = node.inherits.concat( values[0] );
@@ -513,11 +543,15 @@ Visualizer.prototype.instanceNode = function( node, values ) { var self = this, 
   return node;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.listNode = function( node, values ) {
   node.value = values;
 
   return node;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.tupleNode = function( node, values ) {
   node.value = values;
@@ -525,17 +559,23 @@ Visualizer.prototype.tupleNode = function( node, values ) {
   return node;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.setNode = function( node, values ) {
   node.value = values;
 
   return node;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.dictNode = function( node, values ) {
   node.value = values;
 
   return node;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.errorNode = function( node, values ) {
   console.error("ERROR: errorNode => Unknown Type.");
@@ -563,6 +603,8 @@ Visualizer.prototype.getRefUID = function(obj) { var self = this, me = Visualize
   return obj[2];
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.isUID = function(value) { var self = this, me = Visualizer.prototype;
 
   if ( !me.isString(value) )
@@ -571,6 +613,8 @@ Visualizer.prototype.isUID = function(value) { var self = this, me = Visualizer.
   var re = /UID[0-9]+/;
   return re.test( value );
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isRefObj = function(obj) { var self = this, me = Visualizer.prototype;
   var isArr = ( obj instanceof Array && (obj.length == 2 || obj.length == 3) );
@@ -599,17 +643,25 @@ Visualizer.prototype.isRefObj = function(obj) { var self = this, me = Visualizer
   return (isRef && isVal && isUID);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isArray = function(obj) {
   return (obj instanceof Array);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.isString = function(str) {
   return (typeof str === "string");
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isUndefined = function(obj) {
   return (typeof obj == 'undefined' || obj === void 0);
@@ -620,4 +672,6 @@ Visualizer.prototype.isUndefined = function(obj) {
 //  return obj === void 0;
 //}
 
+// --------------------------------------------------------------------------------------------------------------------
+// END
 // --------------------------------------------------------------------------------------------------------------------

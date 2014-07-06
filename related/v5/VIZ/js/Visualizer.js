@@ -66,12 +66,16 @@ Visualizer.prototype.initVisualizerCanvas = function(canvas) { var self = this;
   return true;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getVisualizerCanvas = function() { var self = this;
   if ( !self.isValidCanvas(self._visualizerCanvas) )
     return undefined;
 
   return self._visualizerCanvas;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.setVisualizerCanvas = function(canvas) { var self = this;
   if ( !self.isValidCanvas(canvas) )
@@ -80,6 +84,8 @@ Visualizer.prototype.setVisualizerCanvas = function(canvas) { var self = this;
   self._visualizerCanvas = canvas;
   return true;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isValidCanvas = function(canvas) {
   if (canvas == undefined) {
@@ -124,6 +130,8 @@ Visualizer.prototype.initVerbose = function(isVerbose) { var self = this; var me
   return true;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.isVerbose = function() { var self = this; var me = Visualizer.prototype;
   if (self._verbose == undefined) {
     console.error("ERROR: isVerbose was not defined!");
@@ -132,6 +140,8 @@ Visualizer.prototype.isVerbose = function() { var self = this; var me = Visualiz
 
   return self._verbose;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 // --- Snapshots ------------------------------------------------------------------------------------------------------
 
@@ -145,6 +155,8 @@ Visualizer.prototype.initSnapshot = function() { var self = this; var me = Visua
   return true;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getSnapshots = function() { var self = this; var me = Visualizer.prototype;
   if (self._snapshots == undefined) {
     console.error("ERROR: getSnapshots => was not defined.");
@@ -153,6 +165,8 @@ Visualizer.prototype.getSnapshots = function() { var self = this; var me = Visua
 
   return self._snapshots;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getSnapshot = function(i) { var self = this, me = Visualizer.prototype;
   if ( !self.isValidSnapshotIndex(i) || i < 0 )
@@ -169,6 +183,8 @@ Visualizer.prototype.setCurrentSnapshotNo = function(i) { var self = this, me = 
   self._currentSnapshotIndex = self.getValidSnapshotIndex(i);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer.prototype.getCurrentSnapshotNo = function() { var self = this; var me = Visualizer.prototype;
   if (self._currentSnapshotIndex == undefined) {
     console.error("ERROR: getCurrentLine => getCurrentLine was undefined.");
@@ -177,6 +193,8 @@ Visualizer.prototype.getCurrentSnapshotNo = function() { var self = this; var me
 
   return self.getValidSnapshotIndex(self._currentSnapshotIndex);
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getPreviousSnapshotNo = function() { var self = this, me = Visualizer.prototype;
   if (self._previousSnapshotIndex == undefined) {
@@ -189,11 +207,14 @@ Visualizer.prototype.getPreviousSnapshotNo = function() { var self = this, me = 
 
 // --------------------------------------------------------------------------------------------------------------------
 // snapshot shortcuts: current & previous ("previously displayed snapshot")
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getCurrentSnapshot = function() { var self = this, me = Visualizer.prototype;
   var i = self.getCurrentSnapshotNo();
   return self.getSnapshot(i);
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getPreviousSnapshot = function() { var self = this, me = Visualizer.prototype;
   var i = self.getPreviousSnapshotNo();
@@ -202,10 +223,13 @@ Visualizer.prototype.getPreviousSnapshot = function() { var self = this, me = Vi
 
 // --------------------------------------------------------------------------------------------------------------------
 // snapshot helpers
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getSnapshotsCount = function() { var self = this; var me = Visualizer.prototype;
   return self.getSnapshots().length;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.clearSnapshots = function() { var self = this;
   if (self._snapshots == undefined) {
@@ -215,6 +239,8 @@ Visualizer.prototype.clearSnapshots = function() { var self = this;
 
   self._snapshots.length = 0; //ToDo: make sure this is valid! Could cause memory leaks?
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getValidSnapshotIndex = function(i) { var self = this; var me = Visualizer.prototype;
   if ( i == undefined || i == null || !me.isNumber(i) ) {
@@ -241,6 +267,8 @@ Visualizer.prototype.getValidSnapshotIndex = function(i) { var self = this; var 
 
   return i;
 };
+
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isValidSnapshotIndex = function(i) { var self = this; var me = Visualizer.prototype;
   if ( i == undefined || i == null || !me.isNumber(i) ) {

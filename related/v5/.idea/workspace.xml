@@ -23,91 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1665" max-vertical-offset="3615">
+            <state vertical-scroll-proportion="2.3516948" vertical-offset="0" max-vertical-offset="3615">
               <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2790" max-vertical-offset="15600">
-              <caret line="186" column="52" selection-start-line="186" selection-start-column="52" selection-end-line="186" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visualizer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="4305">
-              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DrawGL.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/DrawGL.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6165" max-vertical-offset="12660">
-              <caret line="411" column="12" selection-start-line="411" selection-start-column="12" selection-end-line="411" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="three.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/webGL/three.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="509400" max-vertical-offset="577455">
-              <caret line="33960" column="0" selection-start-line="33960" selection-start-column="0" selection-end-line="33960" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visualizer.Layout.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.Layout.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="2460">
-              <caret line="112" column="59" selection-start-line="112" selection-start-column="59" selection-end-line="112" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visualizer.Graph.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.Graph.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4525862" vertical-offset="600" max-vertical-offset="4725">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visualizer.RenderHtml.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.RenderHtml.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4185" max-vertical-offset="12375">
-              <caret line="279" column="12" selection-start-line="279" selection-start-column="12" selection-end-line="279" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visualizer.TraceProcessor.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.TraceProcessor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7905" max-vertical-offset="9420">
-              <caret line="527" column="24" selection-start-line="527" selection-start-column="24" selection-end-line="527" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -131,14 +51,14 @@
         <option value="$PROJECT_DIR$/VIZ/js/Visualizer.RenderGL.js" />
         <option value="$PROJECT_DIR$/VIZ/js/Visualizer.RenderText.js" />
         <option value="$PROJECT_DIR$/VIZ/js/Visualizer.debugInfo.js" />
-        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.TraceProcessor.js" />
-        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.js" />
         <option value="$PROJECT_DIR$/VIZ/js/index.js" />
         <option value="$PROJECT_DIR$/VIZ/js/Visualizer.DebugInfo.js" />
-        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.Layout.js" />
-        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.Graph.js" />
+        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.TraceProcessor.js" />
         <option value="$PROJECT_DIR$/VIZ/js/Visualizer.RenderHtml.js" />
+        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.Graph.js" />
+        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.Layout.js" />
         <option value="$PROJECT_DIR$/VIZ/js/DrawGL.js" />
+        <option value="$PROJECT_DIR$/VIZ/js/Visualizer.js" />
       </list>
     </option>
   </component>
@@ -204,24 +124,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="VIZ" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VIZ" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -293,6 +195,9 @@
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="06ce0e0e-3dcf-462a-b352-2be629ffe648" name="Default" comment="" />
@@ -309,7 +214,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25510204" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17685589" sideWeight="0.6226913" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29912663" sideWeight="0.6226913" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41751269" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="62" y="463" width="1360" height="395" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -669,38 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1665" max-vertical-offset="3615">
-          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2790" max-vertical-offset="15600">
-          <caret line="186" column="52" selection-start-line="186" selection-start-column="52" selection-end-line="186" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="4305">
-          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.Layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="2460">
-          <caret line="112" column="59" selection-start-line="112" selection-start-column="59" selection-end-line="112" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.DebugInfo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3547523" vertical-offset="0" max-vertical-offset="1606">
@@ -708,42 +581,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.RenderHtml.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4185" max-vertical-offset="12375">
-          <caret line="279" column="12" selection-start-line="279" selection-start-column="12" selection-end-line="279" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/webGL/three.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="509400" max-vertical-offset="577455">
-          <caret line="33960" column="0" selection-start-line="33960" selection-start-column="0" selection-end-line="33960" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VIZ/js/DrawGL.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6165" max-vertical-offset="12660">
-          <caret line="411" column="12" selection-start-line="411" selection-start-column="12" selection-end-line="411" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.TraceProcessor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7905" max-vertical-offset="9420">
-          <caret line="527" column="24" selection-start-line="527" selection-start-column="24" selection-end-line="527" selection-end-column="24" />
+        <state vertical-scroll-proportion="-1.4224138" vertical-offset="1245" max-vertical-offset="10230">
+          <caret line="17" column="119" selection-start-line="17" selection-start-column="119" selection-end-line="17" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.RenderHtml.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2801724" vertical-offset="0" max-vertical-offset="12855">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.Graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4525862" vertical-offset="600" max-vertical-offset="4725">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+        <state vertical-scroll-proportion="4.88178" vertical-offset="0" max-vertical-offset="4785">
+          <caret line="234" column="119" selection-start-line="234" selection-start-column="119" selection-end-line="234" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.Layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2294854" vertical-offset="136" max-vertical-offset="2505">
+          <caret line="68" column="119" selection-start-line="68" selection-start-column="119" selection-end-line="68" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/webGL/three.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.35465926" vertical-offset="345" max-vertical-offset="577455">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/js/DrawGL.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6036161" vertical-offset="10636" max-vertical-offset="12660">
+          <caret line="738" column="3" selection-start-line="738" selection-start-column="3" selection-end-line="738" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/js/Visualizer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08196721" vertical-offset="0" max-vertical-offset="4725">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VIZ/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39499304" vertical-offset="1111" max-vertical-offset="15600">
+          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.3516948" vertical-offset="0" max-vertical-offset="3615">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
         </state>
       </provider>
