@@ -1,20 +1,18 @@
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE INDEX
+// DOCUMENTATION
 // ---------------------------------------------------------------------------------------------------------------------
 
-Template.index.rendered = function() {
+// ARTICLE: COMPLEX TYPESCRIPT DEFINITIONS MADE EASY
+//      URL: www.stevefenton.co.uk/Content/Blog/Date/201301/Blog/Complex-TypeScript-Definitions-Made-Easy
 
-    var context = Famous.Engine.createContext();
+// ---------------------------------------------------------------------------------------------------------------------
+// DECLARATIONS
+// ---------------------------------------------------------------------------------------------------------------------
 
-    var content = new Famous.MeteorSurface({
-        size: [undefined, true],
-        template: Template.index
-    });
+declare var Engine: any;
+declare var Surface: any;
 
-    context.add(content);
-
-};//Template.index.rendered
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

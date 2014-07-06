@@ -1,20 +1,15 @@
 
+
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE INDEX
+// DECLARATIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-Template.index.rendered = function() {
+interface UIInterface {
+    render:Function;
+}
 
-    var context = Famous.Engine.createContext();
+declare var UI: UIInterface;
 
-    var content = new Famous.MeteorSurface({
-        size: [undefined, true],
-        template: Template.index
-    });
-
-    context.add(content);
-
-};//Template.index.rendered
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
