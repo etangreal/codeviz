@@ -59,16 +59,11 @@ Vagrant.configure(API_VERSION) do |config|
 
   config.vm.network :private_network, ip: "172.17.8.100"
   
-  # PORT FORWARDING:
-  #   HOST(MAC-OSX) -> GUEST(COREOS) -> CONTAINER(DOCKER)
-  #   3030          -> 3000          -> 3000
-  #   3031          -> 3001          -> 3001
-  #   8080          -> 8080          -> 8080
+  config.vm.network "forwarded_port", guest: 3000, host: 3030
+  config.vm.network "forwarded_port", guest: 3001, host: 3031
 
-  config.vm.network "forwarded_port", host: 3030, guest: 3000
-  config.vm.network "forwarded_port", host: 3031, guest: 3001
-  config.vm.network "forwarded_port", host: 8080, guest: 8080
-
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  
   # -------------------------------------------------------------------------------------------------------------------
   # Enable NFS for sharing the host machine into the coreos-vagrant VM.
   # -------------------------------------------------------------------------------------------------------------------

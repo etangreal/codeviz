@@ -1,72 +1,49 @@
 
-_______________________________________________________________________________________________________________________
-
+# -------------------------------------------------------------------------------------------------
 # PREREQUISITES
-_______________________________________________________________________________________________________________________
+# -------------------------------------------------------------------------------------------------
 
-install: VIRTUALBOX
-install: VAGRANT
+	VirtualBox	( www.virtualbox.org )
+	Vagrant 		( www.vagrantup.com )
 
-_______________________________________________________________________________________________________________________
-
-# CREATE PROJECT DIRECTORY
-_______________________________________________________________________________________________________________________
-
-mkdir codeviz
-cd codeviz
-
-_______________________________________________________________________________________________________________________
-
+# -------------------------------------------------------------------------------------------------
 # VAGRANT
+# -------------------------------------------------------------------------------------------------
 
-# TUTORIAL:
-#	URL: tonyhb.com/unsuck-your-vagrant-developing-in-one-vm-with-vagrant-and-docker
+	# goto the 'build' directory
+	# i.e: <path-to-project>/codeviz/build
 
-# RESOURCES:
-#	URL: github.com/coreos/coreos-vagrant
-#	CMD: wget raw.github.com/coreos/coreos-vagrant/master/Vagrantfile
-#
-# SUNDRY:
-#	URL: 	github.com/phusion/open-vagrant-boxes
-_______________________________________________________________________________________________________________________
+	cd build
 
-vagrant box update
-vagrant up
+	vagrant box update
+	vagrant up
+	vagrant ssh
 
-_______________________________________________________________________________________________________________________
+	# your now inside the Virtual Machine
+	# goto the 'share' directory
+	# i.e: ~/share
+
+	cd share
+
+	# check that your in the project diretory i.e: the 'codviz' directory (this directory is shared)
+
+	ls
+
+# -------------------------------------------------------------------------------------------------
 # DOCKER
-#
-# TUTORIAL
-#		URL: mmckeen.net/blog/2013/12/14/docker-all-the-things-nginx-and-supervisor
-# 
-# RESOURCES:
-# 	URL: 	github.com/phusion/passenger-docker
-#		URL:	github.com/phusion/baseimage-docker
-#
-#		URL:	index.docker.io/u/phusion/baseimage
-#		URL:	index.docker.io/u/phusion/passenger-full
-#		URL:	index.docker.io/u/phusion/passenger-customizable
+# -------------------------------------------------------------------------------------------------
 
-# DOCKER DATA VOLUMES
-#		docs.docker.io.s3-website-us-west-2.amazonaws.com/reference/builder/#volume
-# 	docs.docker.io.s3-website-us-west-2.amazonaws.com/use/working_with_volumes/#volume-def
-_______________________________________________________________________________________________________________________
+	# pull the phusion passenger-full docker image
 
-docker pull phusion/passenger-full:latest
-docker pull phusion/baseimage:latest
+	docker pull phusion/passenger-full:latest
 
-docker run --rm -t -i -p 80:80 -v /home/core/share:/vagrant --name SERVER phusion/passenger-full bash -l
+	# start the docker container
 
-#docker run -t -i -v /home/core/share:/vagrant --name SERVER phusion/passenger-full bash -l
+	docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant phusion/passenger-full bash -l
 
-_______________________________________________________________________________________________________________________
-
+# -------------------------------------------------------------------------------------------------
 # METEOR
-#	URL:	docs.meteor.com
-#
-# METOERITE
-#	URL: 	github.com/oortcloud/meteorite
-_______________________________________________________________________________________________________________________
+# -------------------------------------------------------------------------------------------------
 
 # Install Meteor
 curl https://install.meteor.com | /bin/sh
@@ -74,37 +51,31 @@ curl https://install.meteor.com | /bin/sh
 # Install Meteorite
 npm install -g meteorite
 
-_______________________________________________________________________________________________________________________
+# -------------------------------------------------------------------------------------------------
+# RUN THE PROJECT
+# -------------------------------------------------------------------------------------------------
 
-# CREATE THE PROJECT
-_______________________________________________________________________________________________________________________
+# change to the 'src' directory
+# i.e: <path-to-project>/codeviz/src
 
-# add famono ( atmospherejs.com/package/famono )
-mrt add famono
+cd src
 
-mrt add iron-router
+# check that the project works
 
-mkdir client
-mkdir client/lib
-mkdir client/css
-mkdir client/views
+mrt
 
-mkdir collections
-mkdir public
-mkdir server
+# open the project on the host (in the browser)
 
-mrt remove autopublish
-mrt remove insecure	
+http://localhost:3030
 
-mrt add meteor-coffeescript
-mrt add typescript-libs
+# create a re-runabble image ( by commiting the container)
 
-meteor add bootstrap
-mrt add meteor-bootstrap-3
-mrt add meteor-stylus
-mrt add meteor-jade
+docker ps
+docker commit <container-id> codeviz
 
-atmospherejs.com/package/bootstrap-3
+# next time we want to start our docker image
+
+docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant codeviz bash -l
 
 _______________________________________________________________________________________________________________________
 
