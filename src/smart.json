@@ -1,6 +1,7 @@
 {
   "packages": {
     "famono": {},
-    "iron-router": {}
+    "iron-router": {},
+    "typescript-libs": {}
   }
 }

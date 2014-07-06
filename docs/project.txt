@@ -1,0 +1,62 @@
+
+
+
+
+# -------------------------------------------------------------------------------------------------
+# CREATING THE PROJECT LAYOUT
+# -------------------------------------------------------------------------------------------------
+
+	mkdir codeviz
+	cd codeviz
+
+	git init
+
+	mkdir assets
+	mkdir build
+	mkdir docs
+	mkdir related
+	mkdir tmp
+
+# -------------------------------------------------------------------------------------------------
+# CREATING THE INITIAL PROJECT SRC
+# -------------------------------------------------------------------------------------------------
+
+	meteor create src
+	cd src
+
+	# create the initial folders
+	mkdir client
+	mkdir client/lib
+	mkdir client/css
+	mkdir client/views
+
+	mkdir collections
+	mkdir public
+	mkdir server
+
+	_________________________________________________________________________________________________
+	# ADD METEOR/METEORITE PACKAGES
+
+	# famono ( atmospherejs.com/package/famono )
+	mrt add famono
+
+	mrt add iron-router
+
+	#mrt remove autopublish
+	#mrt remove insecure	
+
+	mrt add meteor-coffeescript
+	mrt add typescript-libs
+	#mrt add typescript-compiler #DON'T DO THIS - this compiler doesn't work very nicely
+
+	meteor add bootstrap
+
+	# meteor-bootstrap-3 ( atmospherejs.com/package/bootstrap-3 )
+	# mrt add meteor-bootstrap-3
+	
+	# mrt add meteor-stylus
+	# mrt add meteor-jade
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

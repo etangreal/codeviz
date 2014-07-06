@@ -1,0 +1,19 @@
+
+# -------------------------------------------------------------------------------------------------
+# TYPESCRIPT IN WEBSTROM
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# Setting up File Watchers for TypeScript files ...
+
+	         			File type: TypeScript Files
+	          	    	Scope: Project Files
+	       		    	Program: /Users/ernst/.node/bin/tsc
+	    	      	Arguments: --declaration --sourcemap $FileName$ --outDir $FileParentDir$/../tmp/$FileDirName$/
+   			Working Directory: $FileDir$
+	 	 Enviroment Variables: 
+	Output paths to refresh: $FileNameWithoutExtension$.js:$FileNameWithoutExtension$.js.map
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------
