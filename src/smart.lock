@@ -2,16 +2,11 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "famono": {},
       "iron-router": {},
-      "typescript-libs": {}
+      "typescript-libs": {},
+      "famono": {}
     },
     "packages": {
-      "famono": {
-        "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.3.11",
-        "commit": "d7c6dbc471ad034e2dc0f7d557838c474604cee9"
-      },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.7.1",
@@ -21,6 +16,11 @@
         "git": "https://github.com/orefalo/meteor-typescript-libs.git",
         "tag": "v0.1.16",
         "commit": "9838eec81baf55ddf038d85c5ccc3172730ef0b0"
+      },
+      "famono": {
+        "git": "https://github.com/raix/Meteor-famono.git",
+        "tag": "v0.3.12",
+        "commit": "2cb940bbcf8b72bb65819b813387542156e1bfea"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

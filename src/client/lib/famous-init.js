@@ -1,18 +1,26 @@
 
+if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/lib/famous-init.js');
+
 // ---------------------------------------------------------------------------------------------------------------------
 // STARTUP
 // ---------------------------------------------------------------------------------------------------------------------
 
 Meteor.startup(function() {
+    if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/lib/famous-init.js');
 
-    require("famous-polyfills");  // Add polyfills.
+    // -----------------------------------------------------------------------------------------------------------------
+    // GLOBALS
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // Add everything to the global namespace 'Famous' to maintain a cleaner global scope.
+    this.Famous = {};
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // PRE-REQUISITES
+    // -----------------------------------------------------------------------------------------------------------------
+
+    require("famous.polyfills");    // Add polyfills.
     require("famous/core/famous");  // Add the default CSS file.
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Add everything to 'Famous' to maintain a clean namespace.
-    // -----------------------------------------------------------------------------------------------------------------
-
-    Famous = {}
 
     // -----------------------------------------------------------------------------------------------------------------
     // CORE
@@ -23,10 +31,10 @@ Meteor.startup(function() {
     Famous.Modifier           = require('famous/core/Modifier');
     Famous.Transform          = require('famous/core/Transform');
     Famous.View               = require('famous/core/View');
-    //Famous.OptionsManager      = require("famous/core/OptionsManager");
-    //Famous.EventHandler        = require("famous/core/EventHandler");
-    //Famous.RenderNode          = require("famous/core/RenderNode");
-    //Famous.ViewSequence        = require("famous/core/ViewSequence");
+    //Famous.OptionsManager     = require("famous/core/OptionsManager");
+    Famous.EventHandler       = require("famous/core/EventHandler");
+    Famous.RenderNode         = require("famous/core/RenderNode");
+    //Famous.ViewSequence       = require("famous/core/ViewSequence");
 
     Famous.ReactiveEntity      = require("library/meteor/core/ReactiveEntity");
     Famous.PageView            = require("library/meteor/core/PageView");
@@ -37,8 +45,8 @@ Meteor.startup(function() {
     // SURFACES
     // -----------------------------------------------------------------------------------------------------------------
 
-    //Famous.ImageSurface       = require("famous/surfaces/ImageSurface");
-    //Famous.ContainerSurface    = require("famous/surfaces/ContainerSurface");
+    //Famous.ImageSurface        = require("famous/surfaces/ImageSurface");
+    Famous.ContainerSurface    = require("famous/surfaces/ContainerSurface");
 
     // -----------------------------------------------------------------------------------------------------------------
     // MODIFIERS
@@ -52,12 +60,12 @@ Meteor.startup(function() {
     // -----------------------------------------------------------------------------------------------------------------
 
     //Famous.Scrollview         = require('famous/views/Scrollview');
-    //Famous.GridLayout          = require("famous/views/GridLayout");
-    //Famous.Lightbox            = require("famous/views/Lightbox");
+    //Famous.GridLayout           = require("famous/views/GridLayout");
+    //Famous.Lightbox             = require("famous/views/Lightbox");
     //Famous.RenderController   = require("famous/views/RenderController");
-    //Famous.HeaderFooterLayout  = require("famous/views/HeaderFooterLayout");
+    Famous.HeaderFooterLayout   = require("famous/views/HeaderFooterLayout");
     //Famous.Deck               = require('famous/views/Deck');
-    //Famous.EdgeSwapper         = require("famous/views/EdgeSwapper");
+    Famous.EdgeSwapper          = require("famous/views/EdgeSwapper");
 
     // -----------------------------------------------------------------------------------------------------------------
     // UTILITIES
@@ -96,9 +104,7 @@ Meteor.startup(function() {
     Famous.Transitionable.registerMethod('snap', Famous.SnapTransition);
     Famous.Transitionable.registerMethod('spring', Famous.SpringTransition);
 
-    // -----------------------------------------------------------------------------------------------------------------
-
-});//Meteor.startup
+});//Meteor.Startup
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

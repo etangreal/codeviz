@@ -6,6 +6,6 @@
 standard-app-packages
 autopublish
 insecure
-famono
 iron-router
 typescript-libs
+famono
