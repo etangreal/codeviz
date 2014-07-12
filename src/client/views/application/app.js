@@ -1,89 +1,68 @@
 
 if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/app.js');
 
-// ---------------------------------------------------------------------------------------------------------------------
-// STARTUP
-// ---------------------------------------------------------------------------------------------------------------------
-
-Meteor.startup(function(){
+Meteor.startup(function() {
     if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/views/application/app.js');
 
 // =====================================================================================================================
 // CLASS : App
 // =====================================================================================================================
 
-    //Inherits from: Famous.View
+    //Inherit from Famous.View
     App.prototype = Object.create(Famous.View.prototype);
-    //constructor
+    //Constructor
     App.prototype.constructor = App;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // CONSTRUCTOR
-    // -----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+// CONSTRUCTOR
+// ---------------------------------------------------------------------------------------------------------------------
 
     function App() {
-        // extend from view
+
+        // Call the super class's constructor
         Famous.View.apply(this, arguments);
 
-        var layout = new Famous.HeaderFooterLayout({
-            header: 0,
-            footer: 50
-        });
+        // -------------------------------------------------------------------------------------------------------------
+        // CREATE LAYOUT
+        // -------------------------------------------------------------------------------------------------------------
 
-        var contentArea = new Famous.EdgeSwapper();
-        layout.content.add(contentArea);
+        var headerFooter = Factory.HeaderFooter.createHeaderFooterLayout();
 
-        layout.footer.add(new Famous.MeteorSurface({
-            template: Template.footer,
-            size: [undefined, 50],
-            properties: {
-                backgroundColor: '#b7af4c'
-            }
-        }));
+        this.add(headerFooter.layout);
 
-        this.layout = layout;
-        this.contentArea = contentArea;
+        // -------------------------------------------------------------------------------------------------------------
+        // PUBLIC MEMBERS
+        // -------------------------------------------------------------------------------------------------------------
+
+        this.layout = headerFooter.layout;
+        this.contentArea = headerFooter.content.default;
+
+        // -------------------------------------------------------------------------------------------------------------
+        // PRIVATE MEMBERS
+        // -------------------------------------------------------------------------------------------------------------
+
         this._currentSection = undefined;
         this._sections = {};
 
-        this.add(layout);
-    }
+    }//App
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // FUNCTIONS
-    // -----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+// MEMBER FUNCTIONS
+// ---------------------------------------------------------------------------------------------------------------------
 
-    App.prototype.addSection = function (name, template, data) {
-        //console.log('App.addSection: ', name);
+    App.prototype.addSection = function (name, section) {
+        if (!section)
+            console.log('ERROR: App.addSection: parameter section is undefined.');
 
-        if ( (name in this._sections) ) {
-            console.log('ERROR: App.addSection: ', name, ' already exists.');
-            return this._sections[name];
-        }
+        if ( (name in this._sections) )
+            console.log('WARNING: App.addSection: ', name, ' already exists. It is being overridden.');
 
-//        this._sections[name] = new Famous.ContainerSurface({
-//            size: [undefined, undefined],
-//            //template: template,
-//            properties: {
-//                overflow: 'hidden',
-//                backgroundColor: 'white'
-//            }
-//        });
+        this._sections[name] = section;
 
-        //Test
-        this._sections[name] = new Famous.MeteorSurface({
-            size: [600, 300],
-            template: template,
-            data: data,
-            properties: {
-                backgroundColor: '#b7af4c'
-            }
-        });
-
-        return this._sections[name];
+        return section;
     };
 
-    // -----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
     App.prototype.getSection = function (name) {
         if ( !(name in this._sections) ) {
@@ -94,7 +73,7 @@ Meteor.startup(function(){
         return this._sections[name];
     };
 
-    // -----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
     App.prototype.showSection = function (name) {
         if ( !(name in this._sections) ) {
@@ -107,31 +86,20 @@ Meteor.startup(function(){
         this.contentArea.show(surface);
     };
 
-    // -----------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
     App.prototype.currentSection = function () {
         return this._currentSection;
     };
 
-// =====================================================================================================================
-// APPLICATION
-// =====================================================================================================================
+// ---------------------------------------------------------------------------------------------------------------------
+// EXPORT
+// ---------------------------------------------------------------------------------------------------------------------
 
-    var Application = new App();
-    var mainContext = Famous.Engine.createContext();
-
-    mainContext.add(Application);
-    Famous.Engine.pipe(Application);
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // GLOBALS
-    // -----------------------------------------------------------------------------------------------------------------
-
-    this.Application = Application;
-    this.mainContext = mainContext;
-
-});//Meteor.startup
+    this.App = App;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
+
+});//Meteor.startup

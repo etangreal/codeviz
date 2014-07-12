@@ -62,10 +62,12 @@ Meteor.startup(function() {
     //Famous.Scrollview         = require('famous/views/Scrollview');
     //Famous.GridLayout           = require("famous/views/GridLayout");
     //Famous.Lightbox             = require("famous/views/Lightbox");
-    //Famous.RenderController   = require("famous/views/RenderController");
+    Famous.RenderController     = require("famous/views/RenderController");
     Famous.HeaderFooterLayout   = require("famous/views/HeaderFooterLayout");
     //Famous.Deck               = require('famous/views/Deck');
-    Famous.EdgeSwapper          = require("famous/views/EdgeSwapper");
+    //Famous.EdgeSwapper          = require("famous/views/EdgeSwapper");
+    Famous.FlexibleLayout       = require("famous/views/FlexibleLayout");
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // UTILITIES
