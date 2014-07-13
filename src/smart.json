@@ -2,6 +2,7 @@
   "packages": {
     "iron-router": {},
     "typescript-libs": {},
-    "famono": {}
+    "famono": {},
+    "sharejs": {}
   }
 }

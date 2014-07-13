@@ -4,7 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "typescript-libs": {},
-      "famono": {}
+      "famono": {},
+      "sharejs": {}
     },
     "packages": {
       "iron-router": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/raix/Meteor-famono.git",
         "tag": "v0.3.12",
         "commit": "2cb940bbcf8b72bb65819b813387542156e1bfea"
+      },
+      "sharejs": {
+        "git": "https://github.com/mizzao/meteor-sharejs.git",
+        "tag": "v0.5.2",
+        "commit": "1d8137b59906ce210b2f5c015b7b142735bc2f4e"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
