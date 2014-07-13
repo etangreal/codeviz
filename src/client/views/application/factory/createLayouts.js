@@ -1,199 +1,252 @@
 
 if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/factory/createLayouts.js');
 
+Meteor.startup(function() {
+    if (CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/views/factory/createLayouts.js');
+
 // =====================================================================================================================
 // FACTORY: CREATE LAYOUT FUNCTIONS
 // =====================================================================================================================
 
-Factory = {
+    this.Factory = {
 
-    Surface: {
-        createMeteorSurface: _createMeteorSurface
-    },
+        Surface: {
+            createMeteorSurface: _createMeteorSurface
+        },
 
-    HeaderFooter: {
-        createHeaderFooterLayout: _createHeaderFooterLayout,
-        createHeaderSection: _createHeaderSection,
-        createContentSection: _createContentSection,
-        createFooterSection: _createFooterSection
-    },
+        HeaderFooter: {
+            createHeaderFooterLayout: _createHeaderFooterLayout
+        },
 
-    EditorCanvas: {
-        createEditorCanvasSection: _createEditorCanvasSection
-    }
+        EditorCanvas: {
+            createEditorCanvasSection: _createEditorCanvasSection
+        }
 
-};//Factory
+    };//Factory
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CREATE METEOR SURFACE
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _createMeteorSurface(template, data, properties) {
+    function _createMeteorSurface(template, data, properties) {
 
-    properties = properties || {
+        properties = properties || {
             backgroundColor: '#b7af4c'
         };
 
-    var surface = new Famous.MeteorSurface({
-        size: [600, 300],
-        template: template,
-        data: data,
-        properties: properties
-    });
+        var surface = new Famous.MeteorSurface({
+            size: [undefined, undefined],
+            template: template,
+            data: data,
+            properties: properties
+        });
 
-    // -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-    return {
-        default: surface,
-        modifier: undefined,
-        surface: surface
-    };
+        return {
+            default: surface,
+            modifier: undefined,
+            surface: surface
+        };
 
-}//_createMeteorSurface
+    }//_createMeteorSurface
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CREATE HEADER FOOTER LAYOUT
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _createHeaderFooterLayout() {
+    function _createHeaderFooterLayout() {
 
-    var layout = new Famous.HeaderFooterLayout({
-        header: 50,
-        footer: 10
-    });
+        var layout = new Famous.HeaderFooterLayout({
+            header: 50,
+            footer: 10
+        });
 
-    return {
-        layout: layout,
-        header: _createHeaderSection(layout),
-        content: _createContentSection(layout),
-        footer: _createFooterSection(layout)
-    }
-
-}//_createHeaderFooterLayout
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-function _createHeaderSection(layout) {
-
-    var surface = new Famous.MeteorSurface({
-        template: Template.header,
-        size: [undefined, 50],
-        properties: {
-            backgroundColor: 'lightblue'
+        return {
+            layout: layout,
+            header: _createHeaderSection(layout),
+            content: _createContentSection(layout),
+            footer: _createFooterSection(layout)
         }
-    });
 
-    // -------------------------------------------------------------------------------------------------------------
-
-    layout.header.add(surface);
-
-    return {
-        default: surface,
-        modifier: undefined,
-        surface: surface
-    };
-
-}//_createHeaderSection
+    }//_createHeaderFooterLayout
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _createContentSection(layout) {
+    function _createHeaderSection(layout) {
 
-    var controller = new Famous.RenderController();
+        var surface = new Famous.MeteorSurface({
+            template: Template.header,
+            size: [undefined, 50],
+            properties: {
+                backgroundColor: 'lightblue'
+            }
+        });
 
-    // -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-    layout.content.add(controller);
+        layout.header.add(surface);
 
-    return {
-        //default handle
-        default: controller,
-        controller: controller,
-        modifier: undefined,
-        surface: undefined
-    };
+        return {
+            default: surface,
+            modifier: undefined,
+            surface: surface
+        };
 
-}//_createContent
+    }//_createHeaderSection
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _createFooterSection(layout) {
+    function _createContentSection(layout) {
 
-    var surface = new Famous.MeteorSurface({
-        template: Template.footer,
-        size: [undefined, 20],
-        properties: {
-            backgroundColor: 'lightblue'
-        }
-    });
+        var controller = new Famous.RenderController();
 
-    // -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-    layout.footer.add(surface);
+        layout.content.add(controller);
 
-    return {
-        default: surface,
-        modifier: undefined,
-        surface: surface
-    };
+        return {
+            //default handle
+            default: controller,
+            controller: controller,
+            modifier: undefined,
+            surface: undefined
+        };
 
-}//_createFooterSection
+    }//_createContent
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    function _createFooterSection(layout) {
+
+        var surface = new Famous.MeteorSurface({
+            template: Template.footer,
+            size: [undefined, 20],
+            properties: {
+                backgroundColor: 'lightblue'
+            }
+        });
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        layout.footer.add(surface);
+
+        return {
+            default: surface,
+            modifier: undefined,
+            surface: surface
+        };
+
+    }//_createFooterSection
 
 // ---------------------------------------------------------------------------------------------------------------------
 // EDITOR & CANVAS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _createEditorCanvasSection(container) {
+    function _createEditorCanvasSection() {
 
-    var layout = new Famous.FlexibleLayout();
+        var surfaces = [];
 
-    var initialRatios = [1, true, 1, true];
+        var OPEN = '->';
+        var CLOSED = '<-';
+        var TRANSITION = {curve: 'easeOut', duration: 300};
+        var INITIAL_RATIOS = [1, true, 3];
+        var FINAL_RATIOS = [0, true, 1];
 
-    var colors = [
-        'rgba(256, 0, 0, .7)',
-        'rgba(0, 256, 0, .7)',
-        'rgba(0, 0, 256, .7)',
-        'rgba(256, 0, 0, .7)',
-        'rgba(0, 256, 0, .7)',
-        'rgba(0, 0, 256, .7)',
-        'rgba(256, 0, 0, .7)',
-        'rgba(0, 256, 0, .7)',
-        'rgba(0, 0, 256, .7)'
-    ];
+        var divBtnTxt = CLOSED;
+        var toggle = false;
 
-    var surfaces = [];
-    for (var i = 1; i <= 4; i++) {
-        size = (i % 2 === 0) ? [10, undefined] : [undefined, undefined]
-        surfaces.push(new Famous.Surface({
-            size: size,
+        // -------------------------------------------------------------------------------------------------------------
+
+        var layout = new Famous.FlexibleLayout({
+            ratios : INITIAL_RATIOS
+        });
+
+        var editor = new Famous.Surface({
+            size: [undefined, undefined],
             properties: {
-                backgroundColor: colors[i-1]
+                backgroundColor: 'white'
             }
-        }));
-    }
+        });
 
-    layout.sequenceFrom(surfaces);
+        // -------------------------------------------------------------------------------------------------------------
 
-    var finalRatios = [4, true, 1, true];
-    var toggle = false;
+        //divider-container: serves as a container for the divider & divider-button
+        var divCon = new Famous.ContainerSurface({
+            size: [20, undefined]
+//            properties: {
+//                overflow: 'hidden'
+//            }
+        });
 
-    Famous.Engine.on('click', function(){
-        var ratios = toggle ? initialRatios : finalRatios;
-        layout.setRatios(ratios, {curve : 'easeOut', duration : 500});
-        toggle = !toggle;
-    });
+        //divider: placed in the divider-container to serve as a background
+        var div = new Famous.Surface({
+            size: [20, undefined],
+            properties: {
+                backgroundColor: 'grey'
+            }
+        });
 
-    // -------------------------------------------------------------------------------------------------------------
+        //divider-button-modifier: used to modify the divider-button's position
+        var divBtnMod = new Famous.Modifier({
+            transform: Famous.Transform.translate(0, 350, 0)
+        });
 
-    container.add(layout);
+        //divider button: used to open/close the editor panel
+        var divBtn = new Famous.Surface({
+            size: [20, 20],
+            content: divBtnTxt,
+            properties: {
+                textAlign: "center",
+                backgroundColor: 'lightgrey'
+            }
+        });
 
-    return {
-        default: layout,
-        layout: layout
-    }
+        divCon.add(div);
+        divCon.add(divBtnMod).add(divBtn);
 
-}//_createEditorCanvasSection
+        // -------------------------------------------------------------------------------------------------------------
+
+        // Toggle state between 0 and 1
+        function toggleState() {
+            var ratios = toggle ? INITIAL_RATIOS : FINAL_RATIOS;
+            divBtn.setContent(toggle ? CLOSED : OPEN);
+            layout.setRatios(ratios, TRANSITION);
+            toggle = !toggle;
+        }
+
+        div.on('click', toggleState);
+        divBtn.on('click', toggleState);
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        var canvas = new Famous.Surface({
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'lightgrey'
+            }
+        });
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        surfaces.push(editor);
+        surfaces.push(divCon);
+        surfaces.push(canvas);
+
+        layout.sequenceFrom(surfaces);
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        return {
+            default: layout,
+            layout: layout,
+            surfaces: surfaces
+        }
+
+    }//_createEditorCanvasSection
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
+
+});//Meteor.startup

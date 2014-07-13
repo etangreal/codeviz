@@ -45,10 +45,6 @@
 
 	mrt add typescript-libs
 
-
-
-
-
 	#mrt remove autopublish
 	#mrt remove insecure	
 
@@ -63,6 +59,10 @@
 
 	# mrt add meteor-stylus
 	# mrt add meteor-jade
+
+	# atmospherejs.com/package/sharejs
+	# github.com/mizzao/meteor-sharejs
+	mrt add sharejs
 
 # -------------------------------------------------------------------------------------------------
 # END

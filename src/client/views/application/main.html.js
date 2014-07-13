@@ -60,20 +60,34 @@ Template.home.events({
 
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: FOOTER: EVENTS
+// TEMPLATE: HEADER: EVENTS
 // ---------------------------------------------------------------------------------------------------------------------
 
-Template.footer.events({
+Template.header.events({
 
     'click #btnHome': function(e,t) {
         Router.go(Route.home);
+    },
+
+    'click #btnEditor': function(e,t) {
+        Router.go(Route.editor);
     },
 
     'click #btnAbout': function(e,t) {
         Router.go(Route.about);
     }
 
-});//Template.about.events
+});//Template.header.events
+
+// ---------------------------------------------------------------------------------------------------------------------
+// TEMPLATE: FOOTER: EVENTS
+// ---------------------------------------------------------------------------------------------------------------------
+
+Template.footer.events({
+
+
+
+});//Template.footer.events
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

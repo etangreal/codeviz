@@ -5,6 +5,7 @@
 
 Route  = {
     home    : 'home',
+    editor  : 'editor',
     about   : 'about'
 };
 
@@ -16,12 +17,6 @@ if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js');
 
 Meteor.startup(function() {
     if (CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/config/router-init.js');
-
-    var home = Factory.Surface.createMeteorSurface(Template.home).default;
-    var about = Factory.Surface.createMeteorSurface(Template.about, {context: 'Example Data'}).default;
-
-    Application.addSection(Route.home, home);
-    Application.addSection(Route.about, about);
 
 });//Meteor.startup
 
@@ -41,6 +36,17 @@ Router.map(function() {
             Application.showSection(Route.home);
         }
     });
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    this.route(Route.editor, {
+        path: '/' + Route.editor,
+        template: 'blank',
+        onBeforeAction: function () {
+            Application.showSection(Route.editor);
+        }
+    });
+
 
     // -----------------------------------------------------------------------------------------------------------------
 
