@@ -128,7 +128,7 @@ function _docListAddItem(title) {
 		title: title
 	}, function(err, id) {
 			if(!id) return;
-			Session.set('ssn_document', id);
+			Session.set('ssn_documentId', id);
 		}
 	);//Documents.insert
 
@@ -140,7 +140,7 @@ function _docListAddItem(title) {
 
 Template.docItem.current = function() {
 	// console.log('Template.docItem.current', this._id);
-	return Session.equals('ssn_document', this._id);
+	return Session.equals('ssn_documentId', this._id);
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ Template.docItem.events({
 
 	'click a': function(e) {
 		e.preventDefault();
-		Session.set('ssn_document', this._id);
+		Session.set('ssn_documentId', this._id);
 	}
 
 });
@@ -161,7 +161,9 @@ Template.docItem.events({
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.docid = function() {
-	return Session.get('ssn_document');
+	var id = Session.get('ssn_documentId');
+	//console.log('editor.docid: ' + id);
+	return id;
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -176,7 +178,7 @@ Template.editor.events({
 
 		$(e.target).blur();
 
-		var id = Session.get('ssn_document');
+		var id = Session.get('ssn_documentId');
 		var title = e.target.value;
 		Documents.update(id, {title: title});
 	},
@@ -185,8 +187,8 @@ Template.editor.events({
 
 	'click button': function(e) {
 		e.preventDefault();
-		var id = Session.get('ssn_document');
-		Session.set('ssn_document', null)
+		var id = Session.get('ssn_documentId');
+		Session.set('ssn_documentId', null)
 		Meteor.call('deleteDocument', id);
 	}
 

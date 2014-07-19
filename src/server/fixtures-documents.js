@@ -1,9 +1,96 @@
 
-getExamples = function() {
+if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/server/fixture-documents.js');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE
+// ---------------------------------------------------------------------------------------------------------------------
+
+var fs = Npm.require('fs');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// STARTUP
+// ---------------------------------------------------------------------------------------------------------------------
+
+Meteor.startup(function() {
+  if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/server/fixture-documents.js');
+
+  // -------------------------------------------------------------------------------------------------------------------
+
+  //deleteAllDocuments();
+  if (Documents.find().count() === 0) {
+    
+    populateDocuments();
+
+  }//if (Documents.find().count() === 0)
+
+  // -------------------------------------------------------------------------------------------------------------------
+
+});//Meteor.startup
+
+// ---------------------------------------------------------------------------------------------------------------------
+// FUNCTIONS
+// ---------------------------------------------------------------------------------------------------------------------
+
+var deleteAllDocuments = function() {
+    var cursor = Documents.find().fetch();
+
+    for (var i = 0; i < cursor.length; i++) {
+      var id = cursor[i]._id;
+      Meteor.call("deleteDocument", id);
+    }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+var populateDocuments = function() {
+    Documents.remove({});
+
+    var examples = getExamples();
+
+    for (var i=0; i<examples.length; i++) {
+      var title = examples[i][0];
+      var filepath = examples[i][1];
+
+      var id = insertDocument(title,filepath);
+      var file = readFile(filepath);
+
+      ShareJS.initializeDoc(id, file);
+    }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+var readFile = function (filename) {
+  var ROOT = '../../../../../';
+  var filepath = ROOT + filename;
+
+  //console.log( fs.readdirSync(ROOT) );
+
+  var file = fs.readFileSync(filepath, 'utf8');
+
+  return file;
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+var insertDocument = function(title, filepath) {
+
+    var id = Documents.insert({
+      title: title,
+      filepath: filepath,
+    });
+
+    return id;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+var getExamples = function() {
   var examples = [];
 
   //Unselected Example
-  examples.push (["<clear>", undefined]);
+  // examples.push (["<clear>", undefined]);
 
   //Basic: hello | happy | intro | filter | tokenize | insertion sort | list comprehension
   examples.push (["Basic: hello", "aliasing.txt"]);
@@ -80,7 +167,7 @@ getExamples = function() {
   //examples.push (["Chris Meyers: sieve", "chris-meyers/optSieve.txt"])
   //examples.push (["Chris Meyers: fib", "chris-meyers/optFib.txt"])
 
-  var folder = "OPT/example-code/";
+  var folder = "files/example-code/";
   examples.forEach( function(item) {
     if(item[1] !== undefined)
       item[1] = folder + item[1];
@@ -88,3 +175,7 @@ getExamples = function() {
 
   return examples;
 };
+
+// ---------------------------------------------------------------------------------------------------------------------
+// END
+// ---------------------------------------------------------------------------------------------------------------------
