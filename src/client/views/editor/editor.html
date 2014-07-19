@@ -1,0 +1,57 @@
+
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<template name="docListAdd">
+    <div class="div-docList-add input-append">
+        <input id="id-txt-add-docItem" type="text" width="10px" placeholder="Add File" />
+        <button id="id-btn-add-docItem" type="button" class="btn">Add</button>
+    </div>
+</template>
+
+<template name="docList">
+    <div class="div-docList">
+        <!-- <ul class="nav nav-pills nav-stacked" id="id-docList"> -->
+            <table class="table">
+                {{#each documents}}
+                    {{> docItem}}
+                {{/each}}
+            </table>
+        <!-- </ul> -->
+    </div>
+</template>
+
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<template name="docItem">
+    <!-- <li class="{{#if current}}active{{/if}}"> -->
+        
+        <tr>
+            {{#if isEditingDocItem}}
+                <td>
+                    <input type="text" id="id-docItem-edit-{{this._id}}" class="docItem-edit pull-left" value="{{title}}">
+                </td>
+                <td><i class="accept-docItem icon-ok pull-right" rel="tooltip" data-original-title="Accept"></i></td>
+                <td><i class="cancel-docItem icon-remove pull-right" rel="tooltip" data-original-title="Cancel"></i></td>
+            {{else}}
+                <td>
+                    <a href="#">{{title}}</a>
+                </td>
+                <td><i class="edit-docItem icon-edit pull-right" rel="tooltip" data-original-title="Edit"></i></td>
+                <td><i class="remove-docItem icon-remove pull-right" rel="tooltip" data-original-title="Delete File"></i></td>
+            {{/if}}
+        </tr>
+       
+    <!-- </li> -->
+</template>
+
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<template name="editor">
+
+    {{#if docid}}
+        {{> sharejsAce docid=docid callback=config id="editor"}}
+    {{/if}}
+
+</template>
+
+<!-- ------------------------------------------------------------------------------------------ -->

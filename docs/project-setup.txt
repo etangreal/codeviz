@@ -1,7 +1,4 @@
 
-
-
-
 # -------------------------------------------------------------------------------------------------
 # CREATING THE PROJECT LAYOUT
 # -------------------------------------------------------------------------------------------------
@@ -38,32 +35,44 @@
 	_________________________________________________________________________________________________
 	# ADD METEOR/METEORITE PACKAGES
 
-	# famono ( atmospherejs.com/package/famono )
-	mrt add famono
+	#mrt remove autopublish
+	#mrt remove insecure
+
+	meteor add jquery
+	mrt add stylus
+	# mrt add jade
 
 	mrt add iron-router
 
-	mrt add typescript-libs
-
-	#mrt remove autopublish
-	#mrt remove insecure	
-
-	mrt add meteor-coffeescript
-	mrt add typescript-libs
-	#mrt add typescript-compiler #DON'T DO THIS - this compiler doesn't work very nicely
-
+	mrt add famono
+	
+	mrt add coffeescript
+	#mrt add typescript-libs
+	
 	meteor add bootstrap
+	meteor add less
 
-	# meteor-bootstrap-3 ( atmospherejs.com/package/bootstrap-3 )
-	# mrt add meteor-bootstrap-3
+	# mrt add bootstrap-3
+	# mrt remove bootstrap-3
+	# mrt add accounts-ui-bootstrap-3
 
-	# mrt add meteor-stylus
-	# mrt add meteor-jade
-
-	# atmospherejs.com/package/sharejs
-	# github.com/mizzao/meteor-sharejs
 	mrt add sharejs
 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	REFERENCES
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	# atmospherejs.com/package/famono
+
+	# atmospherejs.com/package/bootstrap-3
+	# atmospherejs.com/package/accounts-ui-bootstrap-3
+	
+	# atmospherejs.com/package/sharejs
+	# github.com/mizzao/meteor-sharejs
+
+	# DON'T ADD: typescript-compiler doesn't work ...
+	# mrt add typescript-compiler
+	
 # -------------------------------------------------------------------------------------------------
 # END
 # -------------------------------------------------------------------------------------------------

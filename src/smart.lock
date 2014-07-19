@@ -20,8 +20,8 @@
       },
       "famono": {
         "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.3.12",
-        "commit": "2cb940bbcf8b72bb65819b813387542156e1bfea"
+        "tag": "v0.3.14",
+        "commit": "5aa3ff0eccceb6031b2d5c553d597d76dc489a31"
       },
       "sharejs": {
         "git": "https://github.com/mizzao/meteor-sharejs.git",

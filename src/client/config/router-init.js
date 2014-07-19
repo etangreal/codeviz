@@ -6,7 +6,10 @@
 Route  = {
     home    : 'home',
     editor  : 'editor',
-    about   : 'about'
+    about   : 'about',
+    test    : 'test',
+
+    docList : 'docList'
 };
 
 if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js');
@@ -28,37 +31,65 @@ Router.map(function() {
     if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js : Router.map');
 
     // -----------------------------------------------------------------------------------------------------------------
+    // HOME
+    // -----------------------------------------------------------------------------------------------------------------
 
     this.route(Route.home, {
         path: '/',
         template: 'blank',
         onBeforeAction: function () {
-            Application.showSection(Route.home);
+            application.showSection(Route.home);
         }
     });
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // EDITOR
     // -----------------------------------------------------------------------------------------------------------------
 
     this.route(Route.editor, {
-        path: '/' + Route.editor,
+        //path: '/editor',
         template: 'blank',
         onBeforeAction: function () {
-            Application.showSection(Route.editor);
+            application.showSection(Route.editor);
         }
     });
 
-
+    // -----------------------------------------------------------------------------------------------------------------
+    // ABOUT
     // -----------------------------------------------------------------------------------------------------------------
 
     this.route(Route.about, {
-        path: '/' + Route.about,
+        //path: '/about',
         template: 'blank',
         onBeforeAction: function () {
-            Application.showSection(Route.about);
+            application.showSection(Route.about);
         }
     });
 
     // -----------------------------------------------------------------------------------------------------------------
+    // TEST
+    // -----------------------------------------------------------------------------------------------------------------
+
+    this.route(Route.test, {
+        //path: '/test',
+        template: 'blank',
+        onBeforeAction: function () {
+            application.hideCurrentSection();
+            appContext.controller.show(appContext.docListViewTest);
+        }
+    });
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // docList
+    // -----------------------------------------------------------------------------------------------------------------
+
+    this.route(Route.docList, {
+        path: '/test/' + Route.docList,
+        template: 'docList',
+        onBeforeAction: function () {
+            application.hideCurrentSection();
+        }
+    });
 
 });//Router.map
 
@@ -67,7 +98,7 @@ Router.map(function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 Router.onRun(function() {
-    if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js : Router.onRun');
+    if(CONSOLE_LOG_ROUTES) console.log('HOOK: src/client/config/router-init.js : Router.onRun');
 });
 
 // ---------------------------------------------------------------------------------------------------------------------

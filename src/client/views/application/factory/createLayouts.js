@@ -10,16 +10,22 @@ Meteor.startup(function() {
 
     this.Factory = {
 
-        Surface: {
+        Layouts: {
+            HeaderFooter: _createHeaderFooterLayout
+        },
+
+        LayoutParts: {
+
+            docList: undefined,
+            editor: undefined,
+            Canvas: undefined,
+
+            docList_editor: undefined,
+            editorCanvas: _createEditorCanvasSection
+        },
+
+        Surfaces: {
             createMeteorSurface: _createMeteorSurface
-        },
-
-        HeaderFooter: {
-            createHeaderFooterLayout: _createHeaderFooterLayout
-        },
-
-        EditorCanvas: {
-            createEditorCanvasSection: _createEditorCanvasSection
         }
 
     };//Factory
@@ -140,7 +146,7 @@ Meteor.startup(function() {
     }//_createFooterSection
 
 // ---------------------------------------------------------------------------------------------------------------------
-// EDITOR & CANVAS
+// CREATE EDITOR & CANVAS LAYOUT
 // ---------------------------------------------------------------------------------------------------------------------
 
     function _createEditorCanvasSection() {
@@ -150,8 +156,8 @@ Meteor.startup(function() {
         var OPEN = '->';
         var CLOSED = '<-';
         var TRANSITION = {curve: 'easeOut', duration: 300};
-        var INITIAL_RATIOS = [1, true, 3];
-        var FINAL_RATIOS = [0, true, 1];
+        var INITIAL_RATIOS = [true, 3, true, 2];
+        var FINAL_RATIOS = [true, 0, true, 1];
 
         var divBtnTxt = CLOSED;
         var toggle = false;
@@ -162,7 +168,19 @@ Meteor.startup(function() {
             ratios : INITIAL_RATIOS
         });
 
-        var editor = new Famous.Surface({
+        // -------------------------------------------------------------------------------------------------------------
+
+//        var editor = new Famous.Surface({
+//            size: [undefined, undefined],
+//            properties: {
+//                backgroundColor: 'white'
+//            }
+//        });
+
+        var docList = EditorViewFactory.docListSurface();
+
+        var editor = new Famous.MeteorSurface({
+            template: Template.editor,
             size: [undefined, undefined],
             properties: {
                 backgroundColor: 'white'
@@ -229,6 +247,7 @@ Meteor.startup(function() {
 
         // -------------------------------------------------------------------------------------------------------------
 
+        surfaces.push(docList);
         surfaces.push(editor);
         surfaces.push(divCon);
         surfaces.push(canvas);

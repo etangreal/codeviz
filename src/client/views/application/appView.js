@@ -1,23 +1,29 @@
 
-if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/app.js');
+if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/appView.js');
 
 Meteor.startup(function() {
-    if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/views/application/app.js');
+    if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/views/application/appView.js');
 
 // =====================================================================================================================
-// CLASS : App
+// CLASS : AppView
 // =====================================================================================================================
+
+this.AppView = AppView;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// INHERITS
+// ---------------------------------------------------------------------------------------------------------------------
 
     //Inherit from Famous.View
-    App.prototype = Object.create(Famous.View.prototype);
+    AppView.prototype = Object.create(Famous.View.prototype);
     //Constructor
-    App.prototype.constructor = App;
+    AppView.prototype.constructor = AppView;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CONSTRUCTOR
 // ---------------------------------------------------------------------------------------------------------------------
 
-    function App() {
+    function AppView() {
 
         // Call the super class's constructor
         Famous.View.apply(this, arguments);
@@ -26,7 +32,7 @@ Meteor.startup(function() {
         // CREATE LAYOUT
         // -------------------------------------------------------------------------------------------------------------
 
-        var headerFooter = Factory.HeaderFooter.createHeaderFooterLayout();
+        var headerFooter = Factory.Layouts.HeaderFooter();
 
         this.add(headerFooter.layout);
 
@@ -44,18 +50,18 @@ Meteor.startup(function() {
         this._currentSection = undefined;
         this._sections = {};
 
-    }//App
+    }//AppView
 
 // ---------------------------------------------------------------------------------------------------------------------
 // MEMBER FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-    App.prototype.addSection = function (name, section) {
+    AppView.prototype.addSection = function (name, section) {
         if (!section)
-            console.log('ERROR: App.addSection: parameter section is undefined.');
+            console.log('ERROR: AppView.addSection: parameter section is undefined.');
 
         if ( (name in this._sections) )
-            console.log('WARNING: App.addSection: ', name, ' already exists. It is being overridden.');
+            console.log('WARNING: AppView.addSection: ', name, ' already exists. It is being overridden.');
 
         this._sections[name] = section;
 
@@ -64,9 +70,9 @@ Meteor.startup(function() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-    App.prototype.getSection = function (name) {
+    AppView.prototype.getSection = function (name) {
         if ( !(name in this._sections) ) {
-            console.log('ERROR: App.prototype.section: unknown section name: ', name);
+            console.log('ERROR: AppView.prototype.section: unknown section name: ', name);
             return undefined;
         }
 
@@ -75,9 +81,15 @@ Meteor.startup(function() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-    App.prototype.showSection = function (name) {
+    AppView.prototype.currentSection = function () {
+        return this._currentSection;
+    };
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.showSection = function (name) {
         if ( !(name in this._sections) ) {
-            console.log('ERROR: App.prototype.show: unknown section name: ', name);
+            console.log('ERROR: AppView.prototype.show: unknown section name: ', name);
             return;
         }
 
@@ -88,15 +100,9 @@ Meteor.startup(function() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-    App.prototype.currentSection = function () {
-        return this._currentSection;
+    AppView.prototype.hideCurrentSection = function() {
+        this.contentArea.hide();
     };
-
-// ---------------------------------------------------------------------------------------------------------------------
-// EXPORT
-// ---------------------------------------------------------------------------------------------------------------------
-
-    this.App = App;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

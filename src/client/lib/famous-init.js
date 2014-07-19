@@ -59,22 +59,26 @@ Meteor.startup(function() {
     // VIEWS
     // -----------------------------------------------------------------------------------------------------------------
 
-    //Famous.Scrollview         = require('famous/views/Scrollview');
-    //Famous.GridLayout           = require("famous/views/GridLayout");
-    //Famous.Lightbox             = require("famous/views/Lightbox");
-    Famous.RenderController     = require("famous/views/RenderController");
-    Famous.HeaderFooterLayout   = require("famous/views/HeaderFooterLayout");
-    //Famous.Deck               = require('famous/views/Deck');
+    //Famous.ContextualView       = require("famous/views/ContextualView");
+    //Famous.Deck                 = require('famous/views/Deck');
     //Famous.EdgeSwapper          = require("famous/views/EdgeSwapper");
     Famous.FlexibleLayout       = require("famous/views/FlexibleLayout");
-
+    //Famous.Flipper              = require("famous/views/Flipper");
+    Famous.GridLayout           = require("famous/views/GridLayout");
+    Famous.HeaderFooterLayout   = require("famous/views/HeaderFooterLayout");
+    //Famous.Lightbox             = require("famous/views/Lightbox");
+    Famous.RenderController     = require("famous/views/RenderController");
+    //Famous.ScrollContainer      = require('famous/views/ScrollContainer');
+    Famous.Scroller             = require('famous/views/Scroller');
+    Famous.Scrollview           = require('famous/views/Scrollview');
+    Famous.SequentialLayout     = require('famous/views/SequentialLayout');
 
     // -----------------------------------------------------------------------------------------------------------------
     // UTILITIES
     // -----------------------------------------------------------------------------------------------------------------
 
     //Famous.Timer               = require("famous/utilities/Timer");
-    //Famous.Utility             = require("famous/utilities/Utility");
+    Famous.Utility              = require("famous/utilities/Utility");
 
     // -----------------------------------------------------------------------------------------------------------------
     // WIDGETS
