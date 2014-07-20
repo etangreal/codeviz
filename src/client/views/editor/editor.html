@@ -11,10 +11,18 @@
 <template name="docList">
     <div class="div-docList">
         <!-- <ul class="nav nav-pills nav-stacked" id="id-docList"> -->
-            <table class="table">
-                {{#each documents}}
-                    {{> docItem}}
-                {{/each}}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th style="width 20px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each documents}}
+                        {{> docItem}}
+                    {{/each}}
+                </tbody>
             </table>
         <!-- </ul> -->
     </div>

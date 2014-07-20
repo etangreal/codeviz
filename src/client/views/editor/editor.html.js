@@ -201,7 +201,8 @@ Template.editor.events({
 Template.editor.config = function() {
 	return function(ace) {
 		// Set some options on the editor
-		//ace.setTheme('ace/theme/monokai');
+		ace.setTheme('ace/theme/monokai');
+		ace.getSession().setMode('ace/mode/python');
 		ace.setShowPrintMargin(false);
 		ace.getSession().setUseWrapMode(true);
 	}

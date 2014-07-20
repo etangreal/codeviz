@@ -58,6 +58,9 @@
 
 	mrt add sharejs
 
+	mrt add jquery-ui
+	mrt add jquery-ui-bootstrap
+
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	REFERENCES
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,6 +72,12 @@
 	
 	# atmospherejs.com/package/sharejs
 	# github.com/mizzao/meteor-sharejs
+
+	# atmospherejs.com/package/jquery-ui
+	# github.com/TimHeckel/meteor-jquery-ui
+
+	# atmospherejs.com/package/jquery-ui-bootstrap
+	# github.com/TimHeckel/meteor-jquery-ui-bootstrap
 
 	# DON'T ADD: typescript-compiler doesn't work ...
 	# mrt add typescript-compiler

@@ -37,7 +37,7 @@ Meteor.startup(function() {
     function _createMeteorSurface(template, data, properties) {
 
         properties = properties || {
-            backgroundColor: '#b7af4c'
+            backgroundColor: 'lightblue'
         };
 
         var surface = new Famous.MeteorSurface({
@@ -83,9 +83,9 @@ Meteor.startup(function() {
 
         var surface = new Famous.MeteorSurface({
             template: Template.header,
-            size: [undefined, 50],
+            size: [undefined, 41],
             properties: {
-                backgroundColor: 'lightblue'
+                backgroundColor: 'black'
             }
         });
 
@@ -129,7 +129,7 @@ Meteor.startup(function() {
             template: Template.footer,
             size: [undefined, 20],
             properties: {
-                backgroundColor: 'lightblue'
+                backgroundColor: 'black'
             }
         });
 

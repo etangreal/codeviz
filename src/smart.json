@@ -3,6 +3,8 @@
     "iron-router": {},
     "typescript-libs": {},
     "famono": {},
-    "sharejs": {}
+    "sharejs": {},
+    "jquery-ui": {},
+    "jquery-ui-bootstrap": {}
   }
 }
