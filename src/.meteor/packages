@@ -8,7 +8,6 @@ autopublish
 insecure
 iron-router
 typescript-libs
-famono
 stylus
 coffeescript
 jquery
@@ -17,3 +16,4 @@ bootstrap
 sharejs
 jquery-ui
 jquery-ui-bootstrap
+famono

@@ -18,7 +18,8 @@ Meteor.startup(function() {
 
   //deleteAllDocuments();
   if (Documents.find().count() === 0) {
-    
+
+    console.log('fixutes-documents.js | populateDocuments');
     populateDocuments();
 
   }//if (Documents.find().count() === 0)
@@ -61,10 +62,13 @@ var populateDocuments = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 var readFile = function (filename) {
-  var ROOT = '../../../../../';
-  var filepath = ROOT + filename;
 
-  //console.log( fs.readdirSync(ROOT) );
+  //console.log( fs.readdirSync('.') );
+  // .meteor/local/build/programs/server      <== ROOT-DIRECTORY
+  // .meteor/local/build/programs/client/app
+
+  var CLIENT = '../client/app/'
+  var filepath = CLIENT + filename;
 
   var file = fs.readFileSync(filepath, 'utf8');
 
@@ -167,7 +171,7 @@ var getExamples = function() {
   //examples.push (["Chris Meyers: sieve", "chris-meyers/optSieve.txt"])
   //examples.push (["Chris Meyers: fib", "chris-meyers/optFib.txt"])
 
-  var folder = "files/example-code/";
+  var folder = "example-code/";
   examples.forEach( function(item) {
     if(item[1] !== undefined)
       item[1] = folder + item[1];

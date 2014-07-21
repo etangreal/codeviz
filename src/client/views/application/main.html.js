@@ -6,9 +6,9 @@ if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/main.h
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.navbar.rendered = function() {
-
+    
     navbar.slider.init.call(this,20);
-
+    navbar.btnExecute.init.call(this);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,17 +27,31 @@ Template.home.events({
 
 Template.header.events({
 
-    'click #btnHome': function(e,t) {
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-home': function(e,t) {
         Router.go(Route.home);
     },
 
-    'click #btnEditor': function(e,t) {
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-editor': function(e,t) {
         Router.go(Route.editor);
     },
 
-    'click #btnAbout': function(e,t) {
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-about': function(e,t) {
         Router.go(Route.about);
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-execute': function(e,t) {
+        //navbar.btnExecute.onClick.call(this);
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
 });//Template.header.events
 

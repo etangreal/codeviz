@@ -1,5 +1,6 @@
 
-if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/navbar.button-execute.js');
+if(CONSOLE_LOG_ROUTES) 
+	console.log('LOADING: src/client/views/application/navbar.button-execute.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
 // STARTUP
@@ -7,54 +8,98 @@ if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/navbar
 
 Meteor.startup(function() {
 
-	if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/views/application/navbar.button-execute.js');
+	if(CONSOLE_LOG_ROUTES) 
+		console.log('STARTUP: src/client/views/application/navbar.button-execute.js');
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXPORT
+	// EXPORT | BUTTON-EXECUTE
 	// -----------------------------------------------------------------------------------------------------------------
 
 	navbar = this.navbar || {};
 
 	navbar.btnExecute = {
-		init: undefined,
-		//event
-		onClick: undefined,
-		//value		
-		get: undefined,
-		set: undefined,
-		reset: undefined,
-		//ui
-		enable: undefined,
-		disable: undefined
-	};
+
+		// -------------------------------
+		// initialization
+		// -------------------------------
+
+			init: _initExecuteButton,
+		
+		// -------------------------------
+		// context = this(of calling object)
+		// -------------------------------
+
+		 context: undefined,
+
+		// -------------------------------
+		// events
+		// -------------------------------
+
+		 onClick: _onClick,
+
+		// -------------------------------
+		// value
+		// -------------------------------
+
+			 get: undefined,
+			 set: undefined,
+		   reset: undefined,
+
+		// -------------------------------
+		// ui
+		// -------------------------------
+
+		  enable: undefined,
+		 disable: undefined
+
+	};//navbar.btnExecute
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXECUTE-BUTTON
+	// FUNCTIONS | BUTTON-EXECUTE
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function getExecuteButton() {
-		var button = $('#id-btn-execute');
+	function _initExecuteButton() {
+		var button = _getExecuteButton();
 
-		if ( button == undefined ) //!(button instanceof HTMLButtonElement)
-			console.error('ERROR: Could not find the "Execute" Button (HTMLButtonElement).');
+		//navbar.btnExecute.context = function() { return this }.bind(this);
 
-		// return button;
-	};
-
-	// -----------------------------------------------------------------------------------------------------------------
-
-	function initExecuteCodeButton() {
-		var button = getExecuteButton();
-
-		button.onclick = function() {
+		button.on('click', function() {
 			if (navbar.btnExecute.onClick)
 				navbar.btnExecute.onClick();
-		}
+		}.bind(this));
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function onExecuteButtonClicked() {
+	function _getExecuteButton() {
+		var button = $('#id-btn-execute');
+
+		if ( button == undefined )
+			console.error('ERROR: Could not find the "Execute" Button (HTMLButtonElement).');
+
+		return button;
+	};
+
+	// -----------------------------------------------------------------------------------------------------------------
+
+	function _getDocumentId() {
+		var id = Session.get('ssn_documents._id');
+
+		if(!id)
+			console.warn('WARNING | _getDocumentId | Could not find a ssn_documents._id.');
+
+		return id;
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------
+
+	function _onClick() { 
+		//console.log('navbar.button-execute.js | _onClick');
+
+		var id = _getDocumentId.call(this);
+
+		Meteor.call('executeCode', id);
+
 		//self.waitToVisualizeMode();
 
 		//self.executeCode();
@@ -64,25 +109,26 @@ Meteor.startup(function() {
 	// -----------------------------------------------------------------------------------------------------------------
 
 	function executeCode (code,backendScript,backendOptions,onSuccess) { 
-		// var self = Index.prototype;
+		var self = Index.prototype;
+		var id = _getDocItemId();
 
-		// code = code || self.getCode();
-		// backendScript = backendScript || self.getBackendScript();
-		// backendOptions = backendOptions || self.getBackendOptions();
-		// onSuccess = onSuccess || self.onExecuteCodeSuccess;
+		code = code || self.getCode();
+		backendScript = backendScript || self.getBackendScript();
+		backendOptions = backendOptions || self.getBackendOptions();
+		onSuccess = onSuccess || self.onExecuteCodeSuccess;
 
-		// if ( code == "" ) {
-		// 	alert('Type in some code to visualize.');
-		// 	return;
-		// }
+		if ( code == "" ) {
+			alert('Type in some code to visualize.');
+			return;
+		}
 
-		// var data = {
-		// 	user_script : code,
-		// 	raw_input_json: '',
-		// 	options_json: JSON.stringify(backendOptions)
-		// };
+		var data = {
+			user_script : code,
+			raw_input_json: '',
+			options_json: JSON.stringify(backendOptions)
+		};
 
-		// $.get(backendScript,data,onSuccess,"json");
+		$.get(backendScript,data,onSuccess,"json");
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------

@@ -8,10 +8,14 @@ Template.docList.documents = function() {
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: DOC-LIST: EVENTS
+// DOC-LIST-ADD	| EVENTS
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.docListAdd.events({
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// ADD
+	// -----------------------------------------------------------------------------------------------------------------
 
     'keydown #id-txt-add-docItem': function (e,t) {
         if (e.keyCode !== 13) return;
@@ -42,14 +46,35 @@ Template.docListAdd.events({
 });//Template.docListAdd.events
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPATE: DOC-ITEM
+// DOC-LIST-ADD | DATABASE-FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-Template.docItem.rendered = function() {
+function _docListAddItem(title) {
+	title = title.trim();
 
-	$('[rel=tooltip]').tooltip();
+	if (title == '') {
+        console.log('Template.docList.events: _docListAddItem: Enter a title...');
+        return;
+    }
 
-}
+	Documents.insert({
+		title: title
+	}, function(err, id) {
+			if(!id) return;
+			Session.set('ssn_documents._id', id);
+		}
+	);//Documents.insert
+
+ }//_docListAddItem
+
+// ---------------------------------------------------------------------------------------------------------------------
+// DOC-ITEM | FUNCTIONS / 'PROPERTIES'
+// ---------------------------------------------------------------------------------------------------------------------
+
+Template.docItem.current = function() {
+	// console.log('Template.docItem.current', this._id);
+	return Session.equals('ssn_documents._id', this._id);
+};
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -59,14 +84,38 @@ Template.docItem.isEditingDocItem = function() {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: DOC-ITEM: EVENTS
+// DOC-ITEM | RENDERED (EVENT HOOK)
+// ---------------------------------------------------------------------------------------------------------------------
+
+Template.docItem.rendered = function() {
+	$('[rel=tooltip]').tooltip();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// DOC-ITEM | EVENTS
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.docItem.events({
 
+	// -----------------------------------------------------------------------------------------------------------------
+	// SELECT
+	// -----------------------------------------------------------------------------------------------------------------
+
+	'click a.docItem': function(e,t) {
+		//console.log('docItem.events | click a.docItem | ssn_documents._id: ', this._id);
+		e.preventDefault();
+		Session.set('ssn_documents._id', this._id);
+	},
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// EDIT
+	// -----------------------------------------------------------------------------------------------------------------
+
 	'click .edit-docItem': function(e,t) {
 		//console.log('docItem.events: click .edit-docItem');
 		Session.set('ssn_isEditingDocItem', this._id);
+		Session.set('ssn_documents._id', false);
+
 		var id = 'id-docItem-edit-' + this._id;
 		//Helpers.focusText( t.find('#'+id) );
 	},
@@ -102,72 +151,31 @@ Template.docItem.events({
 	},
 
 	// -----------------------------------------------------------------------------------------------------------------
+	// REMOVE
+	// -----------------------------------------------------------------------------------------------------------------
 
 	'click .remove-docItem': function() {
 		//console.log('docItem.events: click .remove-docItem');
 		if (confirm('Are you sure you want to delete?')) {
 			Documents.remove(this._id);
+			Session.set('ssn_documents._id', false);
 		}
 	},
 
 });//Template.docItem.events
 
 // ---------------------------------------------------------------------------------------------------------------------
-// HELPER FUNCTIONS: DOC-LIST
-// ---------------------------------------------------------------------------------------------------------------------
-
-function _docListAddItem(title) {
-	title = title.trim();
-
-	if (title == '') {
-        console.log('Template.docList.events: _docListAddItem: Enter a title...');
-        return;
-    }
-
-	Documents.insert({
-		title: title
-	}, function(err, id) {
-			if(!id) return;
-			Session.set('ssn_documentId', id);
-		}
-	);//Documents.insert
-
- }//_docListAddItem
-
-// ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: DOC-ITEM
-// ---------------------------------------------------------------------------------------------------------------------
-
-Template.docItem.current = function() {
-	// console.log('Template.docItem.current', this._id);
-	return Session.equals('ssn_documentId', this._id);
-};
-
-// ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: DOC-ITEM: EVENTS
-// ---------------------------------------------------------------------------------------------------------------------
-
-Template.docItem.events({
-
-	'click a': function(e) {
-		e.preventDefault();
-		Session.set('ssn_documentId', this._id);
-	}
-
-});
-
-// ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: EDITOR
+// EDITOR
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.docid = function() {
-	var id = Session.get('ssn_documentId');
+	var id = Session.get('ssn_documents._id');
 	//console.log('editor.docid: ' + id);
 	return id;
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: EDITOR: EVENTS
+// EDITOR | EVENTS
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.events({
@@ -195,7 +203,7 @@ Template.editor.events({
 });//Template.editor.events
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: EDITOR
+// EDITOR | CONFIG
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.config = function() {

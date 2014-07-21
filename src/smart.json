@@ -2,9 +2,9 @@
   "packages": {
     "iron-router": {},
     "typescript-libs": {},
-    "famono": {},
     "sharejs": {},
     "jquery-ui": {},
-    "jquery-ui-bootstrap": {}
+    "jquery-ui-bootstrap": {},
+    "famono": {}
   }
 }

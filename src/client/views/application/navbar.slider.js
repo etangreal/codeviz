@@ -16,23 +16,24 @@ Meteor.startup(function() {
 	navbar = this.navbar || {};
 
 	navbar.slider = {
-		init: initSlider,
-		//event
+		init: _initSlider,
+	
+		// events
 		onSlide: undefined,
-		//value		
-		get: getSliderValue,
-		set: setSliderValue,
-		reset: resetSlider,
+		// value		
+		get: _getSliderValue,
+		set: _setSliderValue,
+		reset: _resetSlider,
 		//ui
-		enable: enableSlider,
-		disable: disableSlider
+		enable: _enableSlider,
+		disable: _disableSlider
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// SLIDER
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function getSlider() {
+	function _getSlider() {
 		var slider = $('#slider');
 		//var slider = $('#slider').slider( "instance" );
 
@@ -44,10 +45,10 @@ Meteor.startup(function() {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function initSlider(size) { 
+	function _initSlider(size) { 
 		size = size || 50;
 
-	  	var slider = getSlider();
+	  	var slider = _getSlider();
 
 	  	if ( slider.data('uiSlider') ) {
 	  		// If the data attribute for the slider is set, the slider has already been created
@@ -62,18 +63,18 @@ Meteor.startup(function() {
 	  		step: 1,
 	  		animate: 'fast',
 			slide: function( evt, ui ) { 
-				if (navbar.onSlide) 
-					navbar.onSlide(evt,ui); 
+				if (navbar.slider.onSlide) 
+					navbar.slider.onSlide(evt,ui); 
 			}
 	  	});
 
-	  	tweekUI();
+	  	_tweekUI();
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function tweekUI() {
-		var slider = getSlider();
+	function _tweekUI() {
+		var slider = _getSlider();
 
 	  	//disable keyboard actions on the slider itself (to prevent double-firing of events)
 	  	slider.find(".ui-slider-handle").unbind('keydown');
@@ -86,7 +87,7 @@ Meteor.startup(function() {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function onSlide(evt, ui) { 
+	function _onSlide(evt, ui) { 
 		// var i = ui.value;
 
 		if (onProgress)
@@ -100,40 +101,40 @@ Meteor.startup(function() {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function resetSlider() { 
-	  	var slider = getSlider();
+	function _resetSlider() { 
+	  	var slider = _getSlider();
 
 	  	//ToDo: reset the slider
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function setSliderValue(value) {
+	function _setSliderValue(value) {
 		//ToDo: check that 'value' parameter is valid
 
-		getSlider().slider( "value", value );
+		_getSlider().slider( "value", value );
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function getSliderValue() {
-		return getSlider().slider( "value" );
+	function _getSliderValue() {
+		return _getSlider().slider( "value" );
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function enableSlider() {
-		//getSlider().attr('enabled', true);
-		//getSlider().slider({ disabled: false });
-		getSlider().slider( 'disable' );
+	function _enableSlider() {
+		//_getSlider().attr('enabled', true);
+		//_getSlider().slider({ disabled: false });
+		_getSlider().slider( 'disable' );
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function disableSlider() {
-		//getSlider().attr('enabled', false);
-		//getSlider().slider({ disabled: true });
-		getSlider().slider( 'enable' );
+	function _disableSlider() {
+		//_getSlider().attr('enabled', false);
+		//_getSlider().slider({ disabled: true });
+		_getSlider().slider( 'enable' );
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------

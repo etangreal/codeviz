@@ -1,0 +1,35 @@
+{
+  "name": "CodeViz",
+  "description": "Code Visualizer based on Online Python Tutor (pythontutor.com)",
+  "author": "Ernst Salzmann",
+  "email" : "ErnstSalzmann@gmail.com",
+  "version": "0.0.0",
+  "license": "ISC",
+
+  "directories": {
+    "doc": "docs",
+    "bin": "src/.meteor/local/build/programs/ctl"
+  },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/etangreal/codeviz.git"
+  },
+
+  "keywords": [
+    "Code",
+    "Visualization",
+    "Meteor",
+    "Famo.us"
+  ],
+
+  "bugs": {
+    "url": "https://github.com/etangreal/codeviz/issues"
+  },
+
+  "homepage": "https://github.com/etangreal/codeviz"
+}

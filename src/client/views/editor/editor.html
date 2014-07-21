@@ -31,9 +31,8 @@
 <!-- ------------------------------------------------------------------------------------------ -->
 
 <template name="docItem">
-    <!-- <li class="{{#if current}}active{{/if}}"> -->
-        
-        <tr>
+
+        <tr class="{{#if current}}info{{/if}}">
             {{#if isEditingDocItem}}
                 <td>
                     <input type="text" id="id-docItem-edit-{{this._id}}" class="docItem-edit pull-left" value="{{title}}">
@@ -42,7 +41,7 @@
                 <td><i class="cancel-docItem icon-remove pull-right" rel="tooltip" data-original-title="Cancel"></i></td>
             {{else}}
                 <td>
-                    <a href="#">{{title}}</a>
+                    <a href="#" class="docItem">{{title}}</a>
                 </td>
                 <td><i class="edit-docItem icon-edit pull-right" rel="tooltip" data-original-title="Edit"></i></td>
                 <td><i class="remove-docItem icon-remove pull-right" rel="tooltip" data-original-title="Delete File"></i></td>

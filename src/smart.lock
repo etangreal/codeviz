@@ -4,10 +4,10 @@
     "basePackages": {
       "iron-router": {},
       "typescript-libs": {},
-      "famono": {},
       "sharejs": {},
       "jquery-ui": {},
-      "jquery-ui-bootstrap": {}
+      "jquery-ui-bootstrap": {},
+      "famono": {}
     },
     "packages": {
       "iron-router": {
@@ -19,11 +19,6 @@
         "git": "https://github.com/orefalo/meteor-typescript-libs.git",
         "tag": "v0.1.16",
         "commit": "9838eec81baf55ddf038d85c5ccc3172730ef0b0"
-      },
-      "famono": {
-        "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.3.14",
-        "commit": "5aa3ff0eccceb6031b2d5c553d597d76dc489a31"
       },
       "sharejs": {
         "git": "https://github.com/mizzao/meteor-sharejs.git",
@@ -39,6 +34,11 @@
         "git": "https://github.com/TimHeckel/meteor-jquery-ui-bootstrap.git",
         "tag": "v0.1.2",
         "commit": "fa742a85639307003e105898e15b631394b63509"
+      },
+      "famono": {
+        "git": "https://github.com/raix/Meteor-famono.git",
+        "tag": "v0.3.16",
+        "commit": "7642dde4587c7d5dea788b866265c57d99da2d32"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

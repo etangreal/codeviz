@@ -5,9 +5,9 @@
 
 	_________________________________________________________________________________________________
 	# install VIRTUALBOX & VAGRANT using: brew install
-	#
-	#	TITLE: Docker Cheat Sheet
-	# 	URL: gist.github.com/wsargent/7049221
+
+	ARTICLE: Docker Cheat Sheet
+	    URL: gist.github.com/wsargent/7049221
 
 # -------------------------------------------------------------------------------------------------
 # VIRTUALBOX
@@ -26,6 +26,49 @@
 	www.vagrantup.com/downloads.html
 
 	CMD\> vagrant --version
+
+# -------------------------------------------------------------------------------------------------
+# NODE-JS
+# -------------------------------------------------------------------------------------------------
+
+	www.nodejs.org
+	nodejs.org/download
+
+	brew install node
+	brew install npm
+
+# -------------------------------------------------------------------------------------------------
+# ZMQ (ZERO-MESSAGE-QUEUE)
+# -------------------------------------------------------------------------------------------------
+
+	zeromq.org
+
+	brew install --universal zeromq
+
+	# -------------------------------------------------------------------------------------------------
+	# ZeroRPC
+	# -------------------------------------------------------------------------------------------------
+
+	ARTICLE: Communicating between node.js and Python
+	    URL: ianhinsdale.com/code/2013/12/08/communicating-between-nodejs-and-python
+	    URL: zerorpc.dotcloud.com
+		
+	NodeJS-ZeroRPC
+		www.npmjs.org/package/zerorpc
+	
+		npm install zeropc
+
+	Python-ZeroRPC
+
+		pip install zerorpc
+
+# -------------------------------------------------------------------------------------------------
+# METEOR
+# -------------------------------------------------------------------------------------------------
+
+	meteor.com
+
+	curl https://install.meteor.com/ | sh
 
 # -------------------------------------------------------------------------------------------------
 # GOOGLE APPENGINE

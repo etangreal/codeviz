@@ -61,9 +61,10 @@
 	mrt add jquery-ui
 	mrt add jquery-ui-bootstrap
 
+	mrt add npm
+
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	REFERENCES
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# METEOR-REFERENCES
 
 	# atmospherejs.com/package/famono
 
@@ -81,7 +82,44 @@
 
 	# DON'T ADD: typescript-compiler doesn't work ...
 	# mrt add typescript-compiler
-	
+
+	# ARTICLE: meteorhacks.com/complete-npm-integration-for-meteor.html
+	# 	  URL: atmospherejs.com/package/npm
+	#	  URL: github.com/arunoda/meteor-npm
+	#
+	# 	mrt add npm
+
+<ALTERNATIVE-INSTALL>
+
+	# URL: www.npmjs.org/package/meteor-npm
+	#
+	# 	npm install -g meteor-npm
+	# 	meteor-npm
+
+	_________________________________________________________________________________________________
+	# OTHER-INSTALLS
+
+	npm update npm -g
+
+	pip install zerorpc
+
+	cd codeviz/src/server
+	npm install zerorpc
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# OTHER-INSTALLS-REFERENCES
+
+	# zerorpc.dotcloud.com
+	# www.npmjs.org/package/zerorpc
+
+	_________________________________________________________________________________________________
+	# MAC-INSTALLS
+
+	sudo easy_install pip
+
+	brew upgrade node
+	npm update npm -g
+
 # -------------------------------------------------------------------------------------------------
 # END
 # -------------------------------------------------------------------------------------------------
