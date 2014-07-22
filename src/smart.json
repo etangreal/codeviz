@@ -5,6 +5,7 @@
     "sharejs": {},
     "jquery-ui": {},
     "jquery-ui-bootstrap": {},
-    "famono": {}
+    "famono": {},
+    "npm": {}
   }
 }

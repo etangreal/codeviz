@@ -89,7 +89,7 @@
 	#
 	# 	mrt add npm
 
-<ALTERNATIVE-INSTALL>
+	<ALTERNATIVE-INSTALL>
 
 	# URL: www.npmjs.org/package/meteor-npm
 	#
@@ -99,12 +99,21 @@
 	_________________________________________________________________________________________________
 	# OTHER-INSTALLS
 
-	npm update npm -g
+	sudo npm update npm -g
 
 	pip install zerorpc
-
-	cd codeviz/src/server
 	npm install zerorpc
+
+	_________
+	# gevent:
+		www.gevent.org
+
+		# Tutorials:
+			www.gevent.org/intro.html
+			sdiehl.github.io/gevent-tutorial
+
+		# Installation:
+			pip install greenlet
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	# OTHER-INSTALLS-REFERENCES
@@ -117,7 +126,6 @@
 
 	sudo easy_install pip
 
-	brew upgrade node
 	npm update npm -g
 
 # -------------------------------------------------------------------------------------------------

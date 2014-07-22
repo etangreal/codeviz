@@ -97,7 +97,6 @@ Meteor.startup(function() {
 		//console.log('navbar.button-execute.js | _onClick');
 
 		var id = _getDocumentId.call(this);
-
 		Meteor.call('executeCode', id);
 
 		//self.waitToVisualizeMode();
@@ -108,51 +107,12 @@ Meteor.startup(function() {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function executeCode (code,backendScript,backendOptions,onSuccess) { 
-		var self = Index.prototype;
-		var id = _getDocItemId();
+	function _executeCode (code,backendScript,backendOptions,onSuccess) { 
+		Meteor.call('executeCode', id);
 
-		code = code || self.getCode();
-		backendScript = backendScript || self.getBackendScript();
-		backendOptions = backendOptions || self.getBackendOptions();
-		onSuccess = onSuccess || self.onExecuteCodeSuccess;
-
-		if ( code == "" ) {
-			alert('Type in some code to visualize.');
-			return;
-		}
-
-		var data = {
-			user_script : code,
-			raw_input_json: '',
-			options_json: JSON.stringify(backendOptions)
-		};
-
-		$.get(backendScript,data,onSuccess,"json");
-	};
-
-	// -----------------------------------------------------------------------------------------------------------------
-
-	function onExecuteCodeSuccess(data) {
-		// var self = Index.prototype;
-
-		// if ( !self.checkExecutionCodeData(data) ) {
-		// 	alert("Invalid data received from the server.");
-		// 	return;
+		// if (!data) {
+		// 	_onExecutecodeFailed()
 		// }
-
-		// var trace = data.trace;
-		// var exception = trace[trace.length-1];
-		// var isException = ( exception.event == 'uncaught_exception' );
-
-		// if (isException) {
-		// 	self.executeCodeFailed(trace, exception);
-		// 	return;
-		// }
-
-		// self.setVisualizer(data);
-		// self.setPythonTutor(data);
-		// self.executeCodeSucceeded();
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
