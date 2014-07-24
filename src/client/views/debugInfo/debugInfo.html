@@ -2,7 +2,67 @@
 <!-- ------------------------------------------------------------------------------------------ -->
 
 <template name="debugInfo">
-    <h1>Debug Info</h1>
+
+    <nav class="navbar navbar-fixed-bottom" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <ul class="nav">
+                    <li class="active">
+                    	 <a href="#id-div-traceInfo" 		data-toggle="tab">Trace</a>
+                    </li>
+                    <li ><a href="#id-div-stackInfo" 		data-toggle="tab">Stack</a></li>
+                    <li ><a href="#id-div-stackHtmlInfo" 	data-toggle="tab">{html}</a></li>
+                    <li ><a href="#id-div-heapInfo" 		data-toggle="tab">Heap</a></li>
+                    <li ><a href="#id-div-HtmlInfo" 		data-toggle="tab">{html}</a></li>
+                    <li ><a href="#id-div-layoutInfo" 		data-toggle="tab">Layout</a></li>
+                    <li ><a href="#id-div-referencesInfo" 	data-toggle="tab">Refs</a></li>
+                </ul>
+            </div>
+
+        </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+	
+	<!-- Debug Tab Content -->
+    <div id="id-div-debugInfo" class="tab-content affix">
+
+        <!-- TRACE INFO -->
+        <div id="id-div-traceInfo" class="div-debugInfo wrap tab-pane active">
+            <textarea id="id-textArea-traceInfo" class="textarea" readonly>{{traceInfo}}</textarea>
+        </div>
+
+        <!-- STACK INFO -->
+        <div id="id-div-stackInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-stackInfo" class="textarea" readonly>{{stackInfo}}</textarea>
+        </div>
+
+        <!-- STACK HTML INFO -->
+        <div id="id-div-stackHtmlInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-stackHtmlInfo" class="textarea" readonly>{{stackHtml}}</textarea>
+        </div>
+
+        <!-- HEAP INFO -->
+        <div id="id-div-heapInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-heapInfo" class="textarea" readonly>{{heapInfo}}</textarea>
+        </div>
+
+        <!-- HEAP HTML INFO -->
+        <div id="id-div-heapHtmlInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-heapHtmlInfo" class="textarea" readonly>{{heapHtml}}</textarea>
+        </div>
+
+        <!-- LAYOUT INFO -->
+        <div id="id-div-layoutInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-layoutInfo" class="textarea" readonly>{{layoutInfo}}</textarea>
+        </div>
+
+        <!-- REFERENCES INFO -->
+        <div id="id-div-referencesInfo" class="div-debugInfo wrap tab-pane">
+            <textarea id="id-textArea-referencesInfo" class="textarea" readonly>{{referencesInfo}}</textarea>
+        </div>
+
+    </div><!-- /debug tab content-->
+
 </template>
 
 <!-- ------------------------------------------------------------------------------------------ -->

@@ -77,7 +77,9 @@ if (Meteor.isServer) {
 			var res = _rpcExecuteCode(user_script, raw_input_json, options_json);
 			var data = _getData(res);
 
-			_processTrace(data);
+			var snapshots = _processTrace(data);
+
+			_save(id, snapshots);
 
 		} catch(e) {
 			console.log('ERROR: methods.js | Meteor.methods | executeCode\n\t' + e.message);
@@ -85,6 +87,13 @@ if (Meteor.isServer) {
 		}
 
 	}//executeCode
+
+	// -----------------------------------------------------------------------------------------------------------------
+
+	function _save(id, snapshots) {
+		console.log('id: ', id)
+		console.log('snapshot: ', snapshots[0]);
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 
@@ -98,13 +107,9 @@ if (Meteor.isServer) {
 		visualizer = new Visualizer();
 		visualizer.processTrace(trace,code);
 
-		var s = visualizer.getSnapshot(3);
+		var snapshots = visualizer.getSnapshots();
 
-		console.log(s);
-
-		// ToDo: setVisualizer(data);
-		// ToDo: setPythonTutor(data);
-		// ToDo: executeCodeSucceeded();
+		return snapshots;
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------

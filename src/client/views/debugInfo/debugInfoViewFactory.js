@@ -19,7 +19,7 @@ this.DebugInfoViewFactory = {
             template: Template.debugInfo,
             size: [undefined, undefined],
             properties: {
-                backgroundColor: 'white'
+                backgroundColor: 'lightgrey'
             }
         });
 
