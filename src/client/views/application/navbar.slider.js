@@ -16,15 +16,19 @@ Meteor.startup(function() {
 	navbar = this.navbar || {};
 
 	navbar.slider = {
+
+		// initialize
 		init: _initSlider,
 	
 		// events
-		onSlide: undefined,
-		// value		
+		onSlide: _onSlide,
+
+		// value
 		get: _getSliderValue,
 		set: _setSliderValue,
 		reset: _resetSlider,
-		//ui
+
+		// ui
 		enable: _enableSlider,
 		disable: _disableSlider
 	};
@@ -61,7 +65,7 @@ Meteor.startup(function() {
 	  		min: 0, 
 	  		max: size-1, 
 	  		step: 1,
-	  		animate: 'fast',
+	  		// animate: 'fast',
 			slide: function( evt, ui ) { 
 				if (navbar.slider.onSlide) 
 					navbar.slider.onSlide(evt,ui); 
@@ -88,10 +92,10 @@ Meteor.startup(function() {
 	// -----------------------------------------------------------------------------------------------------------------
 
 	function _onSlide(evt, ui) { 
-		// var i = ui.value;
+		var i = ui.value;
 
-		if (onProgress)
-			onProgress(evt,ui);
+		//console.log('slider: ', i);
+		Session.set('ssn_sliderValue', i);
 
 		if (evt.originalEvent) {
 			// if this value was changed pragmatically, then evt.originalEvent will be undefined

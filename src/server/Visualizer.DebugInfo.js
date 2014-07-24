@@ -1,4 +1,8 @@
 
+// --------------------------------------------------------------------------------------------------------------------
+// VISUALIZER (CONSTRUCTOR)
+// --------------------------------------------------------------------------------------------------------------------
+
 Visualizer = function Visualizer() {
   var self = this;
 
@@ -7,6 +11,8 @@ Visualizer = function Visualizer() {
   self.clearCode();
 }
 
+// --------------------------------------------------------------------------------------------------------------------
+// IS-VERBOSE | CONSOLE DEBUGGING
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isVerbose = function() {
@@ -60,7 +66,7 @@ Visualizer.prototype.getDebugInfo = function(i) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// FUNCTIONS | DEBUG-INFO-EXTRACTION
+// EXTRACT-TRACE-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractTraceInfo = function(traceEntry, i) {
@@ -133,6 +139,8 @@ Visualizer.prototype.getTabs = function(count) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// EXTRACT-REFERENCES-INFO
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractReferencesInfo = function(snapshot) {
   if (snapshot == undefined || snapshot.references == undefined || snapshot.referencesInfo == undefined) {
@@ -149,6 +157,8 @@ Visualizer.prototype.extractReferencesInfo = function(snapshot) {
     }
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// EXTRACT-PLUMBING-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractPlumbingInfo = function(snapshot) {
@@ -168,6 +178,8 @@ Visualizer.prototype.extractPlumbingInfo = function(snapshot) {
     }
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// EXTRACT-COORDINATE-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractCoordinateInfo = function(snapshot) {
@@ -192,6 +204,8 @@ Visualizer.prototype.extractCoordinateInfo = function(snapshot) {
     }//for
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// EXTRACT-LAYOUT-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractLayoutInfo = function(snapshot,TB) {

@@ -69,7 +69,7 @@ if (Meteor.isServer) {
 			_checkIsValidId(id);
 
 			var doc = _getDoc(id);
-			
+
 			var user_script = _getCode(doc);
 			var raw_input_json = '';
 			var options_json = JSON.stringify( _getBackendOptions() );
@@ -79,7 +79,7 @@ if (Meteor.isServer) {
 
 			var snapshots = _processTrace(data);
 
-			_save(id, snapshots);
+			_saveSnapshot(id, snapshots);
 
 		} catch(e) {
 			console.log('ERROR: methods.js | Meteor.methods | executeCode\n\t' + e.message);
@@ -90,9 +90,27 @@ if (Meteor.isServer) {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function _save(id, snapshots) {
-		console.log('id: ', id)
-		console.log('snapshot: ', snapshots[0]);
+	function _saveSnapshot(id, snapshots) {
+
+		Documents.update(id, { 
+			$set: { snapshots: snapshots }
+		});
+
+		// Posts.update({
+		// 	_id: postId,
+		// 	upvoters: {$ne: user._id}
+		// },{
+		// 	$addToSet: {upvoters: user._id},
+		// 	$inc: {votes: 1}
+		// });
+
+		// Documents.update({
+		// 	_id: this._id
+		// },{
+		// 	$set: {title: title}
+		// });
+
+		// Posts.update(comment.postId, {$inc: {commentsCount: 1}});
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -107,9 +125,7 @@ if (Meteor.isServer) {
 		visualizer = new Visualizer();
 		visualizer.processTrace(trace,code);
 
-		var snapshots = visualizer.getSnapshots();
-
-		return snapshots;
+		return visualizer.getSnapshots();
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------

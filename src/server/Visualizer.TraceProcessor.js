@@ -24,22 +24,44 @@ Visualizer.prototype.processTrace = function(trace, code) {
     var snapshot = self.newSnapshot(i);
     var stack = snapshot.stack;
 
-    snapshot.traceInfo  = self.extractTraceInfo( entry, i );                      //traceInfo
-    snapshot.meta = self.extractSnapshotMeta( entry );                            //snapshot <- meta data
+    //TRACE
+    snapshot.traceInfo  = self.extractTraceInfo( entry, i );           //extract the debug info on the trace
+    snapshot.meta = self.extractSnapshotMeta( entry );                 //snapshot <- meta data
 
-    stack.push( self.extractGlobalFrame( entry, i ) );                            //stack <- global frame
-    snapshot.stack = stack.concat( self.processStack( entry, i ) );               //stack <- stack frames
+    //STACK
+    stack.push( self.extractGlobalFrame( entry, i ) );                 //stack <- global frame
+    snapshot.stack = stack.concat( self.processStack( entry, i ) );    //stack <- stack frames
+    snapshot.render.stackInfo();                                       //render (i.e. 'extract') the debug info of the stack
 
-    snapshot.heap  = self.processHeap( entry, i );                                //heap
+    //HEAP
+    snapshot.heap  = self.processHeap( entry, i );                     //heap <- all heap objects
+    snapshot.render.heapInfo();                                        //render (i.e 'extract') the debug info of the heap
 
-    me.registerSnapshotReferences( snapshot );                                    //references (aka: registry)
-    me.registerSnapshotPlumbing( snapshot );                                      //plumbing   (aka: edges)
+    //REFERENCES
+    me.registerSnapshotReferences( snapshot );                         //populate the references registry
+    self.extractReferencesInfo( snapshot );                            //extract the debug info of the references
 
-    // self.prerenderHtml( snapshot );                                               //pre-renders: stack & frame
+    //PLUMBING
+    me.registerSnapshotPlumbing( snapshot );                           //populate the plumbing registry (used to draw the references)
+    self.extractPlumbingInfo( snapshot );                              //extract the debug info of the plumbing registry
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TODO: on the CLIENT-SIDE ...
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // stackHtml (after creating the html layout)
+    // heapHtml (after creating the heap layout)
+    // layoutInfo (after calculating the layout)
+
+    // self.prerenderHtml( snapshot );                                 //pre-renders: stack & frame html
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     snapshots.push( snapshot );
-  });
-};
+
+  });// _.each(trace, function(entry, i, list)
+
+};//Visualizer.prototype.processTrace
 
 // --------------------------------------------------------------------------------------------------------------------
 // PROCESS | SNAPSHOT META-DATA

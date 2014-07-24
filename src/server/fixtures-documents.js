@@ -67,7 +67,7 @@ var readFile = function (filename) {
   // .meteor/local/build/programs/server      <== ROOT-DIRECTORY
   // .meteor/local/build/programs/client/app
 
-  var CLIENT = '../client/app/'
+  var CLIENT = '../client/app/';
   var filepath = CLIENT + filename;
 
   var file = fs.readFileSync(filepath, 'utf8');
@@ -83,6 +83,7 @@ var insertDocument = function(title, filepath) {
     var id = Documents.insert({
       title: title,
       filepath: filepath,
+      snapshots: []
     });
 
     return id;

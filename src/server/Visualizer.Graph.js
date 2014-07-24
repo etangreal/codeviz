@@ -44,6 +44,7 @@ Visualizer.prototype.newSnapshot = function(id) {
     , render: {
           stackInfo: function(TB)   { return snapshot.stackInfo = me.renderStackAsText(snapshot.stack, TB || "");  } //Visualizer.Renderer.Text.js
         , heapInfo: function(TB)    { return snapshot.heapInfo = me.renderHeapAsText(snapshot.heap, TB || "");     } //Visualizer.Renderer.Text.js
+
         , layoutInfo: function(TB)  { return snapshot.layoutInfo = me.extractLayoutInfo(snapshot, TB || "" );      } //Visualizer.DebugInfo.js
 
         , stackHtml: function(TB)   { return snapshot.stackHtml = me.renderStackAsHtml(snapshot.stack, TB || "");  } //Visualizer.Renderer.Html.js

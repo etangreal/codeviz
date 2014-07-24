@@ -96,6 +96,23 @@
 	# 	npm install -g meteor-npm
 	# 	meteor-npm
 
+	# ARTICLE: Installing/Using Phantom.js with Meteor
+	#	  URL: stackoverflow.com/questions/23812163/installing-using-phantom-js-with-meteor
+	#	(for version info check)
+	#	  URL: www.npmjs.org/package/phantomjs
+
+		$ mrt add npm
+		
+		# in packages.json add:
+		{
+			"phantomjs": "1.9.7-6"
+		}
+
+		# to uses:
+		var phantomjs = Meteor.require('phantomjs');
+
+		
+
 	_________________________________________________________________________________________________
 	# OTHER-INSTALLS
 
