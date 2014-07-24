@@ -5,8 +5,8 @@
 
 this.EditorViewFactory = {
 
-	docListSurface: function(classes) {
-	
+	docListView: function(classes) {
+
 		var classes = classes || [];
 		var WIDTH = 220;
 
@@ -55,6 +55,23 @@ this.EditorViewFactory = {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
+	editorView: function() {
+
+		var editor = new Famous.MeteorSurface({
+            template: Template.editor,
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'white'
+            }
+        });
+
+        return editor;
+	},
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// TESTS
+	// -----------------------------------------------------------------------------------------------------------------
+
 	docListViewTest: function() {
 
 		var view = new Famous.View();
@@ -64,12 +81,14 @@ this.EditorViewFactory = {
             size: [300, 300]
         });
 		
-		var docList = this.docListSurface(['div-docList-test']);
+		var docList = this.docListView(['div-docList-test']);
 
 		view.add(mod).add(docList);
 
 		return view;
 	}
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 }//EditorViewFactory
 

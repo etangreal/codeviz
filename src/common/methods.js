@@ -31,14 +31,10 @@ Meteor.methods({
 });//Meteor.methods
 
 // -----------------------------------------------------------------------------------------------------------------
-// METEOR.IS-CLIENT
+// DECLARATIONS
 // -----------------------------------------------------------------------------------------------------------------
 
-if (Meteor.isClient) {
-	
-	function _executeCode(id) {}
-
-}
+function _executeCode(id) {} //dummy declaration - just to satisfy meteor
 
 // -----------------------------------------------------------------------------------------------------------------
 // METEOR.IS-SERVER
@@ -80,26 +76,31 @@ if (Meteor.isServer) {
 
 			var res = _rpcExecuteCode(user_script, raw_input_json, options_json);
 			var data = _getData(res);
-			var trace = _getTrace(data);
 
-			_processTrace(data,trace);
+			_processTrace(data);
 
 		} catch(e) {
 			console.log('ERROR: methods.js | Meteor.methods | executeCode\n\t' + e.message);
+			console.log('STACK-TRACE:', e.stack);
 		}
 
 	}//executeCode
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function _processTrace(data,trace) {
+	function _processTrace(data) {
 
-		var exception = trace[trace.length-1];
+		var trace = _getTrace(data);
+		var code = data.code;
 
-		if (exception.event == 'uncaught_exception')
-			return _traceException(trace, exception);
+		if ( _checkIsTraceException(trace) ); //ToDo: Handle the exception...
 
-		console.log(trace);
+		visualizer = new Visualizer();
+		visualizer.processTrace(trace,code);
+
+		var s = visualizer.getSnapshot(3);
+
+		console.log(s);
 
 		// ToDo: setVisualizer(data);
 		// ToDo: setPythonTutor(data);
@@ -108,7 +109,13 @@ if (Meteor.isServer) {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function _traceException(trace, exception) {
+	function _checkIsTraceException(trace) {
+
+		var exception = trace[trace.length-1];
+
+		if (exception.event != 'uncaught_exception')
+			return false;
+
 		console.log('INFO: _traceException | Code execution returned an exception.');
 		console.log('INFO: _traceException | exception: ', exception);
 		console.log('INFO: _traceException | code: ', trace.code);
@@ -123,7 +130,7 @@ if (Meteor.isServer) {
 			console.error('INFO: _traceException | Unknown Exception.');
 		}
 
-		return false;
+		return true;
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -132,7 +139,7 @@ if (Meteor.isServer) {
 		var isTrace = (data && data.trace && data.trace.length > 0);
 
 		if(!isTrace)
-			throw 'Meteor.methods | executeCode:_checkData | invalid Trace. data: ' + data;
+			throw ' _checkData | invalid Trace. data: ' + data;
 
 		return data.trace;
 	}

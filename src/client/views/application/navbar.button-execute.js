@@ -117,44 +117,10 @@ Meteor.startup(function() {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	function checkExecutionCodeData(data) {
-		// var isData = (data !== undefined);
-		// var isTrace = (data.trace !== undefined && data.trace.length > 0);
-
-		// var isOK = (isData && isTrace);
-		// if(!isOK)
-		// 	console.error("ERROR: executeCode => onSuccess => checkData: invalid data received from server.");
-
-		// return isOK;
-	};
-
-	// -----------------------------------------------------------------------------------------------------------------
-
 	function onExecuteCodeSucceeded() { 
 		// var self = Index.prototype;
 		// $(document).scrollTop(0);
 		// self.visualizeMode();
-	};
-
-	// -----------------------------------------------------------------------------------------------------------------
-
-	//TODO: Fix this, its not working yet ...
-	function onExecuteCodeFailed(trace, exception) {
-		// var self = Index.prototype;
-
-		// console.log("code execution failed.\n", trace.code);
-
-		// self.highlightTraceException(trace);
-		// $(document).scrollTop(0);
-		// self.editMode();
-
-		// if ( exception.hasOwnProperty('exception_msg') ) {
-		// 	alert(exception['exception_msg']);
-		// 	console.error("Exception message:\n",exception['exception_msg']);
-		// } else {
-		// 	alert("Unknown Exception.");
-		// 	console.error("Unknown Exception.");
-		// }
 	};
 
 	// -----------------------------------------------------------------------------------------------------------------

@@ -151,51 +151,65 @@ Meteor.startup(function() {
 
     function _createEditorCanvasSection() {
 
+        var initialRatios = [true, 3, true, 2];
+
+        var layout = new Famous.FlexibleLayout({
+            ratios : initialRatios
+        });
+
         var surfaces = [];
+        layout.sequenceFrom(surfaces);
 
-        var OPEN = '->';
-        var CLOSED = '<-';
-        var TRANSITION = {curve: 'easeOut', duration: 300};
-        var INITIAL_RATIOS = [true, 3, true, 2];
-        var FINAL_RATIOS = [true, 0, true, 1];
+        // -------------------------------------------------------------------------------------------------------------
 
-        var divBtnTxt = CLOSED;
+        var docList = EditorViewFactory.docListView();
+        var editor = EditorViewFactory.editorView()
+        var divider = _divider(layout, initialRatios);
+        var canvas = _canvas();
+        var debugInfo = DebugInfoViewFactory.debugInfoView();
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        surfaces.push(docList);
+        surfaces.push(editor);
+        surfaces.push(divider);
+        surfaces.push(debugInfo);
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        return {
+            default: layout,
+            layout: layout,
+            surfaces: surfaces
+        }
+
+    }//_createEditorCanvasSection
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // divider: serves as a divider-container (for the divider & divider-button) between the editor and canvas
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _divider(layout, initialRatios) {
+
+        var open = '->';
+        var closed = '<-';
+        var transition = {curve: 'easeOut', duration: 300};
+
+        var finalRatios = [true, 0, true, 1];
+
+        var divBtnTxt = closed;
         var toggle = false;
 
         // -------------------------------------------------------------------------------------------------------------
 
-        var layout = new Famous.FlexibleLayout({
-            ratios : INITIAL_RATIOS
-        });
-
-        // -------------------------------------------------------------------------------------------------------------
-
-//        var editor = new Famous.Surface({
-//            size: [undefined, undefined],
-//            properties: {
-//                backgroundColor: 'white'
-//            }
-//        });
-
-        var docList = EditorViewFactory.docListSurface();
-
-        var editor = new Famous.MeteorSurface({
-            template: Template.editor,
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: 'white'
-            }
-        });
-
-        // -------------------------------------------------------------------------------------------------------------
-
-        //divider-container: serves as a container for the divider & divider-button
-        var divCon = new Famous.ContainerSurface({
+        var divider = new Famous.ContainerSurface({
             size: [20, undefined]
 //            properties: {
 //                overflow: 'hidden'
 //            }
         });
+
+        // -------------------------------------------------------------------------------------------------------------
 
         //divider: placed in the divider-container to serve as a background
         var div = new Famous.Surface({
@@ -205,10 +219,14 @@ Meteor.startup(function() {
             }
         });
 
+        // -------------------------------------------------------------------------------------------------------------
+
         //divider-button-modifier: used to modify the divider-button's position
         var divBtnMod = new Famous.Modifier({
             transform: Famous.Transform.translate(0, 350, 0)
         });
+
+        // -------------------------------------------------------------------------------------------------------------
 
         //divider button: used to open/close the editor panel
         var divBtn = new Famous.Surface({
@@ -220,24 +238,32 @@ Meteor.startup(function() {
             }
         });
 
-        divCon.add(div);
-        divCon.add(divBtnMod).add(divBtn);
+        divider.add(div);
+        divider.add(divBtnMod).add(divBtn);
 
         // -------------------------------------------------------------------------------------------------------------
 
         // Toggle state between 0 and 1
         function toggleState() {
-            var ratios = toggle ? INITIAL_RATIOS : FINAL_RATIOS;
-            divBtn.setContent(toggle ? CLOSED : OPEN);
-            layout.setRatios(ratios, TRANSITION);
+            var ratios = toggle ? initialRatios : finalRatios;
+            divBtn.setContent(toggle ? closed : open);
+            layout.setRatios(ratios, transition);
             toggle = !toggle;
         }
+
+        // -------------------------------------------------------------------------------------------------------------
 
         div.on('click', toggleState);
         divBtn.on('click', toggleState);
 
         // -------------------------------------------------------------------------------------------------------------
 
+        return divider;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _canvas() {
         var canvas = new Famous.Surface({
             size: [undefined, undefined],
             properties: {
@@ -245,24 +271,8 @@ Meteor.startup(function() {
             }
         });
 
-        // -------------------------------------------------------------------------------------------------------------
-
-        surfaces.push(docList);
-        surfaces.push(editor);
-        surfaces.push(divCon);
-        surfaces.push(canvas);
-
-        layout.sequenceFrom(surfaces);
-
-        // -------------------------------------------------------------------------------------------------------------
-
-        return {
-            default: layout,
-            layout: layout,
-            surfaces: surfaces
-        }
-
-    }//_createEditorCanvasSection
+        return canvas;
+    }
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
