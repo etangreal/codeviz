@@ -81,7 +81,22 @@ Template.debugInfo.referencesInfo = function() {
 	var snapshots = Session.get('ssn_snapshots');
 	var snapshot = (snapshots && idx < snapshots.length) ? snapshots[idx]  : undefined ;
 
-	var referencesInfo = (snapshot) ? snapshot.referencesInfo : 'no-referencesInfo. idx: ' + idx;
+	if (snapshot)
+	  var refInfo =
+	      "-----------------------------------------------------\n" +
+	      "REFERENCES INFO"                                  + "\n" +
+	      "-----------------------------------------------------\n" +
+	      snapshot.referencesInfo                            + "\n" +
+	      "-----------------------------------------------------\n" +
+	      "PLUMBING INFO"                                    + "\n" +
+	      "-----------------------------------------------------\n" +
+	      snapshot.plumbingInfo                              + "\n" +
+	      "-----------------------------------------------------\n" +
+	      "COORDINATE INFO"                                  + "\n" +
+	      "-----------------------------------------------------\n" +
+	      snapshot.coordinateInfo                            + "\n";
+
+	var referencesInfo = (snapshot) ? refInfo : 'no-referencesInfo. idx: ' + idx;
 	return referencesInfo;
 };
 
