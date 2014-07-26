@@ -1,9 +1,12 @@
 
 // --------------------------------------------------------------------------------------------------------------------
-// RENDER
+// RENDER TEXT
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderStackAsText = function(stack, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
@@ -11,8 +14,10 @@ Visualizer.prototype.renderStackAsText = function(stack, TB) {
   var text = "";
 
   stack.forEach( function(frame) {
+    frame.text = me.renderFrameAsText(frame, TB);
+
     text += TB + "-----------------------------------------------------------" + Br;
-    text += frame.render.text(TB);
+    text += frame.text;
   });
 
   return text;
@@ -31,7 +36,8 @@ Visualizer.prototype.renderFrameAsText = function(frame,TB) {
   var locals = "";
 
   frame.locals.forEach( function(node) {
-    locals += node.render.text(TB+Tb+Tb);
+    node.text = me.renderNodeAsText(node, TB+Tb+Tb);
+    locals += node.text;
   });
 
   var meta = frame.meta;
@@ -78,6 +84,9 @@ Visualizer.prototype.renderFrameAsText = function(frame,TB) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderHeapAsText = function(heap, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
@@ -85,7 +94,8 @@ Visualizer.prototype.renderHeapAsText = function(heap, TB) {
   var objects = "";
 
   heap.forEach( function(heapObj) {
-    objects += heapObj.render.text(TB+Tb);
+    heapObj.text = me.renderNodeAsText(heapObj, TB+Tb);
+    objects += heapObj.text;
   });
 
   var heapInfo =
@@ -100,6 +110,9 @@ Visualizer.prototype.renderHeapAsText = function(heap, TB) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderNodeAsText = function(node, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
@@ -108,7 +121,7 @@ Visualizer.prototype.renderNodeAsText = function(node, TB) {
       TB + Tb +       "inherits: "  + node.inherits + Br;
 
   var draw = node.draw;
-  var pos = TB + Tb + Tb +      "{x:"+draw.position.x + ", y:"+draw.position.y+"}";
+  var pos = TB + Tb + Tb +    "{x:"+draw.position.x + ", y:"+draw.position.y+"}";
   var drawInfo =
           TB + Tb +       "Draw { "                        +
                               "uid: " + draw.uid           + Br +
@@ -134,4 +147,6 @@ Visualizer.prototype.renderNodeAsText = function(node, TB) {
   return nodeInfo;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// END
 // --------------------------------------------------------------------------------------------------------------------

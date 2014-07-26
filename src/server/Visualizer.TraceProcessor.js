@@ -24,44 +24,46 @@ Visualizer.prototype.processTrace = function(trace, code) {
     var snapshot = self.newSnapshot(i);
     var stack = snapshot.stack;
 
-    //TRACE
-    snapshot.traceInfo  = self.extractTraceInfo( entry, i );           //extract the debug info on the trace
+    // TRACE
+    snapshot.traceInfo  = self.extractTraceInfo( entry, i );           //extract the trace debug info on the current trace entry
     snapshot.meta = self.extractSnapshotMeta( entry );                 //snapshot <- meta data
 
-    //STACK
+    // STACK
     stack.push( self.extractGlobalFrame( entry, i ) );                 //stack <- global frame
     snapshot.stack = stack.concat( self.processStack( entry, i ) );    //stack <- stack frames
-    snapshot.render.stackInfo();                                       //render (i.e. 'extract') the debug info of the stack
+    self.extractStackInfo(snapshot);                                   //extract the stack debug info of the current snapshot
 
-    //HEAP
+    // HEAP
     snapshot.heap  = self.processHeap( entry, i );                     //heap <- all heap objects
-    snapshot.render.heapInfo();                                        //render (i.e 'extract') the debug info of the heap
+    self.extractHeapInfo(snapshot);                                    //extract the heap debug info of the current snapshot
 
-    //REFERENCES
+    // REFERENCES
     me.registerSnapshotReferences( snapshot );                         //populate the references registry
     self.extractReferencesInfo( snapshot );                            //extract the debug info of the references
 
-    //PLUMBING
+    // PLUMBING
     me.registerSnapshotPlumbing( snapshot );                           //populate the plumbing registry (used to draw the references)
     self.extractPlumbingInfo( snapshot );                              //extract the debug info of the plumbing registry
 
     // -----------------------------------------------------------------------------------------------------------------
-    // TODO: on the CLIENT-SIDE ...
+    // ToDo: ...
     // -----------------------------------------------------------------------------------------------------------------
+
+    // self.prerenderHtml( snapshot );                                 //pre-renders: stack & frame html
 
     // stackHtml (after creating the html layout)
     // heapHtml (after creating the heap layout)
-    // layoutInfo (after calculating the layout)
 
-    // self.prerenderHtml( snapshot );                                 //pre-renders: stack & frame html
+    // LAYOUT (after calculating the layout)
+    //snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
 
     // -----------------------------------------------------------------------------------------------------------------
 
     snapshots.push( snapshot );
 
-  });// _.each(trace, function(entry, i, list)
+  });// _.each(trace ...
 
-};//Visualizer.prototype.processTrace
+};//processTrace
 
 // --------------------------------------------------------------------------------------------------------------------
 // PROCESS | SNAPSHOT META-DATA
@@ -583,7 +585,7 @@ Visualizer.prototype.newFrameNode = function(nodeInfo, id, name) {
   var self = this;
 
   var node = self.newNode( id );
-      node.render.location = NodeLocationTypeEnum.STACK;
+      node.location = NodeLocationTypeEnum.STACK;
       node.name = name;
 
   if ( me.isRefObj( nodeInfo ) ) {
@@ -621,7 +623,7 @@ Visualizer.prototype.newHeapNode = function( heapObj, id, sid ) {
   
   var node = self.newNode( id, sid );
       node.type = heapObj[0];                 //the first element is always the type
-      node.render.location = NodeLocationTypeEnum.HEAP;
+      node.location = NodeLocationTypeEnum.HEAP;
 
   var values = [];
       _.extend(values, heapObj);  //true=>deep-copy

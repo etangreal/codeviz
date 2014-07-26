@@ -66,23 +66,30 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	# METEOR-REFERENCES
 
+	===============================================================================================
 	# atmospherejs.com/package/famono
 
+	===============================================================================================
 	# atmospherejs.com/package/bootstrap-3
 	# atmospherejs.com/package/accounts-ui-bootstrap-3
 	
+	===============================================================================================
 	# atmospherejs.com/package/sharejs
 	# github.com/mizzao/meteor-sharejs
 
+	===============================================================================================
 	# atmospherejs.com/package/jquery-ui
 	# github.com/TimHeckel/meteor-jquery-ui
 
+	===============================================================================================
 	# atmospherejs.com/package/jquery-ui-bootstrap
 	# github.com/TimHeckel/meteor-jquery-ui-bootstrap
 
+	===============================================================================================
 	# DON'T ADD: typescript-compiler doesn't work ...
 	# mrt add typescript-compiler
 
+	===============================================================================================
 	# ARTICLE: meteorhacks.com/complete-npm-integration-for-meteor.html
 	# 	  URL: atmospherejs.com/package/npm
 	#	  URL: github.com/arunoda/meteor-npm
@@ -96,22 +103,37 @@
 	# 	npm install -g meteor-npm
 	# 	meteor-npm
 
+	===============================================================================================
 	# ARTICLE: Installing/Using Phantom.js with Meteor
 	#	  URL: stackoverflow.com/questions/23812163/installing-using-phantom-js-with-meteor
-	#	(for version info check)
+
+	#	phantomjs (MOST POPULAR ON NPM)
 	#	  URL: www.npmjs.org/package/phantomjs
 
 		$ mrt add npm
 		
 		# in packages.json add:
 		{
-			"phantomjs": "1.9.7-6"
+			"phantomjs": "1.9.7-15"
 		}
 
 		# to uses:
 		var phantomjs = Meteor.require('phantomjs');
 
+	<ALTERNATIVE>
+
+	#	phantom (MOST STARS ON GITHUB)
+	#		URL: www.npmjs.org/package/phantom
+
+		$ mrt add npm
 		
+		# in packages.json add:
+		{
+			"phantom": "0.6.5"
+		}
+
+		# to uses:
+		var phantom = Meteor.require('phantom');
 
 	_________________________________________________________________________________________________
 	# OTHER-INSTALLS
@@ -131,11 +153,15 @@
 		# Installation:
 			pip install greenlet
 
+	sudo brew update && brew install phantomjs
+
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	# OTHER-INSTALLS-REFERENCES
 
 	# zerorpc.dotcloud.com
 	# www.npmjs.org/package/zerorpc
+
+	# phantomjs.org/download.html
 
 	_________________________________________________________________________________________________
 	# MAC-INSTALLS

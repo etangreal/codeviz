@@ -40,7 +40,7 @@ Template.debugInfo.stackHtml = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.debugInfo.heapInfo = function() {
-	
+
 	var idx = Session.get('ssn_sliderValue') || 0;
 	var snapshots = Session.get('ssn_snapshots');
 	var snapshot = (snapshots && idx < snapshots.length) ? snapshots[idx]  : undefined ;

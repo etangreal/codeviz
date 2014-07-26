@@ -1,51 +1,5 @@
 
 // --------------------------------------------------------------------------------------------------------------------
-// RENDER HMTL
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.showHtml = function(currSnapshot,prevSnapshot) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  // --------------------------------------------------------------------------
-
-  if (prevSnapshot) {
-
-    var prevHeap = prevSnapshot.heap;
-    var prevStack = prevSnapshot.stack;
-
-    prevStack.forEach( function(frame) {
-      $("#" + frame.draw.uid).hide();
-    });
-
-    prevHeap.forEach(function(heapObj) {
-      $("#"+heapObj.draw.uid).hide();
-    });
-
-  }
-
-  // --------------------------------------------------------------------------
-
-  if (currSnapshot) {
-
-    var currStack = currSnapshot.stack;
-    var currHeap = currSnapshot.heap;
-
-    currStack.forEach( function(frame) {
-      $("#" + frame.draw.uid).show();
-    });
-
-    currHeap.forEach(function(heapObj) {
-      $("#"+heapObj.draw.uid).show();
-    });
-
-  }
-
-  // --------------------------------------------------------------------------
-
-};//showHtml
-
-// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderHtml = function(snapshots, canvas) {
   var me = Visualizer.prototype;
@@ -93,7 +47,7 @@ Visualizer.prototype.renderHtml = function(snapshots, canvas) {
 
 };//renderHtml
 
-// --------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.layoutHtml = function(snapshot) {
   var me = Visualizer.prototype;
@@ -140,15 +94,16 @@ Visualizer.prototype.layoutHtml = function(snapshot) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.prerenderHtml = function(snapshot) {
+Visualizer.prototype.prerenderHtml = function(snapshot, TB) {
   var me = Visualizer.prototype;
   var self = this;
 
+  TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
 
-  snapshot.stackHtml = snapshot.render.stackHtml();
-  snapshot.heapHtml = snapshot.render.heapHtml();
+  snapshot.stackHtml = me.renderStackAsHtml(snapshot.stack, TB);
+  snapshot.heapHtml = me.renderHeapAsHtml(snapshot.heap, TB);
 
   snapshot.html =
       '<div class="_snapshot">'     + Br +
@@ -158,155 +113,7 @@ Visualizer.prototype.prerenderHtml = function(snapshot) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// PLUMBING (jsPlumb)
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.doPlumbing = function(snapshots) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  jsPlumb.ready(function() {
-
-    snapshots.forEach(function(snapshot) {
-      self.doPlumbingForSnapshot(snapshot);
-    });
-
-  });//ready
-
-};//doPlumbing
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.doPlumbingForSnapshot = function(snapshot) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  jsPlumb.ready(function() {
-
-    var plumbing = snapshot.plumbing;
-
-    for (var key in plumbing)
-      if (plumbing.hasOwnProperty(key) ) {
-        var from = key;
-        var tos = plumbing[key];
-
-        tos.forEach( function(to) {
-          self.connectPlumbing(from,to);
-        });
-      }
-
-  });//ready
-
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.connectPlumbing = function(from, to) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if (from == undefined || to == undefined) {
-    console.error("ERROR: PlumbingConnection => from/to undefined.");
-    return;
-  }
-
-  var plumber = self.getPlumber();
-  var connector = self.getPlumbingConnector();
-  var container = self.getVisualizerCanvas();
-
-  plumber.connect({
-      source: from
-    , target: to
-    , container: container
-  } , connector );
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.initPlumber = function() {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  var brightRed = '#e93f34';
-  var connectorBaseColor = '#005583';
-  var connectorHighlightColor = brightRed;
-
-  if (self._plumber !== undefined)
-    console.error("ERROR: initPlumber => plumber is already defined!");
-
-  self._plumber = jsPlumb.getInstance({
-      Endpoint: [ "Dot", {radius:3} ]
-    , EndpointStyles: [ {fillStyle: connectorBaseColor}, {fillstyle: null} /* make right endpoint invisible */ ]
-    , Anchors: [ "RightMiddle", "LeftMiddle" ]
-    , PaintStyle: { lineWidth:1, strokeStyle: connectorBaseColor }
-    , Connector: [ "StateMachine" ]
-    , Overlays: [
-        [ "Arrow", { length: 10, width:7, foldback:0.55, location:1 } ]
-    ]
-    , EndpointHoverStyles: [ { fillStyle: connectorHighlightColor }, {fillstyle: null} /* make right endpoint invisible */ ]
-    , HoverPaintStyle: { lineWidth: 1, strokeStyle: connectorHighlightColor }
-  });
-
-  jsPlumb.Defaults.Container = self.getVisualizerCanvas();
-
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.getPlumber = function() {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if (self._plumber == undefined) {
-    console.error("ERROR: getPlumber => plumber was not initialized.");
-    self.initPlumber();
-  }
-
-  return self._plumber;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.getPlumbingConnector = function() {
-  var stateMachineConnector = {
-    connector: "StateMachine"
-    , paintStyle: { lineWidth:1, strokeStyle:"#056" }
-    , hoverPaintStyle: { strokeStyle:"#dbe300" }
-    , anchors: ["LeftMiddle", "LeftMiddle"]
-    , endpoint: ["Dot", {radius: 4}]
-    , anchor: "Continuous"
-
-    , overlays:[ ["PlainArrow", {location:1, width:5, length:12} ]]
-  };
-
-  return stateMachineConnector;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CONTROL FLOW : RENDER NODE
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.renderNodeAsHtml = function(node, TB) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if (node.render.location == NodeLocationTypeEnum.UNDEFINED) {
-    console.error("ERROR: renderNodeAsHtml => node location undefined");
-    return '<div>LOCATION UNDEFINED</div>'
-  }
-
-  if (node.render.location == NodeLocationTypeEnum.STACK)
-    return self.renderFrameNodeAsHtml(node,TB);
-
-  if (node.render.location == NodeLocationTypeEnum.HEAP)
-    return self.renderHeapNodeAsHtml(node,TB);
-
-  console.error("ERROR: renderNodeAsHtml => unknown node location.");
-  return '<div>UNKNOWN NODE</div>';
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// STACK : FRAMES
+// RENDER | STACK
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderStackAsHtml = function(stack, TB) {
@@ -317,8 +124,10 @@ Visualizer.prototype.renderStackAsHtml = function(stack, TB) {
   var html = TB + '<div class="_stack">' + Br;
 
   stack.forEach(function(frame) {
+    frame.html = me.renderFrameAsHtml(frame, TB+Tb);
+
     html += TB + "<!-------------------------------------------------------->" + Br;
-    html += frame.render.html(TB+Tb);
+    html += frame.html;
   });
 
   html += TB + '</div><!-- stack -->' + Br;
@@ -326,7 +135,9 @@ Visualizer.prototype.renderStackAsHtml = function(stack, TB) {
   return html;
 };
 
-// ---- render stack : frame ------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | STACK-FRAME
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderFrameAsHtml = function(frame,TB) {
   var me = Visualizer.prototype;
@@ -339,7 +150,8 @@ Visualizer.prototype.renderFrameAsHtml = function(frame,TB) {
   var locals = "";
 
   frame.locals.forEach( function(node) {
-    locals += node.render.html(TB+Tb+Tb+Tb);
+    node.html = self.renderFrameNodeAsHtml(node, TB+Tb+Tb+Tb);
+    locals += node.html;
   });
 
   var table =
@@ -353,7 +165,7 @@ Visualizer.prototype.renderFrameAsHtml = function(frame,TB) {
   var frameHtml =
           TB +      '<div id="'+duid+'" class="'+cls+'">'                                 + Br +
           TB +      '<table>'                                                             + Br +
-          TB + Tb +     '<tr><td><div class="_fname">' + frame.name + '</div></td></tr>'   + Br +
+          TB + Tb +     '<tr><td><div class="_fname">' + frame.name + '</div></td></tr>'  + Br +
           TB + Tb +     '<tr><td>'                                                        + Br +
                             table                                                         +
           TB + Tb +     '</td></tr>'                                                      + Br +
@@ -363,7 +175,9 @@ Visualizer.prototype.renderFrameAsHtml = function(frame,TB) {
   return frameHtml;
 };
 
-// ---- render stack : frame : node -----------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | STACK-FRAME | NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderFrameNodeAsHtml = function(node, TB) {
   var me = Visualizer.prototype;
@@ -389,7 +203,7 @@ Visualizer.prototype.renderFrameNodeAsHtml = function(node, TB) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// HEAP
+// RENDER | HEAP
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderHeapAsHtml = function(heap, TB) {
@@ -403,8 +217,10 @@ Visualizer.prototype.renderHeapAsHtml = function(heap, TB) {
     if (heapObj.type == NodeTypeEnum.NONE)
       return;
 
+    heapObj.html = self.renderHeapNodeAsHtml(heapObj, TB+Tb);
+
     heapInfo += TB + "<!-------------------------------------------------------->" + Br;
-    heapInfo += heapObj.render.html(TB+Tb);
+    heapInfo += heapObj.html;
   });
 
   heapInfo += TB + '</div><!-- heap -->' + Br;
@@ -412,7 +228,9 @@ Visualizer.prototype.renderHeapAsHtml = function(heap, TB) {
   return heapInfo;
 };
 
-// --- control flow: render heap node ---------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// FLOW CONTROL | RENDER | HEAP NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderHeapNodeAsHtml = function(node, TB) {
   var me = Visualizer.prototype;
@@ -451,7 +269,9 @@ Visualizer.prototype.renderHeapNodeAsHtml = function(node, TB) {
   return me.renderUnknownNodeAsHtml(node, TB);
 };
 
-// --- heap nodes -----------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | EMPTY NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderEmptyNodeAsHtml = function() {
   console.warn("WARNING: renderEmptyNodeAsHtml => we have an empty node. This was unexpected.");
@@ -463,6 +283,8 @@ Visualizer.prototype.renderEmptyNodeAsHtml = function() {
   return '<div id="'+uid+'" class="'+cls+'">Unknown Node</div>'+ Br;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | REFERENCE NODE
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) {
@@ -501,6 +323,8 @@ Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) {
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | FUNCTION NODE
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) {
@@ -543,6 +367,8 @@ Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) {
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | CLASS NODE
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
@@ -590,6 +416,8 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// RENDER | INSTANCE NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) {
   var me = Visualizer.prototype;
@@ -629,6 +457,8 @@ Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// RENDER | LIST NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) {
   var me = Visualizer.prototype;
@@ -664,6 +494,8 @@ Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) {
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | TUPLE NODE
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
@@ -723,6 +555,8 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// RENDER | SET NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) {
   var me = Visualizer.prototype;
@@ -759,6 +593,8 @@ Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// RENDER | DICTIONARY NODE
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) {
   var me = Visualizer.prototype;
@@ -794,6 +630,8 @@ Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) {
   return nodeHtml;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// RENDER | ERROR | UNKNOWN NODE
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderUnknownNodeAsHtml = function( node, TB ) {
@@ -913,3 +751,29 @@ String.prototype.toDomElement = function () {
 // --------------------------------------------------------------------------------------------------------------------
 // END
 // --------------------------------------------------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------------------------------------------------------
+// FLOW CONTROL | STACK ? HEAP | RENDER NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+/** /
+Visualizer.prototype.renderNodeAsHtml = function(node, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  if (node.location == NodeLocationTypeEnum.UNDEFINED) {
+    console.error("ERROR: renderNodeAsHtml => node location undefined");
+    return '<div>LOCATION UNDEFINED</div>'
+  }
+
+  if (node.location == NodeLocationTypeEnum.STACK)
+    return self.renderFrameNodeAsHtml(node,TB);
+
+  if (node.location == NodeLocationTypeEnum.HEAP)
+    return self.renderHeapNodeAsHtml(node,TB);
+
+  console.error("ERROR: renderNodeAsHtml => unknown node location.");
+  return '<div>UNKNOWN NODE</div>';
+};
+/**/

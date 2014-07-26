@@ -12,7 +12,7 @@ Visualizer = function Visualizer() {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-// IS-VERBOSE | CONSOLE DEBUGGING
+// IS-VERBOSE | TRUE => DEBUGGING TO CONSOLE 
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.isVerbose = function() {
@@ -20,53 +20,7 @@ Visualizer.prototype.isVerbose = function() {
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-// DebugInfo: UI
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.getDebugInfo = function(i) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if ( !self.isValidSnapshotIndex(i) )
-    return {
-      traceInfo: 'invalid-index',
-      stackInfo: 'invalid-index',
-       heapInfo: 'invalid-index',
-      stackHtml: 'invalid-index',
-       heapHtml: 'invalid-index',
-     layoutInfo: 'invalid-index',
-        refInfo: 'invalid-index'
-    };
-
-  var snapshot = self.getSnapshot(i);
-  var refInfo =
-      "-----------------------------------------------------\n" +
-      "REFERENCES INFO"                                  + "\n" +
-      "-----------------------------------------------------\n" +
-      snapshot.referencesInfo                            + "\n" +
-      "-----------------------------------------------------\n" +
-      "PLUMBING INFO"                                    + "\n" +
-      "-----------------------------------------------------\n" +
-      snapshot.plumbingInfo                              + "\n" +
-      "-----------------------------------------------------\n" +
-      "COORDINATE INFO"                                  + "\n" +
-      "-----------------------------------------------------\n" +
-      snapshot.coordinateInfo                            + "\n";
-
-  return {
-    traceInfo: snapshot.traceInfo,
-    stackInfo: snapshot.stackInfo,
-     heapInfo: snapshot.heapInfo,
-    stackHtml: snapshot.stackHtml,
-     heapHtml: snapshot.heapHtml,
-   layoutInfo: snapshot.layoutInfo,
-      refInfo: refInfo
-  };
-
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// EXTRACT-TRACE-INFO
+// EXTRACT | TRACE-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractTraceInfo = function(traceEntry, i) {
@@ -139,7 +93,35 @@ Visualizer.prototype.getTabs = function(count) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// EXTRACT-REFERENCES-INFO
+// EXTRACT | STACK-INFO
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.extractStackInfo = function(snapshot, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  TB = TB || "";
+
+  //Visualizer.Renderer.Text.js
+  snapshot.stackInfo = me.renderStackAsText(snapshot.stack, TB);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// EXTRACT | HEAP-INFO
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.extractHeapInfo = function(snapshot, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  TB = TB || "";
+
+  //Visualizer.Renderer.Text.js
+  snapshot.heapInfo = me.renderHeapAsText(snapshot.heap, TB);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+// EXTRACT | REFERENCES-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractReferencesInfo = function(snapshot) {
@@ -158,7 +140,7 @@ Visualizer.prototype.extractReferencesInfo = function(snapshot) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// EXTRACT-PLUMBING-INFO
+// EXTRACT | PLUMBING-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractPlumbingInfo = function(snapshot) {
@@ -179,7 +161,7 @@ Visualizer.prototype.extractPlumbingInfo = function(snapshot) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// EXTRACT-COORDINATE-INFO
+// EXTRACT | COORDINATE-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractCoordinateInfo = function(snapshot) {
@@ -205,22 +187,30 @@ Visualizer.prototype.extractCoordinateInfo = function(snapshot) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// EXTRACT-LAYOUT-INFO
+// EXTRACT | LAYOUT-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractLayoutInfo = function(snapshot,TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  TB = TB || "";
   var Br = "\n";
 
   var layoutInfo = "";
 
   snapshot.stack.forEach( function(frame) {
+    frame.layoutInfo = me.extractFrameLayoutInfo(frame, TB);
+
     layoutInfo += TB + "-----------------------------------------------------------" + Br;
-    layoutInfo += frame.render.layoutInfo();
+    layoutInfo += frame.layoutInfo;
   });
 
   snapshot.heap.forEach( function(heapObj) {
+    heapObj.layoutInfo = me.extractNodeLayoutInfo(node, TB);
+
     layoutInfo += TB + "-----------------------------------------------------------" + Br;
-    layoutInfo += heapObj.render.layoutInfo();
+    layoutInfo += heapObj.layoutInfo;
   });
 
   return layoutInfo;
