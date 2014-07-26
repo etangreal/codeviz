@@ -117,6 +117,9 @@ Visualizer.prototype.prerenderHtml = function(snapshot, TB) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderStackAsHtml = function(stack, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
@@ -207,6 +210,9 @@ Visualizer.prototype.renderFrameNodeAsHtml = function(node, TB) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderHeapAsHtml = function(heap, TB) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";
@@ -649,6 +655,9 @@ Visualizer.prototype.renderUnknownNodeAsHtml = function( node, TB ) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.nodeValuesAsHtmlTable = function( values, TB ) {
+  var me = Visualizer.prototype;
+  var self = this;
+
   TB = TB || "";
   var Br = "\n";
   var Tb = "\t";

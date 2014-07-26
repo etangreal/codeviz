@@ -4,11 +4,15 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 // TB => Tab Spaces
-Visualizer.prototype.prerenderSnapshot = function(snapshot, TB) {
+Visualizer.prototype.prerender = function(snapshot, TB) {
   var me = Visualizer.prototype;
   var self = this;
 
 	TB = TB || "";
+
+  //Visualizer.Renderer.Text.js
+  snapshot.stackInfo = me.renderStackAsText(snapshot.stack, TB);
+  snapshot.heapInfo = me.renderHeapAsText(snapshot.heap, TB);
 
 	//Visualizer.Renderer.Html.js
 	snapshot.stackHtml = me.renderStackAsHtml(snapshot.stack, TB);

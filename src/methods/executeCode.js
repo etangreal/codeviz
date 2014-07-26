@@ -9,8 +9,9 @@ Meteor.methods({
 		if (Meteor.isClient) { console.log('client: executeCode'); }
 
 		if (Meteor.isServer) {
-			console.log('server: calling _executeCode');
+			console.log('server: CALL _executeCode');
 			_executeCode(id);
+			console.log('server: _executeCode DONE.');
 		}
 	}
 

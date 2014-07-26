@@ -21,6 +21,7 @@ Visualizer.prototype.processTrace = function(trace, code) {
   var snapshots = self.getSnapshots();
 
   _.each(trace, function(entry, i, list) {
+
     var snapshot = self.newSnapshot(i);
     var stack = snapshot.stack;
 
@@ -31,11 +32,11 @@ Visualizer.prototype.processTrace = function(trace, code) {
     // STACK
     stack.push( self.extractGlobalFrame( entry, i ) );                 //stack <- global frame
     snapshot.stack = stack.concat( self.processStack( entry, i ) );    //stack <- stack frames
-    self.extractStackInfo(snapshot);                                   //extract the stack debug info of the current snapshot
+    //self.extractStackInfo(snapshot);                                   //extract the stack debug info of the current snapshot
 
     // HEAP
     snapshot.heap  = self.processHeap( entry, i );                     //heap <- all heap objects
-    self.extractHeapInfo(snapshot);                                    //extract the heap debug info of the current snapshot
+    //self.extractHeapInfo(snapshot);                                    //extract the heap debug info of the current snapshot
 
     // REFERENCES
     me.registerSnapshotReferences( snapshot );                         //populate the references registry
@@ -45,20 +46,14 @@ Visualizer.prototype.processTrace = function(trace, code) {
     me.registerSnapshotPlumbing( snapshot );                           //populate the plumbing registry (used to draw the references)
     self.extractPlumbingInfo( snapshot );                              //extract the debug info of the plumbing registry
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // ToDo: ...
-    // -----------------------------------------------------------------------------------------------------------------
+    // RENDER
+    self.prerender( snapshot );                                         //pre-renders: stack & frame -> text & html
 
-    // self.prerenderHtml( snapshot );                                 //pre-renders: stack & frame html
+    // LAYOUT 
+    // calculate the layout
+    // snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
 
-    // stackHtml (after creating the html layout)
-    // heapHtml (after creating the heap layout)
-
-    // LAYOUT (after calculating the layout)
-    //snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
-
-    // -----------------------------------------------------------------------------------------------------------------
-
+    // PUSH
     snapshots.push( snapshot );
 
   });// _.each(trace ...
