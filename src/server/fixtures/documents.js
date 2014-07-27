@@ -67,8 +67,9 @@ var readFile = function (filename) {
   // .meteor/local/build/programs/server      <== ROOT-DIRECTORY
   // .meteor/local/build/programs/client/app
 
-  var CLIENT = '../client/app/';
-  var filepath = CLIENT + filename;
+  //var CLIENT = '../client/app/';
+  var PRIVATE = 'assets/app/'
+  var filepath = PRIVATE + filename;
 
   var file = fs.readFileSync(filepath, 'utf8');
 
