@@ -24,13 +24,29 @@ Meteor.startup(function() {
         //Famous.Engine.pipe(this.controller);
 
         this.appView = new AppView();
+        this.docListTestView = EditorViewFactory.docListTestView();
 
         this.controller.add(this.appView);
-        this.controller.show(this.appView);
-
-        // this.docListViewTest = EditorViewFactory.docListViewTest();
-        // this.controller.add(this.docListViewTest);
+        this.controller.add(this.docListTestView);
     }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// FUNCTIONS
+// --------------------------------------------------------------------------------------------------------------------
+
+Application.prototype.hide = function() {
+    this.controller.show(null);
+}
+
+Application.prototype.showAppView = function() {
+    this.controller.show(this.appView);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+Application.prototype.showDocListTestView = function() {
+    this.controller.show(this.docListTestView);
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

@@ -26,19 +26,8 @@ Router.map(function() {
         path: '/',
         template: 'blank',
         onBeforeAction: function () {
-
-        }
-    });
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // EDITOR
-    // -----------------------------------------------------------------------------------------------------------------
-
-    this.route(Route.editor, {
-        //path: '/editor',
-        template: 'blank',
-        onBeforeAction: function () {
-
+            application.showAppView();
+            
         }
     });
 
@@ -50,7 +39,7 @@ Router.map(function() {
         //path: '/about',
         template: 'blank',
         onBeforeAction: function () {
-
+            applicaiton.hide();
         }
     });
 
@@ -62,7 +51,7 @@ Router.map(function() {
         // path: '/test',
         template: 'blank',
         onBeforeAction: function () {
-            //application.controller.show(appContext.docListViewTest)
+            application.hide();
         }
     });
 
@@ -71,10 +60,10 @@ Router.map(function() {
     // -----------------------------------------------------------------------------------------------------------------
 
     this.route(Route.docList, {
-        path: '/test/' + Route.docList,
-        template: 'docList',
+        // path: '/' + Route.docList,
+        template: 'blank',
         onBeforeAction: function () {
-            
+            application.showDocListTestView();
         }
     });
 

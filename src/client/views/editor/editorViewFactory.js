@@ -10,7 +10,7 @@ this.EditorViewFactory = {
 	 editorView: _editorView,
 
 	//TEST-VIEWS
-	docListViewTest: _docListViewTest
+	docListTestView: _docListTestView
 
 }//EditorViewFactory
 
@@ -86,12 +86,12 @@ function _editorView() {
 // TEST VIEW FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _docListViewTest() {
+function _docListTestView() {
 
 	var view = new Famous.View();
 
     var mod = new Famous.Modifier({
-        origin: [.5, .5],
+        origin: [.5, 0],
         size: [300, 300]
     });
 	
