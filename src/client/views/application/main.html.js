@@ -30,25 +30,26 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-home': function(e,t) {
-        Router.go(Route.home);
+        // Router.go(Route.home);
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-editor': function(e,t) {
-        Router.go(Route.editor);
+        // Router.go(Route.editor);
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-about': function(e,t) {
-        Router.go(Route.about);
+        // Router.go(Route.about);
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-test': function(e,t) {
-        Meteor.call('phantomTest', Session.get('ssn_documents._id'));
+        Router.go(Route.docList);
+        // Meteor.call('phantomTest', Session.get('ssn_documents._id'));
     },
 
     // -----------------------------------------------------------------------------------------------------------------

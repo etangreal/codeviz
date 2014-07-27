@@ -45,8 +45,6 @@ Meteor.startup(function() {
 function _initExecuteButton() {
 	var button = _getExecuteButton();
 
-	//navbar.btnExecute.context = function() { return this }.bind(this);
-
 	button.on('click', function() {
 		if (navbar.btnExecute.onClick)
 			navbar.btnExecute.onClick();
