@@ -1,9 +1,47 @@
 
-if(CONSOLE_LOG_ROUTES) 
-    console.log('LOADING: src/client/views/application/main.html.js');
+// ---------------------------------------------------------------------------------------------------------------------
+// NAVBAR | HELPERS
+// ---------------------------------------------------------------------------------------------------------------------
+
+Template.navbar.helpers({
+    
+    isFiles: function() { 
+        var active = Session.get('ssn_isFiles');
+        return active && 'active';
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    isEditor: function() {
+        var active = Session.get('ssn_isEditor');
+        return active && 'active';
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    isVisualizer: function() {
+        var active = Session.get('ssn_isVisualizer');
+        return active && 'active';
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    isPythonTutor: function() {
+        var active = Session.get('ssn_isPythonTutor');
+        return active && 'active';
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    isDebugInfo: function() {
+        var active = Session.get('ssn_isDebugInfo');
+        return active && 'active';
+    }
+
+}); //Template.navbar.helpers
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE: NAVBAR:
+// NAVBAR | RENDERED
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.navbar.rendered = function() {
@@ -29,20 +67,43 @@ Template.header.events({
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    'click #id-btn-codeviz': function(e,t) {
+        Router.go(Route.home);
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
     'click #id-btn-files': function(e,t) {
-        // Router.go(Route.home);
+        var active = Session.get('ssn_isFiles');
+        Session.set('ssn_isFiles', !active);
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-editor': function(e,t) {
-        // Router.go(Route.editor);
+        var active = Session.get('ssn_isEditor');
+        Session.set('ssn_isEditor', !active);
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    'click #id-btn-about': function(e,t) {
-        // Router.go(Route.about);
+    'click #id-btn-visualizer': function(e,t) {
+        var active = Session.get('ssn_isVisualizer');
+        Session.set('ssn_isVisualizer', !active);
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-pythonTutor': function(e,t) {
+        var active = Session.get('ssn_isPythonTutor');
+        Session.set('ssn_isPythonTutor', !active);
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    'click #id-btn-debugInfo': function(e,t) {
+        var active = Session.get('ssn_isDebugInfo');
+        Session.set('ssn_isDebugInfo', !active);
     },
 
     // -----------------------------------------------------------------------------------------------------------------

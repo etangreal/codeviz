@@ -66,7 +66,7 @@ function _createHeaderSection(layout) {
 
 function _createContentSection() {
 
-    var initialRatios = [true, 3, true, 2];
+    var initialRatios = [true, 3, 1,true, 2];
 
     var flexLayout = new Famous.FlexibleLayout({
         ratios : initialRatios
@@ -78,7 +78,8 @@ function _createContentSection() {
     // -------------------------------------------------------------------------------------------------------------
 
     var docList = EditorViewFactory.docListView();
-    var editor = EditorViewFactory.editorView()
+    var editor = EditorViewFactory.editorView();
+    var visualizer = VisualizerViewFactory.visualizerView();
     var divider = _divider(flexLayout, initialRatios);
     var debugInfo = DebugInfoViewFactory.debugInfoView();
 
@@ -86,6 +87,7 @@ function _createContentSection() {
 
     surfaces.push(docList);
     surfaces.push(editor);
+    surfaces.push(visualizer);
     surfaces.push(divider);
     surfaces.push(debugInfo);
 
@@ -127,7 +129,7 @@ function _divider(flexLayout, initialRatios) {
     var closed = '<-';
     var transition = {curve: 'easeOut', duration: 300};
 
-    var finalRatios = [true, 0, true, 1];
+    var finalRatios = [true, 0, 1, true, 1];
 
     var divBtnTxt = closed;
     var toggle = false;

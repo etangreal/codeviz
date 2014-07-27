@@ -27,23 +27,23 @@
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
 <template name="navbar">
-	<a class="brand" href="#">CodeViz</a>
+	<a id="id-btn-codeviz" class="brand" href="#">CodeViz</a>
 
-	<ul class="nav">
+	<ul class="nav nav-pills">
 
-		<li><a id="id-btn-files" href="#">Files</a></li>
+		<li class="{{isFiles}}"><a id="id-btn-files" href="#">Files</a></li>
 
-		<li><a id="id-btn-editor" href="#">Editor</a></li>
+		<li class="{{isEditor}}"><a id="id-btn-editor" href="#">Editor</a></li>
 
-		<li><a id="id-btn-visualizer" href="#">Visualizer</a></li>
+		<li class="{{isVisualizer}}"><a id="id-btn-visualizer" href="#">Visualizer</a></li>
 
-		<li><a id="id-btn-pythonTutor" href="#">Python-Tutor</a></li>
+		<li class="{{isPythonTutor}}"><a id="id-btn-pythonTutor" href="#">Python-Tutor</a></li>
 
-		<li><a id="id-btn-debugInfo" href="#">Debug-Info</a></li>
-
-		<!-- <li><a id="id-btn-test" href="#">Test</a></li> -->
+		<li class="{{isDebugInfo}}"><a id="id-btn-debugInfo" href="#">Debug-Info</a></li>
 
 		<li class="divider-vertical"></li>
+
+		<li><a id="id-btn-test" href="#">Test</a></li>
 
 		<li><a id="id-btn-execute" href="#">Execute</a></li>
 
