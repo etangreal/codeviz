@@ -29,7 +29,7 @@ Template.header.events({
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    'click #id-btn-home': function(e,t) {
+    'click #id-btn-files': function(e,t) {
         // Router.go(Route.home);
     },
 
@@ -55,7 +55,7 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-execute': function(e,t) {
-        //navbar.btnExecute.onClick.call(this);
+        //SEE: main.navbar.btnExecute.js | _onClick();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

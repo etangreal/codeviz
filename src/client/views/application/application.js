@@ -21,11 +21,12 @@ Meteor.startup(function() {
         this.controller = new Famous.RenderController();
 
         this.mainContext.add(this.controller);
-        //Famous.Engine.pipe(this.controller);
 
+        //VIEWS
         this.appView = new AppView();
         this.docListTestView = EditorViewFactory.docListTestView();
 
+        //ADD-VIEW-TO-CONTROLLER
         this.controller.add(this.appView);
         this.controller.add(this.docListTestView);
     }
