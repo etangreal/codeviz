@@ -170,9 +170,6 @@ Visualizer.prototype.newNode = function(id,sid) {
       , offset: {x:0, y:0}
       , width: 0
       , height: 0
-
-      , updateProperties: function() { me.setDrawProperties(node); } //Visualizer.Renderer.js
-      , log: function() { me.logDrawProperties(node); } //Visualizer.Renderer.js
     }
 
     //DEBUG INFO

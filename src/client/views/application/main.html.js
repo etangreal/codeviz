@@ -1,12 +1,12 @@
 
-if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/views/application/main.html.js');
+if(CONSOLE_LOG_ROUTES) 
+    console.log('LOADING: src/client/views/application/main.html.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
 // TEMPLATE: NAVBAR:
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.navbar.rendered = function() {
-    
     navbar.slider.init.call(this,20);
     navbar.btnExecute.init.call(this);
 }
@@ -48,7 +48,7 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-test': function(e,t) {
-        Meteor.call('phantomTest');
+        Meteor.call('phantomTest', Session.get('ssn_documents._id'));
     },
 
     // -----------------------------------------------------------------------------------------------------------------

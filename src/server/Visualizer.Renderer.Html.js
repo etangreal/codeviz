@@ -749,6 +749,9 @@ Visualizer.prototype.asHtmlUID = function(uid, values, verbose) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+//var output = document.getElementById("container");
+//    output.appendChild( html.toDomElement() )
+
 String.prototype.toDomElement = function () {
   var wrapper = document.createElement('div');
   wrapper.className = "toDomWrapper";

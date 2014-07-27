@@ -5,11 +5,12 @@
 
 Meteor.methods({
 
-	phantomTest: function() {
-		if (Meteor.isClient) { console.log('client: phantomTest'); }
+	phantomTest: function(id) {
+		if (Meteor.isClient) { console.log('client: phantomTest. id:', id); }
+
 		if (Meteor.isServer) {
-			console.log('server: calling _phantomTest');
-			_phantomSpawnTest();
+			console.log('server: CALLING => _phantomTest. id: ', id);
+			_phantomSpawnTest(id);
 		}
 	}
 

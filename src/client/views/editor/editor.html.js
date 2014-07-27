@@ -189,26 +189,6 @@ Template.editor.docid = function() {
 
 Template.editor.events({
 
-	'keydown input': function(e) {
-		if (e.keyCode !== 13) return;
-		e.preventDefault();
-
-		$(e.target).blur();
-
-		var id = Session.get('ssn_documentId');
-		var title = e.target.value;
-		Documents.update(id, {title: title});
-	},
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-	'click button': function(e) {
-		e.preventDefault();
-		var id = Session.get('ssn_documentId');
-		Session.set('ssn_documentId', null)
-		Meteor.call('deleteDocument', id);
-	}
-
 });//Template.editor.events
 
 // ---------------------------------------------------------------------------------------------------------------------
