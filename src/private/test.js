@@ -2,38 +2,23 @@
 // ------------------------------------------------------------------------------------------------
 // REQUIRE
 // ------------------------------------------------------------------------------------------------
+var page    = require('webpage').create();
 
-fs = require('fs');
-var page = require('webpage').create();
+var fs      = require('fs');
+var stdin	= require('system').stdin;
+var stdout	= require('system').stdout;
 
 // ------------------------------------------------------------------------------------------------
 // DECLARATIONS
 // ------------------------------------------------------------------------------------------------
 
-var html    = '<html><head></head><body>test<div id="d2">div d2</div></body></html>';
-var file    = '/Users/ernst/PROJECTS/active/codeviz/src/private/test.html';
-var inner   = '<div id="UID80" class="_heap _node _func">testing-text-to-html</div>';
-
-if ( !fs.isFile(file) )
-    console.log('file does not exists.');
-
+var file    = fs.workingDirectory + '/assets/app/test.html';
 var fileUrl = 'file://' + file;
 
-// ------------------------------------------------------------------------------------------------
-// CONFIGURE
-// ------------------------------------------------------------------------------------------------
-
-//page.viewportSize = { width: 800, height : 600 };
-//page.setContent(html,'');
-// page.content = html;
-
-//console.log(page.plainText);
-
-//phantom.injectJs('libs/jquery-1.8.2.min.js');
-//phantom.injectJs('css/style.css');
+var stdinput = stdin.readLine();
 
 // ------------------------------------------------------------------------------------------------
-// EVENTS
+// PAGE | EVENTS
 // ------------------------------------------------------------------------------------------------
 
 page.onConsoleMessage = function(msg) {
@@ -41,202 +26,107 @@ page.onConsoleMessage = function(msg) {
 };
 
 // ------------------------------------------------------------------------------------------------
-
-page.onLoadFinished = function(status) {
-    console.log('onLoadFinished');
-    console.log('page-content: ', page.content);
-};
-
+// FUNCTIONS
 // ------------------------------------------------------------------------------------------------
 
-phantom.onError = function(msg, trace) {
-  var msgStack = ['PHANTOM ERROR: ' + msg];
+var appendHtmlToPage = function(htmlAsText) {
 
-  if (trace && trace.length) {
-    msgStack.push('TRACE:');
-    trace.forEach(function(t) {
-      msgStack.push(' -> ' + (t.file || t.sourceURL) + ': ' + t.line + (t.function ? ' (in function ' + t.function +')' : ''));
-    });
-  }
+	String.prototype.toDomElement = function () {
+		var wrapper = document.createElement('div');
+		wrapper.className = "toDomWrapper";
+		wrapper.innerHTML = this;
 
-  console.error(msgStack.join('\n'));
-  phantom.exit(1);
-};
+		return wrapper;
+	};
 
-// ------------------------------------------------------------------------------------------------
-
-page.onError = function(msg, trace) {
-  var msgStack = ['ERROR: ' + msg];
-
-  if (trace && trace.length) {
-    msgStack.push('TRACE:');
-    trace.forEach(function(t) {
-      msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
-    });
-  }
-
-  console.error(msgStack.join('\n'));
-};
-
-// ------------------------------------------------------------------------------------------------
-// FUNCTION
-// ------------------------------------------------------------------------------------------------
-
-var f1 = function() {
-    console.log('f1');
-
-    var html = '<div>hello world</div>';
-
-    var el = document.createElement('div');
-    el.id = 'myDiv';
-    el.innerHTML = html;
-    el.style.background = 'white';
-    document.body.appendChild(el);
-
-    console.log('f1: ', document.body.textContent);
+	document.body.appendChild( htmlAsText.toDomElement() );
 }
 
 // ------------------------------------------------------------------------------------------------
 
-var f2 = function() {
-    console.log('f2');
+getProperties = function (ids) {
+  
+	var objs = [];
 
-    document.write('<html><head></head><body>bite me :D</body></html>');
-    console.log('f2: ', document.body.textContent);
-}
+	ids.forEach(function(id) {
+
+		var obj = {
+			uid: id
+			, position: {x:0, y:0, z:0}
+			, offset: {x:0, y:0}
+			, width: 0
+			, height: 0
+		};
+
+		var el = $("#"+obj.uid).parent();  //every obj's parent has a div "toDomWrapper"
+
+		if (!el.hasClass("toDomWrapper")) {
+			console.log( 'uid: ', obj.uid, ' | el: ', el.html() );
+
+		} else {
+			obj.width = el.width();
+			obj.height = el.height();
+
+			var pos = el.position();
+			obj.position.x = pos.left;
+			obj.position.y = pos.top;
+
+			var off = el.offset();
+			obj.offset.x = off.left;
+			obj.offset.y = off.top;
+
+			objs.push(obj);
+
+		}//if(!el..)
+	});//ids.forEach
+
+	return JSON.stringify(objs);
+
+};//getDrawProperties
 
 // ------------------------------------------------------------------------------------------------
 
-var f3 = function(args) {
-    console.log('f3');
+var process = function(stdinput) {
 
-    var a = args[0];
-    var b = args[1];
+	var ids = [];
+	var objs = JSON.parse(stdinput);
 
-    console.log(a,b);
+	objs.forEach( function(obj) {
+		page.evaluate(appendHtmlToPage, obj.html);
+		ids.push(obj.uid);
+	});
+  
+  	return ids;
 }
+
 
 // ------------------------------------------------------------------------------------------------
 
-var f4 = function() {
-    console.log('f4');
-
-    var status = 'success';
+var onPageLoaded = function(status) {
     if (status !== 'success') {
         console.log('FAIL to load the address');
-        phantom.exit();
+        phantom.exit(1);
     }
 
-    page.includeJs('libs/jquery-1.8.2.min.js', function() { 
-        console.log('injectJs');
-        //var l = $('#mydiv');
-        //console.log( l.html() );
+    var ids = process(stdinput);
+    var res = page.evaluate(getProperties, ids);
 
-        page.evaluate(function() {
-            console.log('page.evaluate: document-content: ', document.body.textContent);
-        })
+    stdout.writeLine(res);
+    //phantom.exit(0);
 
-        page.render('test.png');
-        phantom.exit();
-    });
-
-    console.log('end-of-f4');
+    window.setTimeout(function () {
+      page.render('test.png');
+      phantom.exit();
+    }, 200);
 }
 
 // ------------------------------------------------------------------------------------------------
-// "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"
-
-f5 = function() {
-    console.log('f5');
-
-    page.includeJs('libs/jquery-1.8.2.min.js', function() {
-        console.log('page.includeJs');
-        var res = page.evaluate(function() {
-            console.log('testing ...');
-            return $('#mydiv').html();
-        });
-
-        console.log('res: ', res);
-        phantom.exit();
-    });
-}
-
+// EXECUTE
 // ------------------------------------------------------------------------------------------------
 
-f6 = function() {
-    console.log('f6');
-
-    var res = page.evaluate(function() {
-        console.log('testing ...');
-        return $('#mydiv').html();
-    });
-
-    console.log('res: ', res);
-    phantom.exit();
-}
-
-// ------------------------------------------------------------------------------------------------
-
-var f7 = function(inner) {
-    console.log('f7');
-
-    var html = '<div>hello world</div>';
-
-    var el = document.createElement('div');
-    el.id = 'myDiv';
-    el.innerHTML = inner;
-    el.style.background = 'white';
-    document.body.appendChild(el);
-
-    console.log('f7: ', document.body.innerHTML);
-}
-
-// ------------------------------------------------------------------------------------------------
-
-var f8 = function(htmlText) {
-    console.log('f8');
-
-    String.prototype.toDomElement = function () {
-        var wrapper = document.createElement('div');
-        wrapper.className = "toDomWrapper";
-        wrapper.innerHTML = this;
-
-        return wrapper;
-    };
-
-    document.body.appendChild( htmlText.toDomElement() );
-
-    console.log('f8: ', document.body.innerHTML);
-}
-
-
-// ------------------------------------------------------------------------------------------------
-// EVALUATE
-// ------------------------------------------------------------------------------------------------
-
-//args = [ 'x51', 'angels' ]
-// page.evaluate(f8, inner);
-// phantom.exit();
-
-page.open(fileUrl, f4);
-
-
-// ------------------------------------------------------------------------------------------------
-// HELPERS
-// ------------------------------------------------------------------------------------------------
-
-//var output = document.getElementById("container");
-//    output.appendChild( html.toDomElement() )
-
-
-
-// ------------------------------------------------------------------------------------------------
-// SUNDRY
-// ------------------------------------------------------------------------------------------------
-
-console.log('end-of-file');
-
+page.open(fileUrl, onPageLoaded);
 
 // ------------------------------------------------------------------------------------------------
 // END
 // ------------------------------------------------------------------------------------------------
+
