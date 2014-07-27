@@ -18,12 +18,12 @@ var serverPath 		= path.resolve('.');
 var projectPath 	= path.resolve('.').split('.meteor')[0];
 var privatePath		= serverPath + '/assets/app/phantomjs/';
 
-/** /
-console.log('phantomBinPath: ', phantomBinPath);
-console.log('    serverPath: ', serverPath);
-console.log('   projectPath: ', projectPath);
-console.log('   privatePath: ', privatePath);
-/**/
+
+// console.log('phantomBinPath: ', phantomBinPath);
+// console.log('    serverPath: ', serverPath);
+// console.log('   projectPath: ', projectPath);
+// console.log('   privatePath: ', privatePath);
+
 
 // --------------------------------------------------------------------------------------------------------------------
 // PUBLIC FUNCTIONS
@@ -155,7 +155,6 @@ function _getNodes(id) {
 	return nodes.slice(0,1);
 
 }//_getNodes
-
 
 // --------------------------------------------------------------------------------------------------------------------
 // END
