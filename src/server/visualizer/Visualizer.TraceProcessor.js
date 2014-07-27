@@ -50,7 +50,8 @@ Visualizer.prototype.processTrace = function(trace, code) {
     self.prerender( snapshot );                                         //pre-renders: stack & frame -> text & html
 
     // LAYOUT 
-    // calculate the layout
+    // ToDo: calculate the layout (on the frontend/browser).
+    // ToDo: extract the layout-info (after calculating the layout)
     // snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
 
     // PUSH
