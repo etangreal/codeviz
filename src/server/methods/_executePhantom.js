@@ -16,7 +16,7 @@ var spawn			= process.spawn;
 var phantomBinPath 	= Meteor.require('phantomjs').path;
 var serverPath 		= path.resolve('.');
 var projectPath 	= path.resolve('.').split('.meteor')[0];
-var privatePath		= serverPath + '/assets/app/';
+var privatePath		= serverPath + '/assets/app/phantomjs/';
 
 /** /
 console.log('phantomBinPath: ', phantomBinPath);

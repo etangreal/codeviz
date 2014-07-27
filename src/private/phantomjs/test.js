@@ -12,7 +12,7 @@ var stdout	= require('system').stdout;
 // DECLARATIONS
 // ------------------------------------------------------------------------------------------------
 
-var file    = fs.workingDirectory + '/assets/app/test.html';
+var file    = fs.workingDirectory + '/assets/app/phantomjs/test.html';
 var fileUrl = 'file://' + file;
 
 var stdinput = stdin.readLine();
