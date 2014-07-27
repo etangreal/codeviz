@@ -12,23 +12,11 @@ Route  = {
     docList : 'docList'
 };
 
-if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js');
-
-// ---------------------------------------------------------------------------------------------------------------------
-// STARTUP
-// ---------------------------------------------------------------------------------------------------------------------
-
-Meteor.startup(function() {
-    if (CONSOLE_LOG_ROUTES) console.log('STARTUP: src/client/config/router-init.js');
-
-});//Meteor.startup
-
 // ---------------------------------------------------------------------------------------------------------------------
 // ROUTER MAP
 // ---------------------------------------------------------------------------------------------------------------------
 
 Router.map(function() {
-    if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/client/config/router-init.js : Router.map');
 
     // -----------------------------------------------------------------------------------------------------------------
     // HOME
@@ -38,7 +26,7 @@ Router.map(function() {
         path: '/',
         template: 'blank',
         onBeforeAction: function () {
-            application.showSection(Route.home);
+
         }
     });
 
@@ -50,7 +38,7 @@ Router.map(function() {
         //path: '/editor',
         template: 'blank',
         onBeforeAction: function () {
-            application.showSection(Route.editor);
+
         }
     });
 
@@ -62,7 +50,7 @@ Router.map(function() {
         //path: '/about',
         template: 'blank',
         onBeforeAction: function () {
-            application.showSection(Route.about);
+
         }
     });
 
@@ -71,11 +59,10 @@ Router.map(function() {
     // -----------------------------------------------------------------------------------------------------------------
 
     this.route(Route.test, {
-        //path: '/test',
+        // path: '/test',
         template: 'blank',
         onBeforeAction: function () {
-            application.hideCurrentSection();
-            appContext.controller.show(appContext.docListViewTest);
+            //application.controller.show(appContext.docListViewTest)
         }
     });
 
@@ -87,7 +74,7 @@ Router.map(function() {
         path: '/test/' + Route.docList,
         template: 'docList',
         onBeforeAction: function () {
-            application.hideCurrentSection();
+            
         }
     });
 
@@ -98,7 +85,7 @@ Router.map(function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 Router.onRun(function() {
-    if(CONSOLE_LOG_ROUTES) console.log('HOOK: src/client/config/router-init.js : Router.onRun');
+
 });
 
 // ---------------------------------------------------------------------------------------------------------------------

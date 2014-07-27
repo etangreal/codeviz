@@ -2,32 +2,43 @@
 Meteor.startup(function() {
 
 // ---------------------------------------------------------------------------------------------------------------------
-// CLASS : AppView
+// FACTORY | Provides general View creation functions
 // ---------------------------------------------------------------------------------------------------------------------
 
-    //Export
-    this.AppView = AppView;
+this.Factory = {
 
-    //Inherit from Famous.View
-    AppView.prototype = Object.create(Famous.View.prototype);
+    Surfaces: {
+        createMeteorSurface: _createMeteorSurface
+    }
 
-    //Constructor Reference
-    AppView.prototype.constructor = AppView;
+};//Factory
 
 // ---------------------------------------------------------------------------------------------------------------------
-// CONSTRUCTOR
+// CREATE METEOR SURFACE
 // ---------------------------------------------------------------------------------------------------------------------
 
-    function AppView() {
+function _createMeteorSurface(template, data, properties) {
 
-        // Call the super class's constructor
-        Famous.View.apply(this, arguments);
+    properties = properties || {
+        backgroundColor: 'lightblue'
+    };
 
-        var headerFooter = AppViewFactory.HeaderFooter();
+    var surface = new Famous.MeteorSurface({
+        size: [undefined, undefined],
+        template: template,
+        data: data,
+        properties: properties
+    });
 
-        this.add(headerFooter);
+    // -----------------------------------------------------------------------------------------------------------------
 
-    }//AppView
+    return {
+        default: surface,
+        modifier: undefined,
+        surface: surface
+    };
+
+}//_createMeteorSurface
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

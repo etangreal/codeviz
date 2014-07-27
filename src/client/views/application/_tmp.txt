@@ -1,0 +1,115 @@
+
+function _createContentController(layout) {
+
+    var controller = new Famous.RenderController();
+
+    // -------------------------------------------------------------------------------------------------------------
+
+    layout.content.add(controller);
+
+    return {
+        //default handle
+        default: controller,
+        controller: controller,
+        modifier: undefined,
+        surface: undefined
+    };
+
+}//_createContent
+
+
+// -----------------------------------------------------------------------------------------------------------------
+// Configuration
+// -----------------------------------------------------------------------------------------------------------------
+
+function _configureAppView(appView) {
+
+    var home = Factory.Surfaces.createMeteorSurface(Template.home).default;
+    var about = Factory.Surfaces.createMeteorSurface(Template.about, {context: 'Example Data'}).default;
+    var editor = Factory.LayoutParts.editorCanvas();
+
+    appView.addSection(Route.home, home);
+    appView.addSection(Route.editor, editor.layout);
+    appView.addSection(Route.about, about);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _canvas() {
+    var canvas = new Famous.Surface({
+        size: [undefined, undefined],
+        properties: {
+            backgroundColor: 'lightgrey'
+        }
+    });
+
+    return canvas;
+}
+
+
+        // -------------------------------------------------------------------------------------------------------------
+        // PUBLIC MEMBERS
+        // -------------------------------------------------------------------------------------------------------------
+
+        //this.layout = headerFooter.layout;
+        //this.contentArea = headerFooter.content;
+
+        // -------------------------------------------------------------------------------------------------------------
+        // PRIVATE MEMBERS
+        // -------------------------------------------------------------------------------------------------------------
+
+        this._currentSection = undefined;
+        this._sections = {};
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// MEMBER FUNCTIONS
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.addSection = function (name, section) {
+        if (!section)
+            console.log('ERROR: AppView.addSection: parameter section is undefined.');
+
+        if ( (name in this._sections) )
+            console.log('WARNING: AppView.addSection: ', name, ' already exists. It is being overridden.');
+
+        this._sections[name] = section;
+
+        return section;
+    };
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.getSection = function (name) {
+        if ( !(name in this._sections) ) {
+            console.log('ERROR: AppView.prototype.section: unknown section name: ', name);
+            return undefined;
+        }
+
+        return this._sections[name];
+    };
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.currentSection = function () {
+        return this._currentSection;
+    };
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.showSection = function (name) {
+        if ( !(name in this._sections) ) {
+            console.log('ERROR: AppView.prototype.show: unknown section name: ', name);
+            return;
+        }
+
+        var surface = this._sections[name];
+        this._currentSection = surface;
+        this.contentArea.show(surface);
+    };
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+    AppView.prototype.hideCurrentSection = function() {
+        this.contentArea.hide();
+    };
