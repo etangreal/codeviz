@@ -1,6 +1,4 @@
 
-Meteor.startup(function() {
-
 // ---------------------------------------------------------------------------------------------------------------------
 // CLASS : AppView
 // ---------------------------------------------------------------------------------------------------------------------
@@ -27,8 +25,8 @@ Meteor.startup(function() {
         //      content{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo },
         //  footer }
         var headerFooter = AppViewFactory.HeaderFooter();
-        var flexLayout = headerFooter.content.flexLayout;
-        var visualizer = headerFooter.content.visualizer;
+        var flexLayout   = headerFooter.content.flexLayout;
+        this.visualizer   = headerFooter.content.visualizer;
 
         State.onToggle = toggleViews.bind(flexLayout);
 
@@ -49,5 +47,3 @@ function toggleViews(ratios) {
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
-
-});//Meteor.startup

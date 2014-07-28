@@ -1,32 +1,37 @@
 
+// --------------------------------------------------------------------------------------------------------------------
+// STARTUP
+// --------------------------------------------------------------------------------------------------------------------
+
 Meteor.startup(function() {
 
-// --------------------------------------------------------------------------------------------------------------------
-// CLASS | Application
-// --------------------------------------------------------------------------------------------------------------------
-
     //Export | Singelton
-    this.application = this.application || new Application();
+    app = this.app || new App();
+
+});//Meteor.startup
+
+// --------------------------------------------------------------------------------------------------------------------
+// CLASS | App
+// --------------------------------------------------------------------------------------------------------------------
 
     //Constructor Reference
-    Application.prototype.constructor = Application;
+    App.prototype.constructor = App;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CONSTRUCTOR
 // --------------------------------------------------------------------------------------------------------------------
 
-    function Application() {
+    function App() {
 
         this.mainContext = famous.core.Engine.createContext();
         this.controller = new famous.views.RenderController();
-
         this.mainContext.add(this.controller);
 
-        //VIEWS
+        //Views
         this.appView = new AppView();
         this.docListTestView = EditorViewFactory.docListTestView();
 
-        //ADD-VIEW-TO-CONTROLLER
+        //add to container
         this.controller.add(this.appView);
         this.controller.add(this.docListTestView);
     }
@@ -35,22 +40,26 @@ Meteor.startup(function() {
 // FUNCTIONS
 // --------------------------------------------------------------------------------------------------------------------
 
-Application.prototype.hide = function() {
+App.prototype.hide = function() {
     this.controller.show(null);
 }
 
-Application.prototype.showAppView = function() {
+App.prototype.showAppView = function() {
     this.controller.show(this.appView);
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
-Application.prototype.showDocListTestView = function() {
+App.prototype.showDocListTestView = function() {
     this.controller.show(this.docListTestView);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+App.prototype.showSnapshot = function() {
+    this.appView.visualizer.show( State.getCurrentSnapshot() );
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
-
-});//Meteor.startup

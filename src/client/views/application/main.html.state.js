@@ -3,30 +3,32 @@
 // State
 // -------------------------------------------------------------------------------------------------
 
-this.State = {
+this.State = this.State || {};
 
-	initState: _initState,
+_.extend(this.State, {
 
-	ratios: _ratios,
-	onToggle: undefined,
-	triggerToggle: _raiseEventToggle,
+	    	initState: _initState,
 
-	isFiles: _isFiles,
-	toggleFiles: _toggleFiles,
+	       	   ratios: _ratios,
+	     	 onToggle: undefined,
+		triggerToggle: _raiseEventToggle,
 
-	isEditor: _isEditor,
-	toggleEditor: _toggleEditor,
+	    	  isFiles: _isFiles,
+		  toggleFiles: _toggleFiles,
 
-	isVisualizer: _isVisualizer,
-	toggleVisualizer: _toggleVisualizer,
+	    	 isEditor: _isEditor,
+		 toggleEditor: _toggleEditor,
 
-	isPythonTutor: _isPythonTutor,
+	     isVisualizer: _isVisualizer,
+	 toggleVisualizer: _toggleVisualizer,
+
+	    isPythonTutor: _isPythonTutor,
 	togglePythonTutor: _togglePythonTutor,
 
-	isDebugInfo: _isDebugInfo,
-	toggleDebugInfo: _toggleDebugInfo,
+	      isDebugInfo: _isDebugInfo,
+	  toggleDebugInfo: _toggleDebugInfo,
 
-};//this.State
+});//this.State
 
 // -------------------------------------------------------------------------------------------------
 // STARTUP
@@ -55,7 +57,6 @@ function _ratios() {
 	var editor = _isEditor() ? 1:0;
 	var visualizer = _isVisualizer() ? 2:0;
 	var pythonTuotr = _isPythonTutor() ? 1:0;
-	var divider = true;//_divider
 	var debugInfo = _isDebugInfo() ? 1:0;
 
 	var spacer = !(editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
@@ -65,7 +66,6 @@ function _ratios() {
 		editor,
 		visualizer,
 		pythonTuotr,
-		//divider,
 		debugInfo,
 		spacer
 	];

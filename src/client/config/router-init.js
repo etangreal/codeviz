@@ -3,7 +3,7 @@
 // GLOBAL ROUTE DEFINITIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-Route  = {
+Route = {
     home    : 'home',
     editor  : 'editor',
     about   : 'about',
@@ -26,7 +26,7 @@ Router.map(function() {
         path: '/',
         template: 'blank',
         onBeforeAction: function () {
-            application.showAppView();
+            app.showAppView();
             
         }
     });
@@ -39,7 +39,7 @@ Router.map(function() {
         //path: '/about',
         template: 'blank',
         onBeforeAction: function () {
-            applicaiton.hide();
+            app.hide();
         }
     });
 
@@ -51,7 +51,7 @@ Router.map(function() {
         // path: '/test',
         template: 'blank',
         onBeforeAction: function () {
-            application.hide();
+            app.hide();
         }
     });
 
@@ -63,7 +63,7 @@ Router.map(function() {
         // path: '/' + Route.docList,
         template: 'blank',
         onBeforeAction: function () {
-            application.showDocListTestView();
+            app.showDocListTestView();
         }
     });
 
