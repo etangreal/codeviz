@@ -17,8 +17,8 @@ Meteor.startup(function() {
 
     function Application() {
 
-        this.mainContext = Famous.Engine.createContext();
-        this.controller = new Famous.RenderController();
+        this.mainContext = famous.core.Engine.createContext();
+        this.controller = new famous.views.RenderController();
 
         this.mainContext.add(this.controller);
 

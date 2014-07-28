@@ -1,14 +1,15 @@
 
 // ---------------------------------------------------------------------------------------------------------------------
-// VisualizerViewFactory
+// DECLARATIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-this.VisualizerViewFactory = {
+    //Export
+    this.VisualizerViewFactory = {
 
-	//VIEWS
-	visualizerView: _visualizerView,
+        //Views
+        visualizerView: _visualizerView,
 
-}//VisualizerViewFactory
+    }//VisualizerViewFactory
 
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
@@ -16,15 +17,22 @@ this.VisualizerViewFactory = {
 
 function _visualizerView() {
 
-	var visualizer = new Famous.MeteorSurface({
-        template: Template.visualizer,
-        size: [undefined, undefined],
-        properties: {
-            backgroundColor: 'lightblue'
-        }
-    });
+    // var visualizer = new Famous.MeteorSurface({
+    //     template: Template.visualizer,
+    //     size: [undefined, undefined],
+    //     properties: {
+    //         backgroundColor: 'lightblue'
+    //     }
+    // });
 
-    return visualizer;
+    // var visualizer = new Famous.Surface({
+    //     size: [undefined,undefined],
+    //     properties: { backgroundColor: 'lightblue' }
+    // });
+
+    var canvas = new VisualizerCanvas();
+
+    return canvas;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

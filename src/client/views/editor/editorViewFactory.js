@@ -25,8 +25,8 @@ function _docListView(classes) {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	var layout = new Famous.SequentialLayout({
-	    direction: Famous.Utility.Direction.Y,
+	var layout = new famous.views.SequentialLayout({
+	    direction: famous.utilities.Utility.Direction.Y,
 	    //itemSpacing: 20
 	});
 
@@ -35,7 +35,7 @@ function _docListView(classes) {
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	var docListAdd = new Famous.MeteorSurface({
+	var docListAdd = new library.meteor.core.Surface({
 		template: Template.docListAdd,
 		size: [WIDTH, 37],
 		classes: classes,
@@ -45,7 +45,7 @@ function _docListView(classes) {
 		}
 	});
 
-	var docList = new Famous.MeteorSurface({
+	var docList = new library.meteor.core.Surface({
 		template: Template.docList,
 		size: [WIDTH, 600],
 		classes: classes,
@@ -78,7 +78,7 @@ function _docListView(classes) {
 
 function _editorView() {
 
-	var editor = new Famous.MeteorSurface({
+	var editor = new library.meteor.core.Surface({
         template: Template.editor,
         size: [undefined, undefined],
         properties: {
@@ -95,9 +95,9 @@ function _editorView() {
 
 function _docListTestView() {
 
-	var view = new Famous.View();
+	var view = new famous.core.View();
 
-    var mod = new Famous.Modifier({
+    var mod = new famous.core.Modifier({
         origin: [.5, 0],
         size: [300, 300]
     });

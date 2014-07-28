@@ -1,53 +1,50 @@
 
-Meteor.startup(function() {
-
 // ---------------------------------------------------------------------------------------------------------------------
-// CLASS : AppView
+// EXPORT
 // ---------------------------------------------------------------------------------------------------------------------
-
-    //Export
-    this.AppView = AppView;
 
     //Inherit
-    AppView.prototype = Object.create(famous.core.View.prototype);
+    VisualizerCanvas.prototype = Object.create(famous.surfaces.ContainerSurface.prototype);
 
     //Constructor-Reference
-    AppView.prototype.constructor = AppView;
+    VisualizerCanvas.prototype.constructor = VisualizerCanvas;
+
+    //Export
+    this.VisualizerCanvas = VisualizerCanvas;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CONSTRUCTOR
 // ---------------------------------------------------------------------------------------------------------------------
 
-    function AppView() {
+    function VisualizerCanvas() {
 
         // Call the super class's constructor
-        famous.core.View.apply(this, arguments);
+        famous.surfaces.ContainerSurface.apply(this, arguments);
 
-        // { layout, header,
-        //      content{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo },
-        //  footer }
-        var headerFooter = AppViewFactory.HeaderFooter();
-        var flexLayout = headerFooter.content.flexLayout;
-        var visualizer = headerFooter.content.visualizer;
+        var background = new famous.core.Surface({
+            size: [undefined,undefined],
+            properties: { backgroundColor: 'lightblue' }
+        });
 
-        State.onToggle = toggleViews.bind(flexLayout);
+        this.add(background);
 
-        this.add(headerFooter.layout);
-
-    }//AppView
+    }//VisualizerCanvas
 
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function toggleViews(ratios) {
-    var flexLayout = this;
+VisualizerCanvas.prototype.addHtml = function(html) {
 
-    flexLayout.setRatios(ratios, {curve: 'easeOut', duration: 500});
+    var surface = new famous.core.Surface({
+        content: html,
+        size: [100,100],
+        properties: { backgroundColor: 'pink' }
+    });
+
+    this.add(surface);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
-
-});//Meteor.startup

@@ -5,7 +5,7 @@ Meteor.startup(function() {
 // AppFactory
 // -----------------------------------------------------------------------------------------------------------------
 
-    //Export
+    //EXPORT
     this.AppViewFactory = {
 
         //VIEWS
@@ -19,7 +19,7 @@ Meteor.startup(function() {
 
 function _createHeaderFooterLayout() {
 
-    var layout = new Famous.HeaderFooterLayout({
+    var layout = new famous.views.HeaderFooterLayout({
         header: 50,
         footer: 10
     });
@@ -51,7 +51,7 @@ function _createHeaderFooterLayout() {
 
 function _createHeaderSection(layout) {
 
-	var header = new Famous.MeteorSurface({
+	var header = new library.meteor.core.Surface({
 	    template: Template.header,
 	    size: [undefined, 41],
 	    properties: {
@@ -71,12 +71,9 @@ function _createHeaderSection(layout) {
 
 function _createContentSection() {
 
-    var flexLayout = new Famous.FlexibleLayout({
+    var flexLayout = new famous.views.FlexibleLayout({
         ratios : State.ratios()
     });
-
-    var surfaces = [];
-    flexLayout.sequenceFrom(surfaces);
 
     // -------------------------------------------------------------------------------------------------------------
 
@@ -84,23 +81,26 @@ function _createContentSection() {
     var editor      = EditorViewFactory.editorView();
     var visualizer  = VisualizerViewFactory.visualizerView();
     var pythonTutor = PythonTutorViewFactory.pythonTutorView();
-    var divider     = _divider(flexLayout);
+    // var divider     = _divider(flexLayout);
     var debugInfo   = DebugInfoViewFactory.debugInfoView();
 
-    var spacer      = new Famous.Surface({
+    var spacer      = new famous.core.Surface({
                         size: [undefined,undefined],
                         properties: { backgroundColor: 'red' }
                     });
 
     // -------------------------------------------------------------------------------------------------------------
 
+    var surfaces = [];
     surfaces.push(docList);
     surfaces.push(editor);
     surfaces.push(visualizer);
     surfaces.push(pythonTutor);
-    surfaces.push(divider);
+    //surfaces.push(divider);
     surfaces.push(debugInfo);
     surfaces.push(spacer);
+
+    flexLayout.sequenceFrom(surfaces);
 
     // -------------------------------------------------------------------------------------------------------------
 
@@ -121,7 +121,7 @@ function _createContentSection() {
 
 function _createFooterSection(layout) {
 
-    var footer = new Famous.MeteorSurface({
+    var footer = new library.meteor.core.Surface({
         template: Template.footer,
         size: [undefined, 20],
         properties: {
@@ -151,8 +151,8 @@ function _divider(flexLayout) {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    var divider = new Famous.ContainerSurface({
-        size: [2, undefined]
+    var divider = new famous.surfaces.ContainerSurface({
+        size: [20, undefined]
            // properties: {
            //     overflow: 'hidden'
            // }
@@ -161,7 +161,7 @@ function _divider(flexLayout) {
     // -----------------------------------------------------------------------------------------------------------------
 
     //divider: placed in the divider-container to serve as a background
-    var div = new Famous.Surface({
+    var div = new famous.core.Surface({
         size: [20, undefined],
         properties: {
             backgroundColor: 'grey'
@@ -171,14 +171,14 @@ function _divider(flexLayout) {
     // -----------------------------------------------------------------------------------------------------------------
 
     //divider-button-modifier: used to modify the divider-button's position
-    var divBtnMod = new Famous.Modifier({
-        transform: Famous.Transform.translate(0, 350, 0)
+    var divBtnMod = new famous.core.Modifier({
+        transform: famous.core.Transform.translate(0, 350, 0)
     });
 
     // -----------------------------------------------------------------------------------------------------------------
 
     //divider button: used to open/close the editor panel
-    var divBtn = new Famous.Surface({
+    var divBtn = new famous.core.Surface({
         size: [20, 20],
         content: divBtnTxt,
         properties: {

@@ -1,118 +1,5 @@
 
 // --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.renderHtml = function(snapshots, canvas) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if( snapshots && canvas )
-    snapshots.forEach( function(snapshot) {
-
-      // --------------------------------------------------------------------------
-
-      var stack = snapshot.stack;
-
-      stack.forEach( function(frame) {
-
-        canvas.append(frame.html);
-        frame.draw.updateProperties();
-
-      });
-
-      // --------------------------------------------------------------------------
-
-      var heap = snapshot.heap;
-
-      heap.forEach( function(heapObj) {
-        if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
-
-        canvas.append( heapObj.html );
-        heapObj.draw.updateProperties();
-
-      });
-
-      // --------------------------------------------------------------------------
-
-      self.calcLayout(snapshot);
-      self.layoutHtml(snapshot);
-
-      snapshot.stackInfo = snapshot.render.stackInfo();  //update the snapshot's stack info
-      snapshot.heapInfo = snapshot.render.heapInfo();    //update the snapshot's heap info
-
-      // --------------------------------------------------------------------------
-
-    });//forEach-snapshots
-
-    //self.doPlumbing( snapshots );
-
-};//renderHtml
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.layoutHtml = function(snapshot) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  // --------------------------------------------------------------------------
-
-  var stack = snapshot.stack;
-
-  stack.forEach( function(frame) {
-
-    var f = $("#"+frame.draw.uid);
-
-        f.css({
-            position: "absolute"
-          , left: frame.draw.position.x + "px"
-          , top: frame.draw.position.y + "px"
-        });
-
-        f.hide();
-
-  });//forEach-Frame
-
-  // --------------------------------------------------------------------------
-
-  var heap = snapshot.heap;
-
-  heap.forEach(function(heapObj) {
-
-    var h = $("#"+heapObj.draw.uid);
-
-        h.css({
-            position: "absolute"
-          , left: heapObj.draw.position.x + "px"
-          , top: heapObj.draw.position.y + "px"
-        });
-
-        h.hide();
-  });
-
-  // --------------------------------------------------------------------------
-
-};//layoutHtml
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.prerenderHtml = function(snapshot, TB) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  TB = TB || "";
-  var Br = "\n";
-  var Tb = "\t";
-
-  snapshot.stackHtml = me.renderStackAsHtml(snapshot.stack, TB);
-  snapshot.heapHtml = me.renderHeapAsHtml(snapshot.heap, TB);
-
-  snapshot.html =
-      '<div class="_snapshot">'     + Br +
-          snapshot.stackHtml        +
-          snapshot.heapHtml         +
-      '</div><!-- /._snapshot -->'  ;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
 // RENDER | STACK
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -749,9 +636,6 @@ Visualizer.prototype.asHtmlUID = function(uid, values, verbose) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-//var output = document.getElementById("container");
-//    output.appendChild( html.toDomElement() )
-
 String.prototype.toDomElement = function () {
   var wrapper = document.createElement('div');
   wrapper.className = "toDomWrapper";
@@ -763,29 +647,3 @@ String.prototype.toDomElement = function () {
 // --------------------------------------------------------------------------------------------------------------------
 // END
 // --------------------------------------------------------------------------------------------------------------------
-
-
-// --------------------------------------------------------------------------------------------------------------------
-// FLOW CONTROL | STACK ? HEAP | RENDER NODE
-// --------------------------------------------------------------------------------------------------------------------
-
-/** /
-Visualizer.prototype.renderNodeAsHtml = function(node, TB) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if (node.location == NodeLocationTypeEnum.UNDEFINED) {
-    console.error("ERROR: renderNodeAsHtml => node location undefined");
-    return '<div>LOCATION UNDEFINED</div>'
-  }
-
-  if (node.location == NodeLocationTypeEnum.STACK)
-    return self.renderFrameNodeAsHtml(node,TB);
-
-  if (node.location == NodeLocationTypeEnum.HEAP)
-    return self.renderHeapNodeAsHtml(node,TB);
-
-  console.error("ERROR: renderNodeAsHtml => unknown node location.");
-  return '<div>UNKNOWN NODE</div>';
-};
-/**/

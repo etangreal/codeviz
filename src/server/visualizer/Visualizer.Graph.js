@@ -40,7 +40,7 @@ Visualizer.prototype.newSnapshot = function(id) {
     , plumbing: {}                      //A mapping of UIDs 'from' one object 'to' another object
     , coordinates: {}                   //Maps object's UID to {x,y} coordinates
 
-    //RENDER-TEMPLATE-DATA
+    //PRE-RENDERED-HTML (for debugging)
     , stackHtml: ""
     , heapHtml: ""
     , html: ""

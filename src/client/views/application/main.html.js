@@ -99,7 +99,11 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-test': function(e,t) {
-        Router.go(Route.docList);
+        console.log('display current snapshot... ');
+
+        //this.visualizer.show( State.currentSnapshot() )
+
+        //Router.go(Route.docList);
         // Meteor.call('phantomTest', Session.get('ssn_documents._id'));
     },
 

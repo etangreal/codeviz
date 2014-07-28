@@ -1,14 +1,17 @@
 
+//Meteor.startup(function() {
+
 // ---------------------------------------------------------------------------------------------------------------------
 // PythonTutorViewFactory
 // ---------------------------------------------------------------------------------------------------------------------
 
-this.PythonTutorViewFactory = {
+    //EXPORT
+    this.PythonTutorViewFactory = {
 
-	//VIEWS
-	pythonTutorView: _pythonTutorView,
+    	//VIEWS
+    	pythonTutorView: _pythonTutorView,
 
-}//PythonTutorViewFactory
+    }//PythonTutorViewFactory
 
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
@@ -16,12 +19,17 @@ this.PythonTutorViewFactory = {
 
 function _pythonTutorView() {
 
-	var pythonTutor = new Famous.MeteorSurface({
-        template: Template.pythonTutor,
-        size: [undefined, undefined],
-        properties: {
-            backgroundColor: 'yellow'
-        }
+    // var pythonTutor = new Famous.MeteorSurface({
+    //     template: Template.pythonTutor,
+    //     size: [undefined, undefined],
+    //     properties: {
+    //         backgroundColor: 'yellow'
+    //     }
+    // });
+
+    var pythonTutor = new famous.core.Surface({
+        size: [undefined,undefined],
+        properties: { backgroundColor: 'yellow' }
     });
 
     return pythonTutor;
@@ -30,3 +38,5 @@ function _pythonTutorView() {
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------
+
+//});//Meteor.startup

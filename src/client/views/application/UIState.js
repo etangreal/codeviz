@@ -9,6 +9,7 @@ this.State = {
 
 	ratios: _ratios,
 	onToggle: undefined,
+	triggerToggle: _raiseEventToggle,
 
 	isFiles: _isFiles,
 	toggleFiles: _toggleFiles,
@@ -40,8 +41,6 @@ Meteor.startup(function (){
 // -------------------------------------------------------------------------------------------------
 
 function _initState() {
-	//var initialRatios = [true, 3, 1, 1,true, 2];
-
 	Session.set('ssn_isFiles', true);
 	Session.set('ssn_isEditor', true);
 	Session.set('ssn_isVisualizer', true);
@@ -53,21 +52,20 @@ function _initState() {
 
 function _ratios() {
 	var files = _isFiles() ? true:0;
-	var editor = _isEditor() ? 2:0;
-	var visualizer = _isVisualizer() ? 1:0;
+	var editor = _isEditor() ? 1:0;
+	var visualizer = _isVisualizer() ? 2:0;
 	var pythonTuotr = _isPythonTutor() ? 1:0;
 	var divider = true;//_divider
 	var debugInfo = _isDebugInfo() ? 1:0;
 
-	//var spacer = !(files||editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
-	var spacer = 1;
+	var spacer = !(editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
 
 	return [
 		files,
 		editor,
 		visualizer,
 		pythonTuotr,
-		divider,
+		//divider,
 		debugInfo,
 		spacer
 	];

@@ -15,7 +15,7 @@ this.DebugInfoViewFactory = {
 
 	function _debugInfoView() {
 
-		var debugInfo = new Famous.MeteorSurface({
+		var debugInfo = new library.meteor.core.Surface({
             template: Template.debugInfo,
             size: [undefined, undefined],
             properties: {
