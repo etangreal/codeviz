@@ -36,7 +36,10 @@
 
 VisualizerCanvas.prototype.show = function(snapshot) {
 
-    console.log(snapshot);
+    if (!snapshot) {
+        console.log('VisualizerCanvas.show | no current snapshot..');
+        return;
+    }
 
     // --------------------------------------------------------------------------
 
@@ -51,8 +54,10 @@ VisualizerCanvas.prototype.show = function(snapshot) {
 
     // --------------------------------------------------------------------------
 
-    //var heap = snapshot.heap[1];
-    //var node = this.addNode(heapObj.html);
+    var heap = snapshot.heap[1];
+    var node = this.addNode(heap.html, 100, 100);
+
+    console.log( 'size: ', node.surface.size);
 
     // heap.forEach( function(heapObj) {
     //     if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
@@ -65,7 +70,7 @@ VisualizerCanvas.prototype.show = function(snapshot) {
 
   // --------------------------------------------------------------------------
 
-  this.addNode('<h1>Hello World</h1>', 10, 10);
+  //this.addNode('<h1>Hello World</h1>', 10, 10);
 
 }
 
@@ -79,7 +84,7 @@ VisualizerCanvas.prototype.addNode = function(html, x, y) {
 
     var surface = new famous.core.Surface({
         content: html,
-        size: [100,100],
+        size: [true,true],
         properties: { backgroundColor: 'pink' }
     });
 

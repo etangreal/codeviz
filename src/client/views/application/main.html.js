@@ -44,12 +44,7 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-test': function(e,t) {
-        console.log('display current snapshot... ');
-
         app.showSnapshot();
-
-        //Router.go(Route.docList);
-        // Meteor.call('phantomTest', Session.get('ssn_documents._id'));
     },
 
     // -----------------------------------------------------------------------------------------------------------------

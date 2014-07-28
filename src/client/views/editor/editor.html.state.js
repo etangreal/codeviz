@@ -11,8 +11,6 @@ _.extend(this.State, {
 			  getDocumentId: _getDocumentId,
 			  setDocumentId: _setDocumentId,
 
-		 getCurrentSnapshot: _getCurrentSnapshot,
-
 		   isEditingDocItem: _isEditingDocItem,
 		  setEditingDocItem: _setEditingDocItem
 
@@ -42,23 +40,16 @@ function _getDocumentId() {
 
 function _setDocumentId(id) {
 	Session.set('ssn_documents._id', id);
-	_setCurrentSnapshot(id)
+	_setCurrentSnapshots(id);
 }
 
 // -------------------------------------------------------------------------------------------------
 
-function _setCurrentSnapshot(id) {
-
+function _setCurrentSnapshots(id) {
 	var doc = Documents.findOne({_id:id});
 	var snapshots = (doc) ? doc.snapshots : undefined;
 
 	Session.set('ssn_snapshots', snapshots);
-}
-
-// -------------------------------------------------------------------------------------------------
-
-function _getCurrentSnapshot() {
-	return Session.get('ssn_snapshots');
 }
 
 // -------------------------------------------------------------------------------------------------
