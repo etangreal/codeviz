@@ -5,37 +5,32 @@
 
 Template.navbar.helpers({
     
-    isFiles: function() { 
-        var active = Session.get('ssn_isFiles');
-        return active && 'active';
+    isFiles: function() {
+        return State.isFiles() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     isEditor: function() {
-        var active = Session.get('ssn_isEditor');
-        return active && 'active';
+        return State.isEditor() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     isVisualizer: function() {
-        var active = Session.get('ssn_isVisualizer');
-        return active && 'active';
+        return State.isVisualizer() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     isPythonTutor: function() {
-        var active = Session.get('ssn_isPythonTutor');
-        return active && 'active';
+        return State.isPythonTutor() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     isDebugInfo: function() {
-        var active = Session.get('ssn_isDebugInfo');
-        return active && 'active';
+        return State.isDebugInfo() && 'active';
     }
 
 }); //Template.navbar.helpers
@@ -74,36 +69,31 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-files': function(e,t) {
-        var active = Session.get('ssn_isFiles');
-        Session.set('ssn_isFiles', !active);
+        State.toggleFiles();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-editor': function(e,t) {
-        var active = Session.get('ssn_isEditor');
-        Session.set('ssn_isEditor', !active);
+        State.toggleEditor();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-visualizer': function(e,t) {
-        var active = Session.get('ssn_isVisualizer');
-        Session.set('ssn_isVisualizer', !active);
+        State.toggleVisualizer();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-pythonTutor': function(e,t) {
-        var active = Session.get('ssn_isPythonTutor');
-        Session.set('ssn_isPythonTutor', !active);
+        State.togglePythonTutor();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-debugInfo': function(e,t) {
-        var active = Session.get('ssn_isDebugInfo');
-        Session.set('ssn_isDebugInfo', !active);
+        State.toggleDebugInfo();
     },
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -1,30 +1,30 @@
 
 // ---------------------------------------------------------------------------------------------------------------------
-// VisualizerViewFactory
+// PythonTutorViewFactory
 // ---------------------------------------------------------------------------------------------------------------------
 
-this.VisualizerViewFactory = {
+this.PythonTutorViewFactory = {
 
 	//VIEWS
-	visualizerView: _visualizerView,
+	pythonTutorView: _pythonTutorView,
 
-}//VisualizerViewFactory
+}//PythonTutorViewFactory
 
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _visualizerView() {
+function _pythonTutorView() {
 
-	var visualizer = new Famous.MeteorSurface({
-        template: Template.visualizer,
+	var pythonTutor = new Famous.MeteorSurface({
+        template: Template.pythonTutor,
         size: [undefined, undefined],
         properties: {
-            backgroundColor: 'lightblue'
+            backgroundColor: 'yellow'
         }
     });
 
-    return visualizer;
+    return pythonTutor;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

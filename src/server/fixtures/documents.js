@@ -1,5 +1,4 @@
 
-if(CONSOLE_LOG_ROUTES) console.log('LOADING: src/server/fixture-documents.js');
 
 // ---------------------------------------------------------------------------------------------------------------------
 // REQUIRE
@@ -12,19 +11,14 @@ var fs = Npm.require('fs');
 // ---------------------------------------------------------------------------------------------------------------------
 
 Meteor.startup(function() {
-  if(CONSOLE_LOG_ROUTES) console.log('STARTUP: src/server/fixture-documents.js');
-
-  // -------------------------------------------------------------------------------------------------------------------
 
   //deleteAllDocuments();
   if (Documents.find().count() === 0) {
 
-    console.log('fixutes-documents.js | populateDocuments');
+    console.log('serve/fixutes/documents.js | populateDocuments');
     populateDocuments();
 
   }//if (Documents.find().count() === 0)
-
-  // -------------------------------------------------------------------------------------------------------------------
 
 });//Meteor.startup
 
@@ -33,12 +27,14 @@ Meteor.startup(function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 var deleteAllDocuments = function() {
-    var cursor = Documents.find().fetch();
+    Documents.remove({});
 
-    for (var i = 0; i < cursor.length; i++) {
-      var id = cursor[i]._id;
-      Meteor.call("deleteDocument", id);
-    }
+    // var cursor = Documents.find().fetch();
+
+    // for (var i = 0; i < cursor.length; i++) {
+    //   var id = cursor[i]._id;
+    //   Meteor.call("deleteDocument", id);
+    // }
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -27,16 +27,21 @@ function _createHeaderFooterLayout() {
     // -------------------------------------------------------------------------------------------------------------
 
     var header 	= _createHeaderSection();
-    var content = _createContentSection();
+    var content = _createContentSection(); //{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo }
     var footer  = _createFooterSection();
 
     layout.header.add(header);
-    layout.content.add(content);
+    layout.content.add(content.flexLayout);
     layout.footer.add(footer);
 
     // -------------------------------------------------------------------------------------------------------------
 
-    return layout;
+    return { 
+         layout: layout, 
+         header: header,
+        content: content,
+         footer: footer
+     };
 
 }//_createHeaderFooterLayout
 
@@ -66,10 +71,8 @@ function _createHeaderSection(layout) {
 
 function _createContentSection() {
 
-    var initialRatios = [true, 3, 1,true, 2];
-
     var flexLayout = new Famous.FlexibleLayout({
-        ratios : initialRatios
+        ratios : State.ratios()
     });
 
     var surfaces = [];
@@ -77,23 +80,38 @@ function _createContentSection() {
 
     // -------------------------------------------------------------------------------------------------------------
 
-    var docList = EditorViewFactory.docListView();
-    var editor = EditorViewFactory.editorView();
-    var visualizer = VisualizerViewFactory.visualizerView();
-    var divider = _divider(flexLayout, initialRatios);
-    var debugInfo = DebugInfoViewFactory.debugInfoView();
+    var docList     = EditorViewFactory.docListView();
+    var editor      = EditorViewFactory.editorView();
+    var visualizer  = VisualizerViewFactory.visualizerView();
+    var pythonTutor = PythonTutorViewFactory.pythonTutorView();
+    var divider     = _divider(flexLayout);
+    var debugInfo   = DebugInfoViewFactory.debugInfoView();
+
+    var spacer      = new Famous.Surface({
+                        size: [undefined,undefined],
+                        properties: { backgroundColor: 'red' }
+                    });
 
     // -------------------------------------------------------------------------------------------------------------
 
     surfaces.push(docList);
     surfaces.push(editor);
     surfaces.push(visualizer);
+    surfaces.push(pythonTutor);
     surfaces.push(divider);
     surfaces.push(debugInfo);
+    surfaces.push(spacer);
 
     // -------------------------------------------------------------------------------------------------------------
 
-    return flexLayout;
+    return {
+        flexLayout: flexLayout,
+           docList: docList, 
+            editor: editor, 
+        visualizer: visualizer, 
+       pythonTutor: pythonTutor, 
+         debugInfo: debugInfo 
+    };
 
 }//_createContentSection
 
@@ -121,23 +139,20 @@ function _createFooterSection(layout) {
 // VIEW | Divider
 // -----------------------------------------------------------------------------------------------------------------
 
-function _divider(flexLayout, initialRatios) {
+function _divider(flexLayout) {
 	// divider: serves as a divider-container (for the divider & divider-button) 
 	// between the editor and canvas
 
     var open = '->';
     var closed = '<-';
     var transition = {curve: 'easeOut', duration: 300};
-
-    var finalRatios = [true, 0, 1, true, 1];
-
     var divBtnTxt = closed;
     var toggle = false;
 
     // -----------------------------------------------------------------------------------------------------------------
 
     var divider = new Famous.ContainerSurface({
-        size: [20, undefined]
+        size: [2, undefined]
            // properties: {
            //     overflow: 'hidden'
            // }
@@ -179,7 +194,7 @@ function _divider(flexLayout, initialRatios) {
 
     // Toggle state between 0 and 1
     function toggleState() {
-        var ratios = toggle ? initialRatios : finalRatios;
+        var ratios = State.ratios;
         divBtn.setContent(toggle ? closed : open);
         flexLayout.setRatios(ratios, transition);
         toggle = !toggle;
@@ -187,8 +202,8 @@ function _divider(flexLayout, initialRatios) {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    div.on('click', toggleState);
-    divBtn.on('click', toggleState);
+    // div.on('click', toggleState);
+    // divBtn.on('click', toggleState);
 
     // -----------------------------------------------------------------------------------------------------------------
 

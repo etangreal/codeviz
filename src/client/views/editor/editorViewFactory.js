@@ -20,15 +20,27 @@ this.EditorViewFactory = {
 
 function _docListView(classes) {
 
-	var classes = classes || [];
 	var WIDTH = 220;
+	var classes = classes || [];
+
+	// -----------------------------------------------------------------------------------------------------------------
+
+	var layout = new Famous.SequentialLayout({
+	    direction: Famous.Utility.Direction.Y,
+	    //itemSpacing: 20
+	});
+
+	var surfaces = [];
+	layout.sequenceFrom(surfaces);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	var docListAdd = new Famous.MeteorSurface({
 		template: Template.docListAdd,
 		size: [WIDTH, 37],
 		classes: classes,
 		properties: {
-			overflow: 'visible',
+			overflow: 'hidden',
 			backgroundColor: 'white'
 		}
 	});
@@ -51,17 +63,12 @@ function _docListView(classes) {
 	// 	console.log(list.height());
 	// }
 
-	var layout = new Famous.SequentialLayout({
-	    direction: Famous.Utility.Direction.Y,
-	    //itemSpacing: 20
-	});
+	// -----------------------------------------------------------------------------------------------------------------
 
-	var surfaces = [];
-	layout.sequenceFrom(surfaces);
 	surfaces.push(docListAdd);
 	surfaces.push(docList);
 
-	//layout.sequenceFrom([docListAdd, docList]);
+	// -----------------------------------------------------------------------------------------------------------------
 
 	return layout;
 

@@ -23,11 +23,27 @@ Meteor.startup(function() {
         // Call the super class's constructor
         Famous.View.apply(this, arguments);
 
+        // { layout, header,
+        //      content{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo },
+        //  footer }
         var headerFooter = AppViewFactory.HeaderFooter();
+        var flexLayout = headerFooter.content.flexLayout;
+        State.onToggle = toggleViews.bind(flexLayout);
 
-        this.add(headerFooter);
+        this.add(headerFooter.layout);
 
     }//AppView
+
+// ---------------------------------------------------------------------------------------------------------------------
+// FUNCTIONS
+// ---------------------------------------------------------------------------------------------------------------------
+
+function toggleViews(ratios) {
+    var flexLayout = this;
+    var transition = {curve: 'easeOut', duration: 300};
+
+    flexLayout.setRatios(ratios, transition);
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END
