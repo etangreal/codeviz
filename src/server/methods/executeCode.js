@@ -67,6 +67,10 @@ _executeCode = function(id) {
 
 function _saveSnapshot(id, snapshots) {
 
+	snapshots.forEach(function(snapshot){
+		snapshot.docId = id;
+	});
+
 	Documents.update(id, { 
 		$set: { snapshots: snapshots }
 	});

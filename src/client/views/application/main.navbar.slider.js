@@ -1,7 +1,4 @@
 
-
-Meteor.startup(function() {
-
 // ---------------------------------------------------------------------------------------------------------------------
 // NAVBAR SLIDER | EXPORT
 // ---------------------------------------------------------------------------------------------------------------------
@@ -20,7 +17,7 @@ Meteor.startup(function() {
 		// events
 		// -------------------------------
 
-		onSlide: _onSlide,
+		onSlide: [_onSlide],
 
 		// -------------------------------
 		// value
@@ -72,8 +69,9 @@ function _initSlider(size) {
   		step: 1,
   		// animate: 'fast',
 		slide: function( evt, ui ) { 
-			if (navbar.slider.onSlide) 
-				navbar.slider.onSlide(evt,ui); 
+			navbar.slider.onSlide.forEach( function(func) {
+				func( evt, ui );
+			});
 		}
   	});
 
@@ -97,14 +95,11 @@ function _tweekUI() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _onSlide(evt, ui) { 
-	var i = ui.value;
-
-	//console.log('slider: ', i);
-	Session.set('ssn_sliderValue', i);
-
 	if (evt.originalEvent) {
 		// if this value was changed pragmatically, then evt.originalEvent will be undefined
 		// however, if this value was changed by a user-initiated event then this code should be executed ...
+		var i = ui.value;
+		Session.set('ssn_sliderValue', i);
 	}
 };
 
@@ -149,5 +144,3 @@ function _disableSlider() {
 // -------------------------------------------------------------------------------------------------------------------------
 // END
 // -------------------------------------------------------------------------------------------------------------------------
-
-});//Meteor.startup

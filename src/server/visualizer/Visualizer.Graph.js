@@ -20,7 +20,13 @@ Visualizer.prototype.newSnapshot = function(id) {
   var self = this;
 
   var snapshot = {
-    id: id || 0
+    id: id || 0,                        //id: a.k.a -> sid (snapshot id) by its child nodes. 
+                                        //id: is the numbered index of the snapshot in the list of snapshots
+
+ docId: undefined,                      // each snapshot has a permanent unique document Id
+   uid: self.newUID()                   // uid: unique id of this snapshot.
+                                        //   Together docId & uid can be used by the client(i.e. browser) to keep track of which snapshots its seen. 
+                                        //   Every time the snapshot is regenerated it will have the same docId but a new uid.
 
     //CORE
     , stack: []
@@ -88,15 +94,15 @@ Visualizer.prototype.newFrame = function(id,sid) {
         , unique_hash: ""
       }
 
-    //RENDER-TEMPLATE-DATA
+    //PRE-RENDERED TEXT & HTML
     , text: ""
     , html: ""
 
     //UI DRAW/LAYOUT DATA
     , draw: {
-          uid: self.newUID()
-        , position: { x:0, y:0, z:0 }
-        , offset: {x:0, y:0}
+          uid: self.newUID()                // URL: api.jquery.com/offset
+        , position: { x:0, y:0, z:0 }       //  current position relative to the offset parent
+        , offset: {x:0, y:0}                //  current position of an element relative to the document
         , width: 0
         , height: 0
       }
@@ -145,7 +151,7 @@ Visualizer.prototype.newNode = function(id,sid) {
   var self = this;
 
   var node = {
-      id: id || 0                     //id -> derived from the trace data
+       id: id || 0                    //id -> derived from the trace data
     , sid: sid || 0                   //snapshot id
     , uid: self.newUID()              //unique id
     , gid: ''                         //global id -> id remains the same for the same object across snapshots
@@ -153,12 +159,12 @@ Visualizer.prototype.newNode = function(id,sid) {
     //CORE
     , type: NodeTypeEnum.NONE
     , name: ''
-    , inherits: []                //todo: should change this to: "parents" so that it implies both "inherits" and "instanceof"
+    , inherits: []                    //todo: should change this to: "parents" so that it implies both "inherits" and "instanceof"
     , value: []
     , pointer: []
     , pointerUID: []
 
-    //RENDER-TEMPLATE-DATA
+    //PRE-RENDERED TEXT & HTML
     , location: NodeLocationTypeEnum.UNDEFINED
     , text: ""
     , html: ""

@@ -22,27 +22,33 @@ Meteor.startup(function() {
 // --------------------------------------------------------------------------------------------------------------------
 
     function App() {
+        var self = this;
 
-        this.mainContext = famous.core.Engine.createContext();
-        this.controller = new famous.views.RenderController();
-        this.mainContext.add(this.controller);
+        self.mainContext = famous.core.Engine.createContext();
+        self.controller = new famous.views.RenderController();
+        self.mainContext.add(self.controller);
 
         //Views
-        this.appView = new AppView();
-        this.docListTestView = EditorViewFactory.docListTestView();
+        self.appView = new AppView();
+        self.docListTestView = EditorViewFactory.docListTestView();
 
         //add to container
-        this.controller.add(this.appView);
-        this.controller.add(this.docListTestView);
+        self.controller.add(self.appView);
+        self.controller.add(self.docListTestView);
+
+        //register with the slider's 
+        navbar.slider.onSlide.push( self.onSlider.bind(self) );
     }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// FUNCTIONS
+// METHODS | NAVIGATION
 // --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.hide = function() {
     this.controller.show(null);
 }
+
+// --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.showAppView = function() {
     this.controller.show(this.appView);
@@ -54,10 +60,18 @@ App.prototype.showDocListTestView = function() {
     this.controller.show(this.docListTestView);
 }
 
-// ---------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// METHODS | UI | SNAPSHOTS
+// --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.showSnapshot = function() {
     this.appView.visualizer.show( State.getCurrentSnapshot() );
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+App.prototype.onSlider = function(evt, ui) {
+    this.appView.visualizer.clear();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

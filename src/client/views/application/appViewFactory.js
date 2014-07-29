@@ -77,9 +77,8 @@ function _createContentSection() {
 
     var docList     = EditorViewFactory.docListView();
     var editor      = EditorViewFactory.editorView();
-    var visualizer  = VisualizerViewFactory.visualizerView();
+    var visualizer  = VisualizerViewFactory.visualizer();
     var pythonTutor = PythonTutorViewFactory.pythonTutorView();
-    // var divider     = _divider(flexLayout);
     var debugInfo   = DebugInfoViewFactory.debugInfoView();
 
     var spacer      = new famous.core.Surface({
@@ -94,7 +93,6 @@ function _createContentSection() {
     surfaces.push(editor);
     surfaces.push(visualizer);
     surfaces.push(pythonTutor);
-    //surfaces.push(divider);
     surfaces.push(debugInfo);
     surfaces.push(spacer);
 

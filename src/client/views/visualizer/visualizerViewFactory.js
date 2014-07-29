@@ -7,7 +7,7 @@
     this.VisualizerViewFactory = {
 
         //Views
-        visualizerView: _visualizerView,
+        visualizer: _visualizer,
 
     }//VisualizerViewFactory
 
@@ -15,24 +15,9 @@
 // FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _visualizerView() {
+function _visualizer() {
 
-    // var visualizer = new Famous.MeteorSurface({
-    //     template: Template.visualizer,
-    //     size: [undefined, undefined],
-    //     properties: {
-    //         backgroundColor: 'lightblue'
-    //     }
-    // });
-
-    // var visualizer = new Famous.Surface({
-    //     size: [undefined,undefined],
-    //     properties: { backgroundColor: 'lightblue' }
-    // });
-
-    var canvas = new VisualizerCanvas();
-
-    return canvas;
+    return new Visualizer();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
