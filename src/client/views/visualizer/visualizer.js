@@ -22,6 +22,8 @@
         // Call the super class constructor
         famous.surfaces.ContainerSurface.apply(self, arguments);
 
+        self._controller = new famous.views.RenderController();
+
         // --------------------------------------------------------------------------
         // background
         // --------------------------------------------------------------------------
@@ -32,64 +34,9 @@
         });
 
         self.add(background);
-
-        // --------------------------------------------------------------------------
-        // init nodes tracked
-        // --------------------------------------------------------------------------
-
-        self._nodes = [];
-
-        self._initNodesAndMods();
+        self.add(this._controller);
 
     }//Visualizer
-
-// ---------------------------------------------------------------------------------------------------------------------
-// PRIVATE | METHOD | INIT-NODES-&-MODIFIERS
-// ---------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype._initNodesAndMods = function() {
-    var self = this;
-
-    // --------------------------------------------------------------------------
-    // base modifier & node
-    // --------------------------------------------------------------------------
-
-    // base modifier
-    self._baseMod = new famous.core.Modifier({
-        //transform: famous.core.Transform.translate(0,0,0),
-        //opacity: 1
-    });
-
-    // add base modifier to the container => returns the base render node
-    self._baseNode = self.add(self._baseMod); 
-
-    // --------------------------------------------------------------------------
-    // stack & heap modifiers
-    // --------------------------------------------------------------------------
-
-    // stack modifier
-    self._stackMod = new famous.core.Modifier({
-        //transform: famous.core.Transform.translate(0,0,0)
-    });
- 
-    // heap modifer
-    self._heapMod = new famous.core.Modifier({
-        transform: famous.core.Transform.translate(200,30,0)
-    });
-
-    // --------------------------------------------------------------------------
-    // stack & heap nodes
-    // --------------------------------------------------------------------------
-
-    // base modifier + stack modifier => base stack node
-    self._stackNode = self._baseNode.add(self._heapMod);
-
-    // base modifier + heap modifier => base heap render node
-    self._heapNode = self._baseNode.add(self._heapMod);
-
-    // --------------------------------------------------------------------------
-
-}//Visualizer.prototype.initModifiers
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PUBLIC | METHOD | CLEAR (canvas|nodes)
@@ -98,8 +45,7 @@ Visualizer.prototype._initNodesAndMods = function() {
 Visualizer.prototype.clear = function() {
     var self = this;
 
-    self._stackNode.set({});
-    self._heapNode.set({});
+    self._controller.show(null);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -109,20 +55,39 @@ Visualizer.prototype.clear = function() {
 Visualizer.prototype.show = function(snapshot) {
     var self = this;
 
-    self.clear();
-
     if (!snapshot) {
+        self.clear();
         console.log('Visualizer.show | no current snapshot..');
         return;
     }
+
+    _update(snapshot);
+    self._controller.show(snapshot.render.baseNode);
+
+}//Visualizer.prototype.show
+
+// ---------------------------------------------------------------------------------------------------------------------
+// PRIVATE | FUNCTION | UPDATE (SNAPSHOT)
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _update(snapshot) {
+
+    if (snapshot.render)
+        return;
+
+    // --------------------------------------------------------------------------
+
+    snapshot.render = _initNodesAndMods();
+    var stackNode   = snapshot.render.stackNode;
+    var heapNode    = snapshot.render.heapNode;
 
     // --------------------------------------------------------------------------
 
     var y = 0;
     snapshot.stack.forEach( function(frame, i) {
-        var node = self._newDrawNode(frame);
+        var node = _newDrawNode(frame);
 
-        self._stackNode.add(node.draw.modifier).add(node.draw.surface);
+        stackNode.add(node.draw.modifier).add(node.draw.surface);
         node.draw.move(0, y);
         y += 100;
     });
@@ -132,22 +97,77 @@ Visualizer.prototype.show = function(snapshot) {
     y = 0;
     snapshot.heap.forEach( function(heapObj, i) {
         if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
-        var node = self._newDrawNode(heapObj);
+        var node = _newDrawNode(heapObj);
 
-        self._heapNode.add(node.draw.modifier).add(node.draw.surface);
+        heapNode.add(node.draw.modifier).add(node.draw.surface);
         node.draw.move(0, y);
         y += 100;
     });
 
-  // --------------------------------------------------------------------------
-
-}//Visualizer.prototype.show
+    // --------------------------------------------------------------------------
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
-// PRIVATE | METHOD | NEW-DRAW-NODE
+// PRIVATE | FUNCTION | INIT-NODES-&-MODIFIERS (base, stack & heap)
 // ---------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype._newDrawNode = function(node) {
+_initNodesAndMods = function() {
+
+    // --------------------------------------------------------------------------
+    // base modifier & node
+    // --------------------------------------------------------------------------
+
+    // base modifier
+    var baseMod = new famous.core.Modifier({
+        transform: famous.core.Transform.translate(10,10,0),
+        //opacity: 1
+    });
+
+    // add base modifier to the container => returns the base render node
+    var baseNode = new famous.core.RenderNode(baseMod);
+
+    // --------------------------------------------------------------------------
+    // stack & heap modifiers
+    // --------------------------------------------------------------------------
+
+    // stack modifier
+    var stackMod = new famous.core.Modifier({
+        //transform: famous.core.Transform.translate(0,0,0)
+    });
+ 
+    // heap modifer
+    var heapMod = new famous.core.Modifier({
+        transform: famous.core.Transform.translate(200,30,0)
+    });
+
+    // --------------------------------------------------------------------------
+    // stack & heap nodes
+    // --------------------------------------------------------------------------
+
+    // base modifier + stack modifier => base stack node
+    var stackNode = baseNode.add(stackMod);
+
+    // base modifier + heap modifier => base heap render node
+    var heapNode = baseNode.add(heapMod);
+
+    // --------------------------------------------------------------------------
+
+    return {
+        baseNode: baseNode,
+         baseMod: baseMod,
+       stackNode: stackNode,
+        stackMod: stackMod,
+        heapNode: heapNode,
+         heapMod: heapMod,
+    }
+
+}//Visualizer.prototype.initModifiers
+
+// ---------------------------------------------------------------------------------------------------------------------
+// PRIVATE | FUNCTION | NEW-DRAW-NODE
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _newDrawNode(node) {
 
     // --------------------------------------------------------------------------
 

@@ -32,10 +32,6 @@ Meteor.startup(function() {
         self.appView = new AppView();
         self.docListTestView = EditorViewFactory.docListTestView();
 
-        //add to container
-        self.controller.add(self.appView);
-        self.controller.add(self.docListTestView);
-
         //register with the slider's 
         navbar.slider.onSlide.push( self.onSlider.bind(self) );
     }
@@ -71,7 +67,8 @@ App.prototype.showSnapshot = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 App.prototype.onSlider = function(evt, ui) {
-    this.appView.visualizer.clear();
+    this.appView.visualizer.show( State.getCurrentSnapshot() );
+    //this.appView.visualizer.clear();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
