@@ -46,6 +46,20 @@ Visualizer.prototype.newSnapshot = function(id) {
     , plumbing: {}                      //A mapping of UIDs 'from' one object 'to' another object
     , coordinates: {}                   //Maps object's UID to {x,y} coordinates
 
+    //UI DRAW/LAYOUT (client side only)
+    , draw: {
+        isInit: false
+      , maxStackWidth: 0
+
+      //Pointers
+      , baseNode: undefined             // Pointer to the base Render node 
+      , baseMod: undefined              // Pointer to the base Modifier 
+      , stackNode: undefined            // Pointer to the stack's Render node
+      , stackMod: undefined             // Pointer to the stack's Modifier
+      , heapNode: undefined             // Pointer to the heap's Render node
+      , heapMod: undefined              // Pointer to the heap's Modifier
+    }
+
     //PRE-RENDERED (for debugging)
     , stackHtml: ""
     , heapHtml: ""
@@ -81,11 +95,13 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , gid: ""                         //global id -> id remains the same for the same object across snapshots
 
     //CORE
+    , type: NodeTypeEnum.NONE         //todo: init...
     , name: ""
     , locals: []
 
+    //Pointers (client side only)
     , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
-    , Snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
 
     //META-DATA
     , meta: {
@@ -101,15 +117,16 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , text: ""
     , html: ""
 
-    //UI DRAW/LAYOUT DATA
+    //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
           uid: self.newUID()                // URL: api.jquery.com/offset
         , position: { x:0, y:0, z:0 }       //  current position relative to the offset parent
         , offset: {x:0, y:0}                //  current position of an element relative to the document
         , width: 0
         , height: 0
+        , location: NodeLocationTypeEnum.STACK
 
-        //FUNCTIONS (added during render)
+        //Pointers
         , show: undefined
         , move: undefined
         , log: undefined
@@ -129,31 +146,18 @@ Visualizer.prototype.newFrame = function(id,sid) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// NODE TYPES
+// NODE LOCATION TYPE ENUM
 // --------------------------------------------------------------------------------------------------------------------
 
-NodeLocationTypeEnum = {
-    UNDEFINED: "UNDEFINED"
-  , STACK: "STACK"
-  , HEAP: "HEAP"
-};
+  // NodeLocationTypeEnum
+  // SEE: codeViz/src/common/enum.js
 
 // --------------------------------------------------------------------------------------------------------------------
+// NODE TYPE ENUM
+// --------------------------------------------------------------------------------------------------------------------
 
-NodeTypeEnum = {
-    NONE:"<NONE>"
-  , UNKNOWN: "<UNKNOWN>"
-  , PRIMITIVE:"PRIMITIVE"
-  , ARRAY:"ARRAY"
-  , LIST:"LIST"
-  , TUPLE:"TUPLE"
-  , SET: "SET"
-  , DICT: "DICT"
-  , FUNCTION: "FUNCTION"
-  , CLASS:"CLASS"
-  , INSTANCE: "INSTANCE"
-  , POINTER:"REF"
-};
+  // NodeTypeEnum
+  // SEE: codeViz/src/common/enum.js
 
 // --------------------------------------------------------------------------------------------------------------------
 // NODE
@@ -170,30 +174,31 @@ Visualizer.prototype.newNode = function(id,sid) {
     , gid: ''                         //global id -> id remains the same for the same object across snapshots
 
     //CORE
-    , type: NodeTypeEnum.NONE
+    , type: NodeTypeEnum.NONE         //todo: init...
     , name: ''
     , inherits: []                    //todo: should change this to: "parents" so that it implies both "inherits" and "instanceof"
     , value: []
     , pointer: []
     , pointerUID: []
 
+    //Pointers (client side only)
     , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
-    , Snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
 
     //PRE-RENDERED TEXT & HTML
-    , location: NodeLocationTypeEnum.UNDEFINED
     , text: ""
     , html: ""
 
-    //UI DRAW/LAYOUT DATA
+    //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
         uid: self.newUID()
       , position: {x:0, y:0, z:0}
       , offset: {x:0, y:0}
       , width: 0
       , height: 0
+      , location: NodeLocationTypeEnum.HEAP
 
-      //FUNCTIONS (added during render)
+      //Pointers
       , show: undefined
       , move: undefined
       , log: undefined

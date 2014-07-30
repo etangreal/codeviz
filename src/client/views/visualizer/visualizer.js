@@ -22,7 +22,18 @@
         // Call the super class constructor
         famous.surfaces.ContainerSurface.apply(self, arguments);
 
-        self._controller = new famous.views.RenderController();
+        // --------------------------------------------------------------------------
+
+        var options = {
+            inTransition: {duration: 10},
+            outTransition: {duration: 10},
+            overlap: true
+        }
+
+        self._controller = new famous.views.RenderController(options);
+
+        self._controller.inOpacityFrom( function() { return 1; } );
+        self._controller.outOpacityFrom( function() { return 1; } );
 
         // --------------------------------------------------------------------------
         // background
@@ -61,44 +72,46 @@ Visualizer.prototype.show = function(snapshot) {
         return;
     }
 
-    _update(snapshot);
-    self._controller.show(snapshot.render.baseNode, {duration:0});
+    _initDrawObj(snapshot);
+    self._controller.show(snapshot.draw.baseNode);
 
 }//Visualizer.prototype.show
 
 // ---------------------------------------------------------------------------------------------------------------------
-// PRIVATE | FUNCTION | UPDATE (SNAPSHOT)
+// PRIVATE | FUNCTION | INIT-DRAW-OBJ (SNAPSHOT)
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _update(snapshot) {
+function _initDrawObj(snapshot) {
 
-    if (snapshot.render)
+    if (snapshot.draw && snapshot.draw.isInit)
         return;
 
     // --------------------------------------------------------------------------
 
-    snapshot.render = _initNodesAndMods();
-    var stackNode   = snapshot.render.stackNode;
-    var heapNode    = snapshot.render.heapNode;
+    _initSnapshotDrawNodesAndMods(snapshot);
+
+    var stackNode   = snapshot.draw.stackNode;
+    var heapNode    = snapshot.draw.heapNode;
 
     // --------------------------------------------------------------------------
 
     var chain = stackNode;
-    var parent = undefined
+    var parent = undefined;
     snapshot.stack.forEach( function(frame, i) {
         var node = _newDrawNode(frame);
 
         chain = chain.add(node.draw.modifier);
                 chain.add(node.draw.surface);
 
-        node.parent = parent;
-        parent      = node;
+        node.parent   = parent;
+        node.snapshot = snapshot;
+        parent        = node;
     });
 
     // --------------------------------------------------------------------------
 
     chain = heapNode;
-    parent = undefined
+    parent = undefined;
     snapshot.heap.forEach( function(heapObj, i) {
         if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
         var node = _newDrawNode(heapObj);
@@ -106,19 +119,26 @@ function _update(snapshot) {
         chain = chain.add(node.draw.modifier);
                 chain.add(node.draw.surface);
 
-          node.parent = parent;
+        node.parent   = parent;
         node.snapshot = snapshot;
-          parent      = node;
+        parent        = node;
     });
 
     // --------------------------------------------------------------------------
+
+    snapshot.draw.isInit = true;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | FUNCTION | INIT-NODES-&-MODIFIERS (base, stack & heap)
 // ---------------------------------------------------------------------------------------------------------------------
 
-_initNodesAndMods = function() {
+_initSnapshotDrawNodesAndMods = function(snapshot) {
+
+    if (!snapshot.draw) {
+        console.error('ERROR|_initSnapshotDrawNodesAndMods|snapshot.draw does not exist');
+        snapshot.draw = {};
+    }
 
     // --------------------------------------------------------------------------
     // base modifier & node
@@ -144,7 +164,7 @@ _initNodesAndMods = function() {
  
     // heap modifer
     var heapMod = new famous.core.Modifier({
-        transform: famous.core.Transform.translate(200,30,0)
+        //transform: famous.core.Transform.translate(0,0,0)
     });
 
     // --------------------------------------------------------------------------
@@ -159,14 +179,15 @@ _initNodesAndMods = function() {
 
     // --------------------------------------------------------------------------
 
-    return {
-        baseNode: baseNode,
-         baseMod: baseMod,
-       stackNode: stackNode,
-        stackMod: stackMod,
-        heapNode: heapNode,
-         heapMod: heapMod,
-    }
+    var draw = snapshot.draw;
+
+    //add properties to snapshot
+    draw.baseNode   = baseNode;
+    draw.baseMod    = baseMod;
+    draw.stackNode  = stackNode;
+    draw.stackMod   = stackMod;
+    draw.heapNode   = heapNode;
+    draw.heapMod    = heapMod;
 
 }//Visualizer.prototype.initModifiers
 
@@ -244,19 +265,43 @@ function _move(x,y) {
 function _onDeploy() {
     var node = this;
 
-    node.draw.width = node.draw.surface._currTarget.offsetWidth;
-    node.draw.height = node.draw.surface._currTarget.offsetHeight;
+    if (!node.snapshot)
+        console.error('ERROR|node.onDeploy| node has no snapshot!');
+
+    var w = node.draw.surface._currTarget.offsetWidth;
+    var h = node.draw.surface._currTarget.offsetHeight;
+    var x = 0;
+    var y = 0;
+    var d = 10;
+
+    node.draw.width = w;
+    node.draw.height = h;
 
     node.draw.show();
     //node.draw.log();
 
-    if (node.parent) {
-        //console.log(node.parent.draw.height);
-        node.draw.move(0,node.parent.draw.height + 10);
+    var msw = node.snapshot.draw.maxStackWidth;                 //current maximum stack width
+    if (node.draw.location == NodeLocationTypeEnum.STACK) {
+        if (w > msw) node.snapshot.draw.maxStackWidth = w;
+        if (w > msw && msw != 0)
+            node.snapshot.draw.baseMod.transformFrom(famous.core.Transform.translate(w-msw + d, d, 0));
     }
 
-    if (node.snapshot)
+    node.snapshot.draw.heapMod.transformFrom(famous.core.Transform.translate(msw+3*d, 0, 0));
 
+    if (node.parent) {
+        var pw  = node.parent.draw.width;               //pw = parent height
+        var ph  = node.parent.draw.height;              //ph = parent height
+
+        y = ph + d;
+
+        if (node.draw.location == NodeLocationTypeEnum.STACK) {
+            if (w < pw) x = pw-w;
+            if (w > pw) x = -(w-pw);
+        }//if(node.draw.location)
+    }//if(node.parent)
+
+    if (x>0 || y>0) node.draw.move(x,y);
     //node.draw.unsubscribeFromOnDeploy();
 }
 

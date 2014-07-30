@@ -41,19 +41,26 @@ Meteor.startup(function() {
 // --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.hide = function() {
-    this.controller.show(null);
+    this.controller.show( null );
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.showAppView = function() {
-    this.controller.show(this.appView);
+    var self = this;
+
+    self.controller.show( self.appView );
+
+    if (!self.appView.isInit) { //on the first time the appView is shown...
+        self.appView.isInit = true;
+        State.toggleDebugInfo();
+    }
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
 App.prototype.showDocListTestView = function() {
-    this.controller.show(this.docListTestView);
+    this.controller.show( this.docListTestView );
 }
 
 // --------------------------------------------------------------------------------------------------------------------

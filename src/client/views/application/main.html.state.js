@@ -35,7 +35,7 @@ _.extend(this.State, {
 // -------------------------------------------------------------------------------------------------
 
 Meteor.startup(function (){
-	_initState();
+
 });
 
 // -------------------------------------------------------------------------------------------------
@@ -46,9 +46,11 @@ function _initState() {
 	Session.set('ssn_isFiles', true);
 	Session.set('ssn_isEditor', true);
 	Session.set('ssn_isVisualizer', true);
-	Session.set('ssn_isPythonTutor', true);
+	Session.set('ssn_isPythonTutor', false);
 	Session.set('ssn_isDebugInfo', true);
 }
+
+_initState();
 
 // -------------------------------------------------------------------------------------------------
 

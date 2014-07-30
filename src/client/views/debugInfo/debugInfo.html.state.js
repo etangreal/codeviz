@@ -54,6 +54,9 @@ function _getCurrentSnapshot() {
 // -------------------------------------------------------------------------------------------------
 
 function _getTraceInfo() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -63,6 +66,9 @@ function _getTraceInfo() {
 // -------------------------------------------------------------------------------------------------
 
 function _getStackInfo() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -72,6 +78,9 @@ function _getStackInfo() {
 // -------------------------------------------------------------------------------------------------
 
 function _getStackHtml() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -81,6 +90,9 @@ function _getStackHtml() {
 // -------------------------------------------------------------------------------------------------
 
 function _getHeapInfo() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -90,6 +102,9 @@ function _getHeapInfo() {
 // -------------------------------------------------------------------------------------------------
 
 function _getHeapHtml() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -99,6 +114,9 @@ function _getHeapHtml() {
 // -------------------------------------------------------------------------------------------------
 
 function _getLayoutInfo() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 
@@ -108,6 +126,9 @@ function _getLayoutInfo() {
 // -------------------------------------------------------------------------------------------------
 
 function _getReferencesInfo() {
+	var self = this;
+	if (!self.isDebugInfo()) return '';
+
 	var idx = _getCurrentSliderIndex();
 	var snapshot = _getCurrentSnapshot();
 

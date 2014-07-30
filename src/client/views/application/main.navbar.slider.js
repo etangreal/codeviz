@@ -51,7 +51,8 @@ function _getSlider() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _initSlider(size) { 
+function _initSlider(size) {
+	// console.log('_initSlider');
 	size = size || 50;
 
   	var slider = _getSlider();

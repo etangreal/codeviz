@@ -392,6 +392,7 @@ DrawGL.prototype.prerenderGL = function( snapshots ) { var self = this, me = Vis
     me.extractCoordinateInfo( snapshot );
 
     // ------------------------------------------
+
     var plumbing = snapshot.plumbing;
     var coordinates = snapshot.coordinates;
 

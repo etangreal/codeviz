@@ -43,6 +43,7 @@ Meteor.startup(function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _initExecuteButton() {
+	// console.log('_initExecuteButton');
 	var button = _getExecuteButton();
 
 	button.on('click', function() {

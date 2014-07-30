@@ -17,20 +17,27 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
     function AppView() {
+        var self = this;
 
         // Call the super class's constructor
-        famous.core.View.apply(this, arguments);
+        famous.core.View.apply(self, arguments);
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        self.isInit = false;
 
         // { layout, header,
         //      content{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo },
         //  footer }
         var headerFooter = AppViewFactory.HeaderFooter();
         var flexLayout   = headerFooter.content.flexLayout;
-        this.visualizer   = headerFooter.content.visualizer;
+        self.visualizer   = headerFooter.content.visualizer;
 
         State.onToggle = toggleViews.bind(flexLayout);
 
-        this.add(headerFooter.layout);
+        self.add(headerFooter.layout);
+
+        // -------------------------------------------------------------------------------------------------------------
 
     }//AppView
 
