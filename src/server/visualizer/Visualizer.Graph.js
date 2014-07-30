@@ -46,7 +46,7 @@ Visualizer.prototype.newSnapshot = function(id) {
     , plumbing: {}                      //A mapping of UIDs 'from' one object 'to' another object
     , coordinates: {}                   //Maps object's UID to {x,y} coordinates
 
-    //PRE-RENDERED-HTML (for debugging)
+    //PRE-RENDERED (for debugging)
     , stackHtml: ""
     , heapHtml: ""
     , html: ""
@@ -84,6 +84,9 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , name: ""
     , locals: []
 
+    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
+    , Snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+
     //META-DATA
     , meta: {
           is_highlighted: false
@@ -105,6 +108,16 @@ Visualizer.prototype.newFrame = function(id,sid) {
         , offset: {x:0, y:0}                //  current position of an element relative to the document
         , width: 0
         , height: 0
+
+        //FUNCTIONS (added during render)
+        , show: undefined
+        , move: undefined
+        , log: undefined
+        , cleanup: undefined
+
+        , onDeploy: undefined
+        , subsribeToOnDeploy: undefined
+        , unsubscribeFromOnDeploy: undefined
       }
 
     //DEBUG INFO
@@ -164,6 +177,9 @@ Visualizer.prototype.newNode = function(id,sid) {
     , pointer: []
     , pointerUID: []
 
+    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
+    , Snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+
     //PRE-RENDERED TEXT & HTML
     , location: NodeLocationTypeEnum.UNDEFINED
     , text: ""
@@ -176,6 +192,16 @@ Visualizer.prototype.newNode = function(id,sid) {
       , offset: {x:0, y:0}
       , width: 0
       , height: 0
+
+      //FUNCTIONS (added during render)
+      , show: undefined
+      , move: undefined
+      , log: undefined
+      , cleanup: undefined
+
+      , onDeploy: undefined
+      , subsribeToOnDeploy: undefined
+      , unsubscribeFromOnDeploy: undefined
     }
 
     //DEBUG INFO

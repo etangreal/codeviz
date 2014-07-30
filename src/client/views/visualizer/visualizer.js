@@ -62,7 +62,7 @@ Visualizer.prototype.show = function(snapshot) {
     }
 
     _update(snapshot);
-    self._controller.show(snapshot.render.baseNode);
+    self._controller.show(snapshot.render.baseNode, {duration:0});
 
 }//Visualizer.prototype.show
 
@@ -83,25 +83,32 @@ function _update(snapshot) {
 
     // --------------------------------------------------------------------------
 
-    var y = 0;
+    var chain = stackNode;
+    var parent = undefined
     snapshot.stack.forEach( function(frame, i) {
         var node = _newDrawNode(frame);
 
-        stackNode.add(node.draw.modifier).add(node.draw.surface);
-        node.draw.move(0, y);
-        y += 100;
+        chain = chain.add(node.draw.modifier);
+                chain.add(node.draw.surface);
+
+        node.parent = parent;
+        parent      = node;
     });
 
     // --------------------------------------------------------------------------
 
-    y = 0;
+    chain = heapNode;
+    parent = undefined
     snapshot.heap.forEach( function(heapObj, i) {
         if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
         var node = _newDrawNode(heapObj);
 
-        heapNode.add(node.draw.modifier).add(node.draw.surface);
-        node.draw.move(0, y);
-        y += 100;
+        chain = chain.add(node.draw.modifier);
+                chain.add(node.draw.surface);
+
+          node.parent = parent;
+        node.snapshot = snapshot;
+          parent      = node;
     });
 
     // --------------------------------------------------------------------------
@@ -241,7 +248,14 @@ function _onDeploy() {
     node.draw.height = node.draw.surface._currTarget.offsetHeight;
 
     node.draw.show();
-    node.draw.log();
+    //node.draw.log();
+
+    if (node.parent) {
+        //console.log(node.parent.draw.height);
+        node.draw.move(0,node.parent.draw.height + 10);
+    }
+
+    if (node.snapshot)
 
     //node.draw.unsubscribeFromOnDeploy();
 }
