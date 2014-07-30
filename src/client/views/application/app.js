@@ -51,8 +51,8 @@ App.prototype.showAppView = function() {
 
     self.controller.show( self.appView );
 
-    if (!self.appView.isInit) { //on the first time the appView is shown...
-        self.appView.isInit = true;
+    if (!self.appView._isInitShow) { //on the first time the appView is shown...
+        self.appView._isInitShow = true;
         State.toggleDebugInfo();
     }
 }

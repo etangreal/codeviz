@@ -24,7 +24,7 @@
 
         // -------------------------------------------------------------------------------------------------------------
 
-        self.isInit = false;
+        self._isInitShow = false;
 
         // { layout, header,
         //      content{ flexLayout, docList, editor, visualizer, pythonTutor, debugInfo },
