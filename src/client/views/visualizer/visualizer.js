@@ -206,7 +206,9 @@ function _newDrawNode(node) {
     var surface = new famous.core.Surface({
         content: node.html,
         size: [true,true],
-        properties: { backgroundColor: 'pink' }
+        properties: {
+            backgroundColor: 'pink'
+        }
     });
 
     // --------------------------------------------------------------------------

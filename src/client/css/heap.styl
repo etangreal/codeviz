@@ -1,0 +1,227 @@
+
+// test styles on sample heap
+// 	URL: jsbin.com/cavub/10/edit
+
+/* ------------------------------------------------------------------ *
+ * DECLARATIONS
+ * ------------------------------------------------------------------ */
+
+DEBUG = false
+REFS = false
+
+/* ------------------------------------------------------------------ *
+ * HEAP
+ * ------------------------------------------------------------------ */
+
+._heap
+	overflow: visible
+
+	if (DEBUG || false)
+		padding: 2px
+		border: 2px solid gray
+		background-color: pink
+
+// ----------------------------------------------
+// HEAP | TABLE
+// ----------------------------------------------
+
+._heap table
+	width: 100%
+
+	if (DEBUG || false)
+		// background-color: brown 
+		// border: 2px solid darkgrey 
+
+// ----------------------------------------------
+
+._heap table,
+._heap table tr,
+._heap table td
+	min-width: 10px
+	// min-height: 10px
+
+	if (DEBUG || false)
+		// margin:  1px 
+		// padding: 1px 
+		// border:  1px solid black
+
+// ----------------------------------------------
+
+._heap table tr td
+	// padding-right: 5px
+	// padding-left: 5px
+
+// ----------------------------------------------
+
+._heap table tr td:first-child
+	if (DEBUG || false)
+		background-color: blue
+
+// ----------------------------------------------
+
+._heap table tr td:nth-child(2)
+	if (DEBUG || false)
+		background-color: red
+
+// ----------------------------------------------
+
+._heap table tr td:nth-child(3)
+	if (DEBUG || false)
+		background-color: yellow
+
+// ----------------------------------------------
+// HEAP | TABLE | PROPERTIES (node values)
+// ----------------------------------------------
+
+div._heap table ._properties
+	margin-left: 5px;
+
+// ----------------------------------------------
+// HEAP | NODE
+// ----------------------------------------------
+
+div._heap ._node
+	display: block;
+
+	if (DEBUG || false)
+		border: 1px solid LightSlateGray
+		border-radius:10px
+
+// ----------------------------------------------
+// HEAP | NODE | NAME
+// ----------------------------------------------
+
+div._heap ._node ._name
+	float: left
+
+	margin: 1px
+	margin-right: 10px
+	padding: 5px
+
+	min-width: 100px
+	min-height: 22px
+
+	if (DEBUG || false)
+		border: 1px solid darkgrey
+
+// ----------------------------------------------
+// HEAP | NODE | VALUE
+// ----------------------------------------------
+
+div._heap ._node ._value
+	float: left
+
+	margin: 1px
+
+	min-width: 100px
+	max-height: 22px
+
+	if (DEBUG || false)
+		border: 1px solid grey
+
+// ----------------------------------------------
+// HEAP | NODE | POINTER/REF
+// ----------------------------------------------
+
+div._heap ._node ._ref
+	float: left
+
+	margin: 1px
+
+	max-width: 20px
+	max-height: 22px
+
+	if (DEBUG || false)
+		border: 1px solid grey
+
+// ----------------------------------------------
+// HEAP | NODE | FUNCTION
+// ----------------------------------------------
+
+div._heap ._node ._func
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | CLASS
+// ----------------------------------------------
+
+div._heap ._node ._class
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | INSTANCE
+// ----------------------------------------------
+
+div._heap ._node ._instance
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | LIST
+// ----------------------------------------------
+
+div._heap ._node ._list
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | TUPLE
+// ----------------------------------------------
+
+div._heap ._node ._tuple
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | SET
+// ----------------------------------------------
+
+div._heap ._node ._set
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | DICTIONARY
+// ----------------------------------------------
+
+div._heap ._node ._dict
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | NODE | UNKNOWN
+// ----------------------------------------------
+
+div._heap ._node ._unknown
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: orange
+
+/* ------------------------------------------------------------------ *
+ * END
+ * ------------------------------------------------------------------ */

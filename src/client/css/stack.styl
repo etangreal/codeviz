@@ -1,0 +1,186 @@
+
+// test styles on sample stack
+// 	URL: jsbin.com/xuruk/81/edit
+
+/* ------------------------------------------------------------------ *
+ * DECLARATIONS
+ * ------------------------------------------------------------------ */
+
+DEBUG = false
+REFS = false
+
+/* ------------------------------------------------------------------ *
+ * STACK | FRAME
+ * ------------------------------------------------------------------ */
+
+._frame
+	overflow: visible
+
+	padding-left: 5px
+
+	border-left: 1px solid LightSlateGray
+
+	if (DEBUG || false)
+		border-left: 1px solid LightSlateGray
+		background-color: pink
+
+// ----------------------------------------------
+// FRAME | TABLE
+// ----------------------------------------------
+
+._frame table
+	width: 100%
+
+	if (DEBUG || false)
+		background-color: brown 
+		border: 2px solid darkgrey 
+
+// ----------------------------------------------
+
+._frame table,
+._frame table tr,
+._frame table td
+	min-width: 10px
+	// min-height: 10px
+
+	if (DEBUG || false)
+		// margin: 1px
+		// padding: 1px
+		// border: 1px solid black
+
+// ----------------------------------------------
+
+._frame table tr td
+	// padding-right: 5px
+	// padding-left: 5px
+
+// ----------------------------------------------
+
+._frame table._locals tr td:first-child
+	if (DEBUG || false)
+		background-color: blue
+
+// ----------------------------------------------
+
+._frame table._locals tr td:nth-child(2)
+	if (DEBUG || false)
+		background-color: red
+
+// ----------------------------------------------
+// FRAME | ACTIVE
+// ----------------------------------------------
+
+_.frame ._active
+	background: rgba(135,206,250, 0.3)
+	background: rgba(176,196,222, 0.25)
+
+// ----------------------------------------------
+// FRAME | NAME
+// ----------------------------------------------
+
+._frame div._fname
+	overflow: visible
+
+	if (DEBUG || false)
+		/* margin:  1px */
+		/* padding: 1px */
+
+		/* border:  2px solid teal */
+		background-color: teal
+
+// ----------------------------------------------
+// FRAME | LOCALS
+// ----------------------------------------------
+
+._frame table._locals
+	padding-left: 20px
+
+	if (DEBUG || false)
+		border: 2px solid green
+		/* background-color: green */
+
+// ----------------------------------------------
+// FRAME | LOCALS | NAME
+// ----------------------------------------------
+
+._frame table._locals ._name
+	text-align: right
+
+	padding-right: 5px
+
+	if (DEBUG || false)
+		border: 2px solid yellow
+		/* background-color: yellow */
+
+// ----------------------------------------------
+// FRAME | LOCALS | VALUE
+// ----------------------------------------------
+
+._frame table._locals ._value
+	overflow: hidden
+	text-align: left
+
+	padding-left: 10px
+	padding-right: 5px
+
+	border-left: 1px solid lightslategray
+	border-bottom: 1px solid lightslategray
+
+	if (DEBUG || false)
+		border: 2px solid yellow
+		/* background-color: purple */
+
+// ----------------------------------------------
+// FRAME | LOCALS | VALUE | UID (val & ptr)
+// ----------------------------------------------
+
+._frame table._locals div._uid
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 2px solid grey
+		/* background-color: grey */
+
+// ----------------------------------------------
+// FRAME | LOCALS | VALUE | UID | VAL
+// ----------------------------------------------
+
+._frame table._locals div._value div._uid div._val
+	display: none
+
+	/* font-size: 12px */
+
+	/* padding-left: 10px */
+	padding-right: 5px
+
+	if (DEBUG || false)
+		border: 2px solid green
+		/* background-color: green */
+
+	if (REFS || false)
+		display: inline-block
+
+// ----------------------------------------------
+// FRAME | LOCALS | VALUE | UID | PTR
+// ----------------------------------------------
+
+._frame table._locals div._uid div._ptr
+	display: inline-block
+	overflow: hidden
+
+	width: 10px
+	height: 10px
+
+	// margin-left: 10px
+	// margin-right: 5px 
+
+	-webkit-border-radius: 10px
+	-moz-border-radius: 10px
+
+	background-color: lightgrey
+	if (DEBUG || false)
+		/* border: 2px solid green */
+
+/* ------------------------------------------------------------------ *
+ * END
+ * ------------------------------------------------------------------ */

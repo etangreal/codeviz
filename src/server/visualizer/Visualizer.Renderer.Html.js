@@ -90,11 +90,12 @@ Visualizer.prototype.renderFrameNodeAsHtml = function(node, TB) {
   var Tb = "\t";
 
   var verbose = self.isVerbose();
-  var value   = self.recurseValueRefsToHtmlUID(node.value,verbose);
+  var name    = '<div class="_name">' + node.name + '</div>'
+  var value   = '<div class="_value">' + self.recurseValueRefsToHtmlUID(node.value,verbose) + '</div>';
 
   var nodeHtml =
       TB +      '<tr>'                                + Br +
-      TB + Tb +   '<td>' + node.name + '</td>'        + Br +
+      TB + Tb +   '<td>' + name  + '</td>'            + Br +
       TB + Tb +   '<td>' + value + '</td>'            + Br +
       TB +      '</tr>'                               + Br ;
 
@@ -637,10 +638,10 @@ Visualizer.prototype.asHtmlUID = function(uid, values, verbose) {
   verbose = verbose || self.isVerbose();
 
   var uid = (verbose) ?
-      '<div id="' + uid + '" class="_uid">' + values + '</div>' :
-      '<div id="' + uid + '" class="_uid _ptr">' + '</div>';
+      '<div class="_val">' + values + '</div><div id="' + uid + '" class="_ptr"></div>' :
+      '<div id="' + uid + '" class="_ptr">' + '</div>';
 
-  return '<div class="_ptrWrapper" >'+uid+'</div>';
+  return '<div class="_uid" >'+uid+'</div>';
 };
 
 // --------------------------------------------------------------------------------------------------------------------
