@@ -151,9 +151,6 @@ Visualizer.prototype.renderHeapNodeAsHtml = function(node, TB) {
   if ( node.type == NodeTypeEnum.CLASS )
     return self.renderClassNodeAsHtml(node, TB);
 
-  if ( node.type == NodeTypeEnum.POINTER )
-    return self.renderRefNodeAsHtml(node, TB);
-
   if ( node.type == NodeTypeEnum.INSTANCE )
     return self.renderInstanceNodeAsHtml(node, TB);
 
@@ -202,15 +199,14 @@ Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) {
   console.warn("WARNING: renderRefNodeAsHtml => we have a reference node. This was unexpected.");
 
   var duid    = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var value   = self.recurseValueRefsToHtmlUID(node.value, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
   var cls     = "_heap _node _ref";
 
   var table =
           TB +           '<table>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>' + node.type + '</td>'    + Br +
           TB + Tb + Tb +     '<td>' + node.name + '</td>'    + Br +
           TB + Tb + Tb +     '<td>' + value + '</td>'        + Br +
@@ -219,9 +215,9 @@ Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) {
           TB +           '</table>'                          + Br ;
 
   var nodeHtml =
-          TB +           '<div id="'+duid+'" class="'+cls+'">'+ Br +
-                            table                            +
-          TB +           '</div><!-- /_node _ref -->'        + Br ;
+          TB +           '<div id="'+duid+'" class="'+cls+'">' + Br +
+                            table                              +
+          TB +           '</div><!-- /_node _ref -->'          + Br ;
 
   return nodeHtml;
 };
@@ -241,8 +237,7 @@ Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var cls     = "_heap _node _func";
 
   var table =
@@ -256,7 +251,7 @@ Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) {
           TB +           '</thead>'                          + Br +
           TB +           '<tbody>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>' + node.name + '</td>'    + Br +
           TB + Tb +        '</tr>'                           + Br +
           TB +           '</tbody>'                          + Br +
@@ -285,8 +280,7 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var cls     = "_heap _node _class";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -296,7 +290,7 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
           TB +           '<table>'                            + Br +
           TB +           '<thead>'                            + Br +
           TB + Tb +        '<tr>'                             + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'            + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'           + Br +
           TB + Tb + Tb +     '<td>' + node.type +     '</td>' + Br +
           TB + Tb + Tb +     '<td>' + node.name +     '</td>' + Br +
           TB + Tb + Tb +     '<td>' + node.inherits + '</td>' + Br +
@@ -332,9 +326,8 @@ Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) {
 
   var verbose = self.isVerbose();
 
-  var duid     = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var duid    = node.draw.uid;
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var cls     = "_heap _node _instance";
 
   var values    = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -343,7 +336,7 @@ Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) {
   var table =
           TB +           '<table>'                            + Br +
           TB + Tb +        '<tr>'                             + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'            + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'           + Br +
           TB + Tb + Tb +     '<td>' + node.type + '</td>'     + Br +
           TB + Tb + Tb +     '<td>' + node.inherits + '</td>' + Br +
                                 properies.asRow               +
@@ -373,9 +366,8 @@ Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) {
 
   var verbose = self.isVerbose();
 
-  var duid     = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var duid    = node.draw.uid;
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var cls     = "_heap _node _list";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -383,14 +375,14 @@ Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) {
   var table =
           TB +           '<table>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>' + node.type + '</td>'    + Br +
           TB + Tb + Tb +     '<td>' + values + '</td>'       + Br +
           TB + Tb +        '</tr>'                           + Br +
           TB +           '</table>'                          + Br ;
 
   var nodeHtml =
-          TB +           '<div id="'+duid+'" class="'+cls+'">'  + Br +
+          TB +           '<div id="' + duid + '" class="' + cls + '">'  + Br +
                             table                               +
           TB +           '</div><!-- /_node _list -->'          + Br ;
 
@@ -412,8 +404,7 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
   var cls     = "_heap _node _tuple";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -441,7 +432,7 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
           TB +           '</thead>'                          + Br +
           TB +           '<tbody>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>'                          + Br +
                                 localsTable                  +
           TB + Tb + Tb +     '</td>'                         + Br +
@@ -481,7 +472,7 @@ Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) {
   var table =
           TB +           '<table>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>' + node.type + '</td>'    + Br +
           TB + Tb + Tb +     '<td>' + values + '</td>'       + Br +
           TB + Tb +        '</tr>'                           + Br +
@@ -519,7 +510,7 @@ Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) {
   var table =
           TB +           '<table>'                           + Br +
           TB + Tb +        '<tr>'                            + Br +
-          TB + Tb + Tb +     '<td>' + id + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid + '</td>'          + Br +
           TB + Tb + Tb +     '<td>' + node.type + '</td>'    + Br +
           TB + Tb + Tb +     '<td>' + values + '</td>'       + Br +
           TB + Tb +        '</tr>'                           + Br +

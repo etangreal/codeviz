@@ -29,8 +29,8 @@ REFS = false
 	width: 100%
 
 	if (DEBUG || false)
-		// background-color: brown 
-		// border: 2px solid darkgrey 
+		/* background-color: brown */ 
+		/* border: 2px solid purple */ 
 
 // ----------------------------------------------
 
@@ -38,12 +38,12 @@ REFS = false
 ._heap table tr,
 ._heap table td
 	min-width: 10px
-	// min-height: 10px
+		// min-height: 10px
 
 	if (DEBUG || false)
-		// margin:  1px 
-		// padding: 1px 
-		// border:  1px solid black
+		/* margin:  1px */ 
+		/* padding: 1px */ 
+		/* border:  1px solid black */
 
 // ----------------------------------------------
 
@@ -63,82 +63,101 @@ REFS = false
 	if (DEBUG || false)
 		background-color: red
 
-// ----------------------------------------------
-
 ._heap table tr td:nth-child(3)
 	if (DEBUG || false)
 		background-color: yellow
 
-// ----------------------------------------------
-// HEAP | TABLE | PROPERTIES (node values)
-// ----------------------------------------------
-
-div._heap table ._properties
-	margin-left: 5px;
+._heap table tr td:nth-child(4)
+	if (DEBUG || false)
+		background-color: brown
 
 // ----------------------------------------------
 // HEAP | NODE
 // ----------------------------------------------
 
-div._heap ._node
+._heap ._node
 	display: block;
 
 	if (DEBUG || false)
 		border: 1px solid LightSlateGray
 		border-radius:10px
+		/* background-color: brown */
 
 // ----------------------------------------------
-// HEAP | NODE | NAME
+// HEAP | (node) | POINTER/REF
 // ----------------------------------------------
 
-div._heap ._node ._name
-	float: left
+._heap ._ref
+	overflow: visible
 
-	margin: 1px
-	margin-right: 10px
-	padding: 5px
-
-	min-width: 100px
-	min-height: 22px
+	min-width: 10px
+	min-height: 10px
 
 	if (DEBUG || false)
-		border: 1px solid darkgrey
+		border: 2px solid grey
 
 // ----------------------------------------------
-// HEAP | NODE | VALUE
+// HEAP | (node) | FUNCTION
 // ----------------------------------------------
 
-div._heap ._node ._value
-	float: left
+div._heap ._func
+	overflow: visible
 
-	margin: 1px
-
-	min-width: 100px
-	max-height: 22px
-
-	if (DEBUG || false)
+	if (DEBUG || true)
 		border: 1px solid grey
+		background-color: orange
 
 // ----------------------------------------------
-// HEAP | NODE | POINTER/REF
+// HEAP | CLASS
 // ----------------------------------------------
 
-div._heap ._node ._ref
-	float: left
-
-	margin: 1px
-
-	max-width: 20px
-	max-height: 22px
+._heap ._class
 
 	if (DEBUG || false)
-		border: 1px solid grey
+		border: 2px solid purple
+		/* background-color: brown */
 
 // ----------------------------------------------
-// HEAP | NODE | FUNCTION
+// HEAP | INSTANCE
 // ----------------------------------------------
 
-div._heap ._node ._func
+._heap ._instance
+
+	if (DEBUG || false)
+		border: 2px solid red
+		/* background-color: brown */
+
+// ----------------------------------------------
+// HEAP | (class|instance) | TABLE | PROPERTIES
+// ----------------------------------------------
+
+._heap table._properties
+	padding-left: 20px
+
+	if (DEBUG || false)
+		border: 2px solid teal
+		/* background-color: brown */
+
+// ----------------------------------------------
+
+._heap table._properties tr td:first-child
+	text-align: right
+
+	if (DEBUG || false)
+		background-color: blue
+
+// ----------------------------------------------
+
+._heap table._properties tr td:nth-child(2)
+
+	if (DEBUG || false)
+		background-color: orange
+
+// ----------------------------------------------
+// HEAP | (node) | LIST
+// ----------------------------------------------
+
+._heap ._list
 	overflow: visible
 
 	if (DEBUG || false)
@@ -146,10 +165,21 @@ div._heap ._node ._func
 		background-color: orange
 
 // ----------------------------------------------
-// HEAP | NODE | CLASS
+// HEAP | (node) | TUPLE
 // ----------------------------------------------
 
-div._heap ._node ._class
+._heap ._tuple
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 1px solid grey
+		background-color: purple
+
+// ----------------------------------------------
+// HEAP | (node) | SET
+// ----------------------------------------------
+
+._heap ._set
 	overflow: visible
 
 	if (DEBUG || false)
@@ -157,10 +187,10 @@ div._heap ._node ._class
 		background-color: orange
 
 // ----------------------------------------------
-// HEAP | NODE | INSTANCE
+// HEAP | (node) | DICTIONARY
 // ----------------------------------------------
 
-div._heap ._node ._instance
+._heap ._dict
 	overflow: visible
 
 	if (DEBUG || false)
@@ -168,10 +198,10 @@ div._heap ._node ._instance
 		background-color: orange
 
 // ----------------------------------------------
-// HEAP | NODE | LIST
+// HEAP | (node) | UNKNOWN
 // ----------------------------------------------
 
-div._heap ._node ._list
+._heap ._unknown
 	overflow: visible
 
 	if (DEBUG || false)
@@ -179,49 +209,5 @@ div._heap ._node ._list
 		background-color: orange
 
 // ----------------------------------------------
-// HEAP | NODE | TUPLE
+// END
 // ----------------------------------------------
-
-div._heap ._node ._tuple
-	overflow: visible
-
-	if (DEBUG || false)
-		border: 1px solid grey
-		background-color: orange
-
-// ----------------------------------------------
-// HEAP | NODE | SET
-// ----------------------------------------------
-
-div._heap ._node ._set
-	overflow: visible
-
-	if (DEBUG || false)
-		border: 1px solid grey
-		background-color: orange
-
-// ----------------------------------------------
-// HEAP | NODE | DICTIONARY
-// ----------------------------------------------
-
-div._heap ._node ._dict
-	overflow: visible
-
-	if (DEBUG || false)
-		border: 1px solid grey
-		background-color: orange
-
-// ----------------------------------------------
-// HEAP | NODE | UNKNOWN
-// ----------------------------------------------
-
-div._heap ._node ._unknown
-	overflow: visible
-
-	if (DEBUG || false)
-		border: 1px solid grey
-		background-color: orange
-
-/* ------------------------------------------------------------------ *
- * END
- * ------------------------------------------------------------------ */

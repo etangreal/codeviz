@@ -1,0 +1,60 @@
+
+/* ------------------------------------------------------------------ *
+ * DECLARATIONS
+ * ------------------------------------------------------------------ */
+
+DEBUG = false
+REFS = false
+
+/* ------------------------------------------------------------------ *
+ * COMMON | HEAP & STACK
+ * ------------------------------------------------------------------ */
+
+// ----------------------------------------------
+// (...) | UID
+// ----------------------------------------------
+
+div._uid
+	overflow: visible
+
+	if (DEBUG || false)
+		border: 2px solid grey
+		/* background-color: grey */
+
+// ----------------------------------------------
+// (...) | UID | VAL
+// ----------------------------------------------
+
+div._uid div._val
+	display: none
+
+	if (REFS || false)
+		display: inline-block
+		font-size: 10px
+
+	if (DEBUG || true)
+		border: 2px solid green
+		/* background-color: green */
+
+// ----------------------------------------------
+// (...) | UID | PTR
+// ----------------------------------------------
+
+div._uid div._ptr
+	display: inline-block
+	overflow: hidden
+
+	width: 10px
+	height: 10px
+
+	-webkit-border-radius: 10px
+	-moz-border-radius: 10px
+
+	background-color: lightgrey
+
+	if (DEBUG || false)
+		border: 2px solid green
+
+/* ------------------------------------------------------------------ *
+ * END
+ * ------------------------------------------------------------------ */
