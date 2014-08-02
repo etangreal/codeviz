@@ -31,6 +31,7 @@ function _pythonTutorView() {
         content: '<div id="pythonTutor"></div>',
         size: [undefined,undefined],
         properties: {
+            overflow: 'scroll',
             borderLeft: '2px solid grey',
             backgroundColor: 'white' 
         }
