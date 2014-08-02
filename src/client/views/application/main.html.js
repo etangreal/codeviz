@@ -33,6 +33,14 @@ Template.header.events({
 
     'click #id-btn-pythonTutor': function(e,t) {
         State.togglePythonTutor();
+
+        var id = State.getDocumentId();
+
+        if (id && State.isPythonTutor()) {
+            var data = State.getCurrentData();
+            var options = State.getPythonTutorFrontendOptions();
+            State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
+        }
     },
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -44,7 +52,6 @@ Template.header.events({
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-test': function(e,t) {
-        app.showSnapshot();
     },
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -75,7 +75,12 @@ App.prototype.showSnapshot = function() {
 
 App.prototype.onSlider = function(evt, ui) {
     this.appView.visualizer.show( State.getCurrentSnapshot() );
-    //this.appView.visualizer.clear();
+
+    if (State.getDocumentId() && State.isPythonTutor() && State._pythonTutor) {
+        var i = ui.value;
+        State._pythonTutor.curInstr = i;
+        State._pythonTutor.updateOutput();
+    }
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

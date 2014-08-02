@@ -58,7 +58,7 @@ function _ratios() {
 	var files = _isFiles() ? true:0;
 	var editor = _isEditor() ? 1:0;
 	var visualizer = _isVisualizer() ? 2:0;
-	var pythonTuotr = _isPythonTutor() ? 1:0;
+	var pythonTuotr = _isPythonTutor() ? 3:0;
 	var debugInfo = _isDebugInfo() ? 1:0;
 
 	var spacer = !(editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
@@ -126,8 +126,8 @@ function _isPythonTutor() {
 // -------------------------------------------------------------------------------------------------
 
 function _togglePythonTutor() {
-    Session.set('ssn_isPythonTutor', !Session.get('ssn_isPythonTutor'));
-    _raiseEventToggle();
+	Session.set('ssn_isPythonTutor', !Session.get('ssn_isPythonTutor'));
+	_raiseEventToggle();
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -139,8 +139,8 @@ function _isDebugInfo() {
 // -------------------------------------------------------------------------------------------------
 
 function _toggleDebugInfo() {
-    Session.set('ssn_isDebugInfo', !Session.get('ssn_isDebugInfo'));
-    _raiseEventToggle();
+	Session.set('ssn_isDebugInfo', !Session.get('ssn_isDebugInfo'));
+	_raiseEventToggle();
 }
 
 // -------------------------------------------------------------------------------------------------

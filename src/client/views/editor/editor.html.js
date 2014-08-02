@@ -86,7 +86,7 @@ Template.docItem.isEditingDocItem = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.docItem.rendered = function() {
-	$('[rel=tooltip]').tooltip();
+	//$('[rel=tooltip]').tooltip();			//ToDo: tooltips not working...
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -170,7 +170,15 @@ Template.docItem.events({
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.docid = function() {
-	return State.getDocumentId() || 'start';
+	var id = State.getDocumentId();
+
+	if (id && State.isPythonTutor()) {
+		var data = State.getCurrentData();
+		var options = State.getPythonTutorFrontendOptions();
+		State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
+	}
+
+	return  id || 'start';
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

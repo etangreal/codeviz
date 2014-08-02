@@ -52,7 +52,7 @@ _executeCode = function(id) {
 
 		var snapshots = _processTrace(data);
 
-		_saveSnapshot(id, snapshots);
+		_saveSnapshot(id, snapshots, data);
 
 	} catch(e) {
 		console.log('ERROR: methods.js | Meteor.methods | executeCode\n\t' + e.message);
@@ -65,14 +65,17 @@ _executeCode = function(id) {
 // PRIVATE FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _saveSnapshot(id, snapshots) {
+function _saveSnapshot(id, snapshots, data) {
 
 	snapshots.forEach(function(snapshot){
 		snapshot.docId = id;
 	});
 
 	Documents.update(id, { 
-		$set: { snapshots: snapshots }
+		$set: { 
+			snapshots: snapshots,
+			data: data
+		}
 	});
 
 }

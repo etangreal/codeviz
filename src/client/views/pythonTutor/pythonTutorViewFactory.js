@@ -19,7 +19,7 @@
 
 function _pythonTutorView() {
 
-    // var pythonTutor = new Famous.MeteorSurface({
+    // var pythonTutor = new library.meteor.core.Surface({
     //     template: Template.pythonTutor,
     //     size: [undefined, undefined],
     //     properties: {
@@ -28,8 +28,12 @@ function _pythonTutorView() {
     // });
 
     var pythonTutor = new famous.core.Surface({
+        content: '<div id="pythonTutor"></div>',
         size: [undefined,undefined],
-        properties: { backgroundColor: 'yellow' }
+        properties: {
+            borderLeft: '2px solid grey',
+            backgroundColor: 'white' 
+        }
     });
 
     return pythonTutor;

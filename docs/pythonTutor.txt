@@ -62,6 +62,47 @@
 	sudo apt-get install python-bottle
 
 # -------------------------------------------------------------------------------------------------
+# PYTHON TUTOR INTEGRATION
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________________________________________________
+	# python tutor documentation
+	# 	URL: github.com/pgbovine/OnlinePythonTutor/blob/master/v3/docs/developer-overview.md
+
+	_________________________________________________________________________________________________
+	# FRONTEND-INTEGRATION
+
+		# Python Tutor | Required Files
+
+			OPT/css/opt-frontend.css
+			OPT/css/pytutor.css
+
+			OPT/js/opt-frontend.js
+			OPT/js/pytutor.js
+
+		# Python Tutor | Dependencies
+
+			OPT/js/d3.v2.min.js
+
+			OPT/js/jquery-1.8.2.min.js
+			OPT/js/jquery-ui-1.8.24.custom.min.js
+			VIZ/jquery-ui/jquery-ui-1.10.3.custom.js
+
+			OPT/js/jquery.ba-bbq.min.js
+			OPT/js/jquery.jsPlumb-1.3.10-all-min.js 		#DO NOT UPGRADE ABOVE 1.3.10 OR ELSE BREAKAGE WILL OCCUR
+
+			codemirror/codemirror.js
+			codemirror/python.js
+
+			VIZ/codemirror/codemirror.css
+			
+			OPT/css/ui-lightness/jquery-ui-1.8.24.custom.css
+
+		# Usage
+
+			var visualizer = new ExecutionVisualizer(container.attr('id'), data, options);
+
+# -------------------------------------------------------------------------------------------------
 # END
 # -------------------------------------------------------------------------------------------------
 
