@@ -255,11 +255,23 @@ function _show() {
 
 function _move(x,y) {
     var node = this;
+    _moveNode(node,x,y);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _moveNode(node,x,y) {
 
     node.draw.position.x = x;
     node.draw.position.y = y;
 
     node.draw.modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _moveModifier(modifier,x,y) {
+    modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -270,11 +282,13 @@ function _onDeploy() {
     if (!node.snapshot)
         console.error('ERROR|node.onDeploy| node has no snapshot!');
 
-    var w = node.draw.surface._currTarget.offsetWidth;
-    var h = node.draw.surface._currTarget.offsetHeight;
-    var x = 0;
-    var y = 0;
-    var d = 10;
+    var msw = node.snapshot.draw.maxStackWidth;                 //current maximum stack width
+    var w   = node.draw.surface._currTarget.offsetWidth;
+    var h   = node.draw.surface._currTarget.offsetHeight;
+    var x   = 0;
+    var y   = 0;
+    var d   = 20;
+    var dt  = w - msw;
 
     node.draw.width = w;
     node.draw.height = h;
@@ -282,14 +296,15 @@ function _onDeploy() {
     node.draw.show();
     //node.draw.log();
 
-    var msw = node.snapshot.draw.maxStackWidth;                 //current maximum stack width
     if (node.draw.location == NodeLocationTypeEnum.STACK) {
-        if (w > msw) node.snapshot.draw.maxStackWidth = w;
-        if (w > msw && msw != 0)
-            node.snapshot.draw.baseMod.transformFrom(famous.core.Transform.translate(w-msw + d, d, 0));
+        if (dt > 0 && msw > 0)
+            _moveModifier(node.snapshot.draw.stackMod, dt, 0);
+
+        if (w > msw)
+            node.snapshot.draw.maxStackWidth = msw = w;
     }
 
-    node.snapshot.draw.heapMod.transformFrom(famous.core.Transform.translate(msw+3*d, 0, 0));
+    _moveModifier(node.snapshot.draw.heapMod, msw + d, 0);
 
     if (node.parent) {
         var pw  = node.parent.draw.width;               //pw = parent height

@@ -10,7 +10,7 @@ Visualizer.prototype.newUID = function() {
   if (self._uid == undefined)
       self._uid = 0;
 
-  return "UID" + self._uid++;
+  return 'UID' + self._uid++;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -36,9 +36,9 @@ Visualizer.prototype.newSnapshot = function(id) {
     //META-DATA
     , meta: {
         line: -1
-      , event: "UNDEFINED"
-      , func_name: "UNDEFINED"
-      , stdout: "UNDEFINED"
+      , event: 'UNDEFINED'
+      , func_name: 'UNDEFINED'
+      , stdout: 'UNDEFINED'
     }
 
     //REGISTRY
@@ -61,18 +61,18 @@ Visualizer.prototype.newSnapshot = function(id) {
     }
 
     //PRE-RENDERED (for debugging)
-    , stackHtml: ""
-    , heapHtml: ""
-    , html: ""
+    , stackHtml: ''
+    , heapHtml: ''
+    , html: ''
 
     //DEBUG INFO
-    , traceInfo: ""
-    , stackInfo: ""
-    , heapInfo: ""
-    , layoutInfo: ""
-    , referencesInfo: ""
-    , plumbingInfo: ""
-    , coordinateInfo: ""
+    , traceInfo: ''
+    , stackInfo: ''
+    , heapInfo: ''
+    , layoutInfo: ''
+    , referencesInfo: ''
+    , plumbingInfo: ''
+    , coordinateInfo: ''
 
   };//snapshot
 
@@ -89,14 +89,13 @@ Visualizer.prototype.newFrame = function(id,sid) {
   var self = this;
 
   var frame = {
-      id: id || 0                     //frame id -> derived from the trace data
+      id: id || 0                     //   frame id -> derived from the trace data
     , sid: sid || 0                   //snapshot id
-    , uid: self.newUID()              //unique id
-    , gid: ""                         //global id -> id remains the same for the same object across snapshots
+    , uid: self.newUID()              //  unique id
+    , gid: ''                         //  global id -> id remains the same for the same object across snapshots
 
     //CORE
-    , type: NodeTypeEnum.NONE         //todo: init...
-    , name: ""
+    , name: ''
     , locals: []
 
     //Pointers (client side only)
@@ -107,26 +106,27 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , meta: {
           is_highlighted: false
         , is_parent: false
-        , func_name: ""
+        , func_name: ''
         , is_zombie: false
         , parent_frame_id_list: []
-        , unique_hash: ""
+        , unique_hash: ''
       }
 
     //PRE-RENDERED TEXT & HTML
-    , text: ""
-    , html: ""
+    , text: ''
+    , html: ''
 
     //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
-          uid: self.newUID()                // URL: api.jquery.com/offset
-        , position: { x:0, y:0, z:0 }       //  current position relative to the offset parent
-        , offset: {x:0, y:0}                //  current position of an element relative to the document
+          uid: self.newUID()                
+                                                // SEE: api.jquery.com/offset
+        , position: { x:0, y:0, z:0 }           //  current position relative to the offset parent
+        , offset: { x:0, y:0 }                  //  current position of an element relative to the document
         , width: 0
         , height: 0
         , location: NodeLocationTypeEnum.STACK
 
-        //Pointers
+        //Function Pointers
         , show: undefined
         , move: undefined
         , log: undefined
@@ -138,9 +138,9 @@ Visualizer.prototype.newFrame = function(id,sid) {
       }
 
     //DEBUG INFO
-    , layoutInfo: ""
+    , layoutInfo: ''
 
-  };
+  };//frame
 
   return frame;
 };
@@ -150,14 +150,14 @@ Visualizer.prototype.newFrame = function(id,sid) {
 // --------------------------------------------------------------------------------------------------------------------
 
   // NodeLocationTypeEnum
-  // SEE: codeViz/src/common/enum.js
+  //  SEE: codeViz/src/common/enum.js
 
 // --------------------------------------------------------------------------------------------------------------------
 // NODE TYPE ENUM
 // --------------------------------------------------------------------------------------------------------------------
 
   // NodeTypeEnum
-  // SEE: codeViz/src/common/enum.js
+  //  SEE: codeViz/src/common/enum.js
 
 // --------------------------------------------------------------------------------------------------------------------
 // NODE
@@ -174,7 +174,6 @@ Visualizer.prototype.newNode = function(id,sid) {
     , gid: ''                         //global id -> id remains the same for the same object across snapshots
 
     //CORE
-    , type: NodeTypeEnum.NONE         //todo: init...
     , name: ''
     , inherits: []                    //todo: should change this to: "parents" so that it implies both "inherits" and "instanceof"
     , value: []
@@ -186,19 +185,20 @@ Visualizer.prototype.newNode = function(id,sid) {
     , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
 
     //PRE-RENDERED TEXT & HTML
-    , text: ""
-    , html: ""
+    , text: ''
+    , html: ''
 
     //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
         uid: self.newUID()
-      , position: {x:0, y:0, z:0}
-      , offset: {x:0, y:0}
+      , location: NodeLocationTypeEnum.HEAP
+                                      // SEE: api.jquery.com/offset
+      , position: { x:0, y:0, z:0 }   //  current position relative to the offset parent
+      , offset: { x:0, y:0 }          //  current position of an element relative to the document
       , width: 0
       , height: 0
-      , location: NodeLocationTypeEnum.HEAP
 
-      //Pointers
+      //Function Pointers
       , show: undefined
       , move: undefined
       , log: undefined
@@ -210,7 +210,7 @@ Visualizer.prototype.newNode = function(id,sid) {
     }
 
     //DEBUG INFO
-    , layoutInfo: ""
+    , layoutInfo: ''
 
   };
 
