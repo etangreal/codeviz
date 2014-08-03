@@ -86,9 +86,11 @@ function _isFiles() {
 
 // -------------------------------------------------------------------------------------------------
 
-function _toggleFiles() {
-    Session.set('ssn_isFiles', !Session.get('ssn_isFiles'));
-    _raiseEventToggle();
+function _toggleFiles(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isFiles');
+    Session.set('ssn_isFiles', show);
+
+    return show;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -99,9 +101,11 @@ function _isEditor() {
 
 // -------------------------------------------------------------------------------------------------
 
-function _toggleEditor() {
-    Session.set('ssn_isEditor', !Session.get('ssn_isEditor'));
-    _raiseEventToggle();
+function _toggleEditor(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isEditor');
+    Session.set('ssn_isEditor', show);
+
+    return show;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -112,9 +116,11 @@ function _isVisualizer() {
 
 // -------------------------------------------------------------------------------------------------
 
-function _toggleVisualizer() {
-    Session.set('ssn_isVisualizer', !Session.get('ssn_isVisualizer'));
-    _raiseEventToggle();
+function _toggleVisualizer(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isVisualizer')
+    Session.set('ssn_isVisualizer', show);
+
+    return show;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -125,9 +131,11 @@ function _isPythonTutor() {
 
 // -------------------------------------------------------------------------------------------------
 
-function _togglePythonTutor() {
-	Session.set('ssn_isPythonTutor', !Session.get('ssn_isPythonTutor'));
-	_raiseEventToggle();
+function _togglePythonTutor(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isPythonTutor');
+	Session.set('ssn_isPythonTutor', show);
+
+	return show;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -138,9 +146,11 @@ function _isDebugInfo() {
 
 // -------------------------------------------------------------------------------------------------
 
-function _toggleDebugInfo() {
-	Session.set('ssn_isDebugInfo', !Session.get('ssn_isDebugInfo'));
-	_raiseEventToggle();
+function _toggleDebugInfo(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isDebugInfo')
+	Session.set('ssn_isDebugInfo', show);
+
+	return show;
 }
 
 // -------------------------------------------------------------------------------------------------

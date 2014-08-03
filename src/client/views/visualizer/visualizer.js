@@ -339,7 +339,7 @@ function _onDeploy() {
 
     node.draw.position.x = x;
     node.draw.position.y = y;
-    
+
     node.draw.move(x,y);
     node.draw.show();
 
@@ -347,14 +347,12 @@ function _onDeploy() {
     _getCoordinates(node);
 
     node.draw.log();
-
-    //node.draw.unsubscribeFromOnDeploy();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _getOffset(node) {
-    
+
     var mods = [];
 
     var baseMod = node.snapshot.draw.baseMod;
@@ -398,7 +396,6 @@ function _updateDrawProperties(node) {
     var uid = node.draw.uid;
 
     var node = document.getElementById(uid);
-
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

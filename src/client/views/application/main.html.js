@@ -15,38 +15,56 @@ Template.header.events({
 
     'click #id-btn-files': function(e,t) {
         State.toggleFiles();
+        State.triggerToggle();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-editor': function(e,t) {
         State.toggleEditor();
+        State.triggerToggle();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-visualizer': function(e,t) {
         State.toggleVisualizer();
+        State.triggerToggle();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-pythonTutor': function(e,t) {
-        State.togglePythonTutor();
 
-        var id = State.getDocumentId();
+        if ( State.togglePythonTutor() ) {
+            State.toggleFiles(false);
+            State.toggleEditor(false);
+            State.toggleVisualizer(true);
+            State.toggleDebugInfo(false);
 
-        if (id && State.isPythonTutor()) {
-            var data = State.getCurrentData();
-            var options = State.getPythonTutorFrontendOptions();
-            State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
+            var id = State.getDocumentId();
+
+            if (id && State.isPythonTutor()) {
+                var data = State.getCurrentData();
+                var options = State.getPythonTutorFrontendOptions();
+                State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
+            }
         }
+
+        State.triggerToggle();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
     'click #id-btn-debugInfo': function(e,t) {
-        State.toggleDebugInfo();
+
+        if ( State.toggleDebugInfo() ) {
+            State.toggleFiles(false);
+            State.toggleEditor(false);
+            State.togglePythonTutor(false);
+        }
+        
+        State.triggerToggle();
     },
 
     // -----------------------------------------------------------------------------------------------------------------
