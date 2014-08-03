@@ -23,6 +23,8 @@
         famous.surfaces.ContainerSurface.apply(self, arguments);
 
         // --------------------------------------------------------------------------
+        // RenderController
+        // --------------------------------------------------------------------------
 
         var options = {
             inTransition: {duration: 10},
@@ -36,15 +38,32 @@
         self._controller.outOpacityFrom( function() { return 1; } );
 
         // --------------------------------------------------------------------------
-        // background
+        // Background
         // --------------------------------------------------------------------------
 
-        var background = new famous.core.Surface({
+        // var background = new famous.core.Surface({
+        //     size: [undefined,undefined],
+        //     properties: { 
+        //         backgroundColor: 'lightblue' 
+        //     }
+        // });
+
+        // --------------------------------------------------------------------------
+        // Canvas
+        // --------------------------------------------------------------------------
+
+        self._canvas = new famous.surfaces.CanvasSurface({
             size: [undefined,undefined],
-            properties: { backgroundColor: 'lightblue' }
+            properties: {
+                backgroundColor: 'lightblue'
+            }
         });
 
-        self.add(background);
+        // --------------------------------------------------------------------------
+        // Add Components to Visualizer
+        // --------------------------------------------------------------------------
+
+        self.add(self._canvas);
         self.add(this._controller);
 
     }//Visualizer
@@ -76,58 +95,6 @@ Visualizer.prototype.show = function(snapshot) {
     self._controller.show(snapshot.draw.baseNode);
 
 }//Visualizer.prototype.show
-
-// ---------------------------------------------------------------------------------------------------------------------
-// PRIVATE | FUNCTION | INIT-DRAW-OBJ (SNAPSHOT)
-// ---------------------------------------------------------------------------------------------------------------------
-
-function _initDrawObj(snapshot) {
-
-    if (snapshot.draw && snapshot.draw.isInit)
-        return;
-
-    // --------------------------------------------------------------------------
-
-    _initSnapshotDrawNodesAndMods(snapshot);
-
-    var stackNode   = snapshot.draw.stackNode;
-    var heapNode    = snapshot.draw.heapNode;
-
-    // --------------------------------------------------------------------------
-
-    var chain = stackNode;
-    var parent = undefined;
-    snapshot.stack.forEach( function(frame, i) {
-        var node = _newDrawNode(frame);
-
-        chain = chain.add(node.draw.modifier);
-                chain.add(node.draw.surface);
-
-        node.parent   = parent;
-        node.snapshot = snapshot;
-        parent        = node;
-    });
-
-    // --------------------------------------------------------------------------
-
-    chain = heapNode;
-    parent = undefined;
-    snapshot.heap.forEach( function(heapObj, i) {
-        if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
-        var node = _newDrawNode(heapObj);
-
-        chain = chain.add(node.draw.modifier);
-                chain.add(node.draw.surface);
-
-        node.parent   = parent;
-        node.snapshot = snapshot;
-        parent        = node;
-    });
-
-    // --------------------------------------------------------------------------
-
-    snapshot.draw.isInit = true;
-}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | FUNCTION | INIT-NODES-&-MODIFIERS (base, stack & heap)
@@ -190,6 +157,58 @@ _initSnapshotDrawNodesAndMods = function(snapshot) {
     draw.heapMod    = heapMod;
 
 }//Visualizer.prototype.initModifiers
+
+// ---------------------------------------------------------------------------------------------------------------------
+// PRIVATE | FUNCTION | INIT-DRAW-OBJ (SNAPSHOT)
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _initDrawObj(snapshot) {
+
+    if (snapshot.draw && snapshot.draw.isInit)
+        return;
+
+    // --------------------------------------------------------------------------
+
+    _initSnapshotDrawNodesAndMods(snapshot);
+
+    var stackNode   = snapshot.draw.stackNode;
+    var heapNode    = snapshot.draw.heapNode;
+
+    // --------------------------------------------------------------------------
+
+    var chain = stackNode;
+    var parent = undefined;
+    snapshot.stack.forEach( function(frame, i) {
+        var node = _newDrawNode(frame);
+
+        chain = chain.add(node.draw.modifier);
+                chain.add(node.draw.surface);
+
+        node.parent          = parent;
+        node.snapshot        = snapshot;
+        parent               = node;
+    });
+
+    // --------------------------------------------------------------------------
+
+    chain = heapNode;
+    parent = undefined;
+    snapshot.heap.forEach( function(heapObj, i) {
+        if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
+        var node = _newDrawNode(heapObj);
+
+        chain = chain.add(node.draw.modifier);
+                chain.add(node.draw.surface);
+
+        node.parent   = parent;
+        node.snapshot = snapshot;
+        parent        = node;
+    });
+
+    // --------------------------------------------------------------------------
+
+    snapshot.draw.isInit = true;
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | FUNCTION | NEW-DRAW-NODE
@@ -287,14 +306,14 @@ function _onDeploy() {
     var h   = node.draw.surface._currTarget.offsetHeight;
     var x   = 0;
     var y   = 0;
-    var d   = 20;
-    var dt  = w - msw;
+    var d   = 20;                       //distance (between nodes)
+    var dt  = w - msw;                  //delta (width - maxStackWidth)
+
+    var ox  = 0;                        // offset-x (from the root node)
+    var oy  = 0;                        // offset-y (form the root node)
 
     node.draw.width = w;
     node.draw.height = h;
-
-    node.draw.show();
-    //node.draw.log();
 
     if (node.draw.location == NodeLocationTypeEnum.STACK) {
         if (dt > 0 && msw > 0)
@@ -318,8 +337,68 @@ function _onDeploy() {
         }//if(node.draw.location)
     }//if(node.parent)
 
-    if (x>0 || y>0) node.draw.move(x,y);
+    node.draw.position.x = x;
+    node.draw.position.y = y;
+    
+    node.draw.move(x,y);
+    node.draw.show();
+
+    _getOffset(node);
+    _getCoordinates(node);
+
+    node.draw.log();
+
     //node.draw.unsubscribeFromOnDeploy();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _getOffset(node) {
+    
+    var mods = [];
+
+    var baseMod = node.snapshot.draw.baseMod;
+    var modSH = (node.draw.location == NodeLocationTypeEnum.STACK) ?
+        node.snapshot.draw.stackMod : 
+        node.snapshot.draw.heapMod ;
+
+    mods.push(baseMod);
+    mods.push(modSH);
+
+    var n = node; 
+    while(n) {
+        mods.push(n.draw.modifier);
+        n = n.parent;
+    }
+
+    var p = [ 0, 0, 0 ];
+    mods.forEach( function(m) {
+        p = _addPos(p, _getPos(m));
+    });
+
+    node.draw.offset.x = p[0];
+    node.draw.offset.y = p[1];
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _getPos(mod) {
+    return famous.core.Transform.getTranslate(mod.getFinalTransform());
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _addPos(a, b) {
+    return [ a[0] + b[0], a[1] + b[1], 0 ];
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _updateDrawProperties(node) {
+    var uid = node.draw.uid;
+
+    var node = document.getElementById(uid);
+
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -363,11 +442,136 @@ function _log() {
 "    height: " + node.draw.height + Br +
 "position.x: " + node.draw.position.x + Br +
 "position.y: " + node.draw.position.y + Br +
-"position.z: " + node.draw.position.z + Br +
+// "position.z: " + node.draw.position.z + Br +
 "  offset.x: " + node.draw.offset.x + Br +
 "  offset.y: " + node.draw.offset.y + Br);
 
 };//log
+
+// --------------------------------------------------------------------------------------------------------------------
+// GET-COORDINATES
+// --------------------------------------------------------------------------------------------------------------------
+
+function _getCoordinates(node) {
+    if (node.draw.location == NodeLocationTypeEnum.STACK)
+        _getFrameCoordinates(node);
+
+    else if (node.draw.location == NodeLocationTypeEnum.HEAP)
+        _getHeapObjCoordinates(node);
+
+    else
+        console.error('ERROR | _getCoordinates | unknown node location.');
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+function _getFrameCoordinates(frame) {
+
+  var coordinates = frame.snapshot.coordinates;
+
+  coordinates[frame.draw.uid] = _calcCoordinates(frame.draw.uid, frame);
+
+  console.log(
+    'frame 1) uid: ', frame.draw.uid, ' | coordinates[frame.draw.uid]\n\t ', 
+    coordinates[frame.draw.uid],
+    '\n');
+
+  frame.locals.forEach( function(local) {
+    local.pointerUID.forEach( function(uid) {
+      coordinates[uid] = _calcCoordinates(uid, frame);
+      console.log(
+        'locals 2) uid: ', uid, ' | coordinates[uid] \n\t', 
+        coordinates[uid],
+        '\n');
+    });
+  });//forEach Local
+
+}//getFrameCoordinates
+
+// --------------------------------------------------------------------------------------------------------------------
+// GET-HEAP-OBJ-COORDINATES
+// --------------------------------------------------------------------------------------------------------------------
+
+function _getHeapObjCoordinates(heapObj) {
+
+  var coordinates = heapObj.snapshot.coordinates;
+
+  coordinates[heapObj.uid] = _calcCoordinates(heapObj.uid, heapObj);
+  coordinates[heapObj.draw.uid] = _calcCoordinates(heapObj.draw.uid, heapObj);
+
+  heapObj.pointerUID.forEach( function(uid) {
+    coordinates[uid] = _calcCoordinates(uid, heapObj);
+  });
+
+}//getHeapObjCoordinates
+
+// --------------------------------------------------------------------------------------------------------------------
+// GET-COORDINATES
+// --------------------------------------------------------------------------------------------------------------------
+
+function _calcCoordinates(uid, parent) { 
+
+  //child
+  var c = $("#" + uid);
+  var cw = c.width();
+  var ch = c.height();
+
+  //relative
+  var element = document.getElementById(uid);
+  var wrapper = document.getElementById(parent.draw.uid).offsetParent;
+  var r = _getRelativePosition( element , wrapper );
+
+  //parent
+  var p = parent.draw.offset;
+  var w = parent.draw.width;
+  var h = parent.draw.height;
+
+  var x = p.x ;
+  var y = p.y ;
+
+  console.log(
+    '_gc) uid: ', uid,
+    '\n\t |cw: ', cw, ' |ch: ', ch,
+    '\n\t |r: ', r,
+    '\n\t |p: ', p,
+    '\n\t |w: ', w, ' |h ', h,
+    '\n');
+
+  return {
+      x: x + r.x
+    , y: y + r.y
+    , z: 0
+  };
+
+};//getCoordinates
+
+// --------------------------------------------------------------------------------------------------------------------
+// HELPER | GET-RELATIVE-POSITION
+// --------------------------------------------------------------------------------------------------------------------
+
+function _getRelativePosition(element, parent) {
+  // www.kirupa.com/html5/get_element_position_using_javascript.htm
+
+  var x = 0;
+  var y = 0;
+
+  while(element) {
+    x += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+    y += (element.offsetTop - element.scrollTop + element.clientTop);
+    element = (element == parent) ? undefined : element.offsetParent;
+  }
+
+  return { x: x, y: y, z: 0 };
+
+};//getRelativePosition
+
+// ---------------------------------------------------------------------------------------------------------------------
+// HELPER-FUNCTIONS
+// ---------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.isUndefined = function(obj) {
+  return (typeof obj == 'undefined' || obj === void 0); // || obj === null ??
+};
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

@@ -52,22 +52,17 @@ Visualizer.prototype.render = function(snapshot, canvas) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.setDrawProperties = function (obj) {
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _updateDrawProperties(obj) {
   var me = Visualizer.prototype;
   var self = this;
 
-  if( me.isUndefined(obj) || me.isUndefined(obj.draw) ) {
-    console.error("ERROR: setNodeProperties => undefined obj.");
-    return;
-  }
-
-  var elem = $("#"+obj.draw.uid).parent(); //every object (frame or heap) has a parent div "toDomWrapper" which wraps it
+  var elem = $('#'+obj.draw.uid).parent(); //every object (frame or heap) has a parent div 
+                                           //'famous.core.Surface' which wraps it
 
   if( me.isUndefined(elem) )
-    console.error("ERROR: setNodeProperties => undefined element.");
-
-  if ( !elem.hasClass( "toDomWrapper" ) )
-    console.error("ERROR: setNodeProperties => element does not have parent with class 'toDomWrapper'.");
+    console.error('ERROR: setNodeProperties => undefined element.');
 
   obj.draw.width = elem.width();
   obj.draw.height = elem.height();
@@ -83,35 +78,6 @@ Visualizer.prototype.setDrawProperties = function (obj) {
   obj.draw.offset.x = off.left;
   obj.draw.offset.y = off.top;
 
-  if ( isNaN(pos.left) )
-    console.warn("WARNING: setDrawProperties => position.left is NaN.");
-
-  if ( isNaN(pos.top) )
-    console.warn("WARNING: setDrawProperties => position.top is NaN.");
-
-  if ( isNaN(off.left) )
-    console.warn("WARNING: setDrawProperties => offset.left is NaN.");
-
-  if ( isNaN(off.top) )
-    console.warn("WARNING: setDrawProperties => offset.top is NaN.");
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// HELPER FUNCTIONS
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.logDrawProperties = function(obj) {
-  var Br = "\n";
-  console.log(
-      "uid: " + obj.draw.uid + Br +
-      "width: " + obj.draw.width + Br +
-      "height: " + obj.draw.height + Br +
-      "position.x: " + obj.draw.position.x + Br +
-      "position.y: " + obj.draw.position.y + Br +
-      "position.z: " + obj.draw.position.z + Br +
-      "offset.x: " + obj.draw.offset.x + Br +
-      "offset.y: " + obj.draw.offset.y + Br
-  );
 };
 
 // --------------------------------------------------------------------------------------------------------------------

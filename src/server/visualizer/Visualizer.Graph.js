@@ -98,10 +98,6 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , name: ''
     , locals: []
 
-    //Pointers (client side only)
-    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
-    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
-
     //META-DATA
     , meta: {
           is_highlighted: false
@@ -116,6 +112,12 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , text: ''
     , html: ''
 
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //Pointers (client side only)
+    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
+    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+
     //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
           uid: self.newUID()                
@@ -126,7 +128,11 @@ Visualizer.prototype.newFrame = function(id,sid) {
         , height: 0
         , location: NodeLocationTypeEnum.STACK
 
-        //Function Pointers
+        // Draw Objects (future pointers)
+        , modifier: undefined           //famous.core.modifier (for current node position)
+        , surface: undefined            //famous.core.Surface
+
+        // Draw Function (future pointers)
         , show: undefined
         , move: undefined
         , log: undefined
@@ -136,6 +142,8 @@ Visualizer.prototype.newFrame = function(id,sid) {
         , subsribeToOnDeploy: undefined
         , unsubscribeFromOnDeploy: undefined
       }
+
+      // --------------------------------------------------------------------------------------------------------------
 
     //DEBUG INFO
     , layoutInfo: ''
@@ -180,13 +188,15 @@ Visualizer.prototype.newNode = function(id,sid) {
     , pointer: []
     , pointerUID: []
 
-    //Pointers (client side only)
-    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
-    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
-
     //PRE-RENDERED TEXT & HTML
     , text: ''
     , html: ''
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //Pointers (client side only)
+    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
+    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
 
     //UI DRAW/LAYOUT DATA (client side only)
     , draw: {
@@ -194,11 +204,15 @@ Visualizer.prototype.newNode = function(id,sid) {
       , location: NodeLocationTypeEnum.HEAP
                                       // SEE: api.jquery.com/offset
       , position: { x:0, y:0, z:0 }   //  current position relative to the offset parent
-      , offset: { x:0, y:0 }          //  current position of an element relative to the document
+      , offset: { x:0, y:0 }          //  current position of an element relative to the root parent
       , width: 0
       , height: 0
 
-      //Function Pointers
+      // Draw Objects (future pointers)
+      , modifier: undefined           //famous.core.modifier (for current node position)
+      , surface: undefined            //famous.core.Surface
+
+      // Draw Function (future pointers)
       , show: undefined
       , move: undefined
       , log: undefined
@@ -209,10 +223,12 @@ Visualizer.prototype.newNode = function(id,sid) {
       , unsubscribeFromOnDeploy: undefined
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
+
     //DEBUG INFO
     , layoutInfo: ''
 
-  };
+  };//node
 
   return node;
 };
