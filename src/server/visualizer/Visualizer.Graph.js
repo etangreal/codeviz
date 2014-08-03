@@ -27,7 +27,6 @@ Visualizer.prototype.newSnapshot = function(id) {
    uid: self.newUID()                   // uid: unique id of this snapshot.
                                         //   Together docId & uid can be used by the client(i.e. browser) to keep track of which snapshots its seen. 
                                         //   Every time the snapshot is regenerated it will have the same docId but a new uid.
-
     //CORE
     , stack: []
     , heap: []
@@ -50,6 +49,7 @@ Visualizer.prototype.newSnapshot = function(id) {
     , draw: {
         isInit: false
       , maxStackWidth: 0
+      , deployedCount: 0                //used by onDeployedCompleted
 
       //Pointers
       , baseNode: undefined             // Pointer to the base Render node 
@@ -58,6 +58,11 @@ Visualizer.prototype.newSnapshot = function(id) {
       , stackMod: undefined             // Pointer to the stack's Modifier
       , heapNode: undefined             // Pointer to the heap's Render node
       , heapMod: undefined              // Pointer to the heap's Modifier
+
+      //Functions
+      , onDeployCompleted: undefined
+      , extractCoordinateInfo: undefined
+      , extractLayoutInfo: undefined
     }
 
     //PRE-RENDERED (for debugging)

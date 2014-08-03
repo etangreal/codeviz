@@ -11,6 +11,7 @@ _.extend(this.State, {
 			  getDocumentId: _getDocumentId,
 			  setDocumentId: _setDocumentId,
 
+		 // setCurrentSnapshots: _setCurrentSnapshots,
 			  getCurrentData: _getCurrentData,
 
 		   isEditingDocItem: _isEditingDocItem,
@@ -92,6 +93,9 @@ function _setCurrentSnapshots(id) {
 	Session.set('ssn_snapshots', snapshots);
 	Session.set('ssn_data', data);
 }
+
+
+// -------------------------------------------------------------------------------------------------
 
 function _getCurrentData() {
 	return Session.get('ssn_data');

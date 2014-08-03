@@ -156,105 +156,16 @@ Visualizer.prototype.extractPlumbingInfo = function(snapshot) {
 // EXTRACT | COORDINATE-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.extractCoordinateInfo = function(snapshot) {
-  if (snapshot == undefined || snapshot.coordinates == undefined || snapshot.coordinateInfo == undefined) {
-    console.error("ERROR: extractPlumbingInfo => undefined snapshot/coordinates/coordinateInfo.");
-    return;
-  }
-
-  snapshot.coordinateInfo = "";
-  var coordinates = snapshot.coordinates;
-
-  for( var key in coordinates )
-    if ( coordinates.hasOwnProperty(key) ) {
-
-      var co = coordinates[key];
-      snapshot.coordinateInfo +=
-          "uid: " + key + " { " +
-              "x: " + Math.round(co.x) + ", " +
-              "y: " + Math.round(co.y) +
-          " }\n";
-
-    }//for
-};
+// Client-Side
+//  SEE: src/client/views/visualizer/visualizer.DebugInfo.js
 
 // --------------------------------------------------------------------------------------------------------------------
 // EXTRACT | LAYOUT-INFO
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.extractLayoutInfo = function(snapshot,TB) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  TB = TB || "";
-  var Br = "\n";
-
-  var layoutInfo = "";
-
-  snapshot.stack.forEach( function(frame) {
-    frame.layoutInfo = me.extractFrameLayoutInfo(frame, TB);
-
-    layoutInfo += TB + "-----------------------------------------------------------" + Br;
-    layoutInfo += frame.layoutInfo;
-  });
-
-  snapshot.heap.forEach( function(heapObj) {
-    heapObj.layoutInfo = me.extractNodeLayoutInfo(node, TB);
-
-    layoutInfo += TB + "-----------------------------------------------------------" + Br;
-    layoutInfo += heapObj.layoutInfo;
-  });
-
-  return layoutInfo;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.extractFrameLayoutInfo = function(frame,TB) {
-  TB = TB || "";
-  var Br = "\n";
-  var Tb = "\t";
-
-  var draw = frame.draw;
-  var pos =
-      "Pos {x: " + draw.position.x + ", y: " + draw.position.y + "} " +
-      "Off {x: " + Math.round(draw.offset.x) + ", y: " + Math.round(draw.offset.y) + "}" ;
-
-  var layoutInfo =
-                "Frame id: " + frame.id          + Br +
-                "Draw: "                         + Br +
-          Tb +      "uid: " + draw.uid           + Br +
-          Tb +      pos                          + Br +
-          Tb +      " Width: " +  draw.width     + Br +
-          Tb +      " Height: " + draw.height    + Br ;
-
-  return layoutInfo;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.extractNodeLayoutInfo = function(node,TB) {
-  TB = TB || "";
-  var Br = "\n";
-  var Tb = "\t";
-
-  var draw = node.draw;
-  var pos =
-      "Pos {x: " + draw.position.x + ", y: " + draw.position.y + "} " +
-      "Off {x: " + Math.round(draw.offset.x) + ", y: " + Math.round(draw.offset.y) + "}" ;
-
-  var layoutInfo =
-                "Heap id: " + node.id            + Br +
-                "Draw: "                         + Br +
-          Tb +      "uid: " + draw.uid           + Br +
-          Tb +      pos                          + Br +
-          Tb +      " Width: " +  draw.width     + Br +
-          Tb +      " Height: " + draw.height    + Br ;
-
-  return layoutInfo;
-};
+// Client-Side
+//  SEE: src/client/views/visualizer/visualizer.DebugInfo.js
 
 // --------------------------------------------------------------------------------------------------------------------
 // END
 // --------------------------------------------------------------------------------------------------------------------
-

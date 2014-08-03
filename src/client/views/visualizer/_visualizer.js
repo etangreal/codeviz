@@ -82,7 +82,7 @@ Visualizer.prototype.clear = function() {
 // PUBLIC | METHOD | SHOW
 // ---------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.show = function(snapshot) {
+Visualizer.prototype.show = function(snapshot, i) {
     var self = this;
 
     if (!snapshot) {
@@ -91,24 +91,47 @@ Visualizer.prototype.show = function(snapshot) {
         return;
     }
 
-    _initDrawObj(snapshot);
+    _initSnapshot.call(self, snapshot);
     self._controller.show(snapshot.draw.baseNode);
 
 }//Visualizer.prototype.show
 
 // ---------------------------------------------------------------------------------------------------------------------
+// PRIVATE | FUNCTION | INIT-SNAPSHOT
+// ---------------------------------------------------------------------------------------------------------------------
+
+_initSnapshot = function(snapshot) {
+    var self = this;
+
+    if (snapshot.draw && snapshot.draw.isInit)
+        return;
+
+    snapshot.draw.onDeployCompleted     = _onDeployCompleted.bind(snapshot);
+    snapshot.draw.extractCoordinateInfo = Visualizer.prototype.extractCoordinateInfo.bind(self);
+    snapshot.draw.extractLayoutInfo     = Visualizer.prototype.extractLayoutInfo.bind(self);
+
+    // --------------------------------------------------------------------------
+    // Init the snapshot's (base, stack & heap) Modifers & RenderNodes
+    // --------------------------------------------------------------------------
+
+    _initModifierAndRenderNode.call(self,snapshot);
+
+    // --------------------------------------------------------------------------
+    // Init the Draw Object
+    // --------------------------------------------------------------------------
+
+    _initDrawObj.call(self,snapshot);
+
+}//Visualizer.prototype.initModifiers
+
+// ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | FUNCTION | INIT-NODES-&-MODIFIERS (base, stack & heap)
 // ---------------------------------------------------------------------------------------------------------------------
 
-_initSnapshotDrawNodesAndMods = function(snapshot) {
-
-    if (!snapshot.draw) {
-        console.error('ERROR|_initSnapshotDrawNodesAndMods|snapshot.draw does not exist');
-        snapshot.draw = {};
-    }
+function _initModifierAndRenderNode(snapshot) {
 
     // --------------------------------------------------------------------------
-    // base modifier & node
+    // Add base modifier & renderNode
     // --------------------------------------------------------------------------
 
     // base modifier
@@ -121,7 +144,7 @@ _initSnapshotDrawNodesAndMods = function(snapshot) {
     var baseNode = new famous.core.RenderNode(baseMod);
 
     // --------------------------------------------------------------------------
-    // stack & heap modifiers
+    // Add stack & heap modifiers
     // --------------------------------------------------------------------------
 
     // stack modifier
@@ -135,7 +158,7 @@ _initSnapshotDrawNodesAndMods = function(snapshot) {
     });
 
     // --------------------------------------------------------------------------
-    // stack & heap nodes
+    // Add stack & heap renderNodes
     // --------------------------------------------------------------------------
 
     // base modifier + stack modifier => base stack node
@@ -156,20 +179,15 @@ _initSnapshotDrawNodesAndMods = function(snapshot) {
     draw.heapNode   = heapNode;
     draw.heapMod    = heapMod;
 
-}//Visualizer.prototype.initModifiers
+    // --------------------------------------------------------------------------
+
+}//_initModifierAndRenderNode
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | FUNCTION | INIT-DRAW-OBJ (SNAPSHOT)
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _initDrawObj(snapshot) {
-
-    if (snapshot.draw && snapshot.draw.isInit)
-        return;
-
-    // --------------------------------------------------------------------------
-
-    _initSnapshotDrawNodesAndMods(snapshot);
 
     var stackNode   = snapshot.draw.stackNode;
     var heapNode    = snapshot.draw.heapNode;
@@ -262,7 +280,7 @@ function _newDrawNode(node) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// PRIVATE | FUNCTIONS | NEW-DRAW-NODE
+// PRIVATE | FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _show() {
@@ -292,6 +310,7 @@ function _moveNode(node,x,y) {
 function _moveModifier(modifier,x,y) {
     modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
 }
+
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -341,12 +360,40 @@ function _onDeploy() {
     node.draw.position.y = y;
 
     node.draw.move(x,y);
-    node.draw.show();
 
     _getOffset(node);
     _getCoordinates(node);
 
-    node.draw.log();
+    node.draw.show();
+    //node.draw.log();
+
+    node.snapshot.draw.onDeployCompleted();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _onDeployCompleted() {
+    var snapshot = this;
+
+    snapshot.draw.deployedCount += 1;
+    //console.log('deployedCount: ', snapshot.draw.deployedCount);
+
+    var count = snapshot.stack.length + snapshot.heap.length -1; // -1 because the first item in the heap is a dummy #HACK
+
+    if (snapshot.draw.deployedCount == count) {
+        //console.log('DeployCompleted');
+
+
+
+        // ToDo: update the current snapshot ... 
+        //      snapshot.draw.extractCoordinateInfo(snapshot);
+        //      snapshot.draw.extractLayoutInfo(snapshot);
+        //      State.updateSnapshot(snapshot);
+
+    }
+
+    if(snapshot.draw.deployedCount > count)
+        console.warn('WARNING | _onDeployCompleted | deployedCount > count');
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -468,19 +515,21 @@ function _getFrameCoordinates(frame) {
 
   coordinates[frame.draw.uid] = _calcCoordinates(frame.draw.uid, frame);
 
-  console.log(
-    'frame 1) uid: ', frame.draw.uid, ' | coordinates[frame.draw.uid]\n\t ', 
-    coordinates[frame.draw.uid],
-    '\n');
+  // console.log(
+  //   'frame 1) uid: ', frame.draw.uid, ' | coordinates[frame.draw.uid]\n\t ', 
+  //   coordinates[frame.draw.uid],
+  //   '\n');
 
   frame.locals.forEach( function(local) {
     local.pointerUID.forEach( function(uid) {
       coordinates[uid] = _calcCoordinates(uid, frame);
-      console.log(
-        'locals 2) uid: ', uid, ' | coordinates[uid] \n\t', 
-        coordinates[uid],
-        '\n');
-    });
+
+      // console.log(
+      //   'locals 2) uid: ', uid, ' | coordinates[uid] \n\t', 
+      //   coordinates[uid],
+      //   '\n');
+
+    });//forEach pointerUID
   });//forEach Local
 
 }//getFrameCoordinates
@@ -509,9 +558,9 @@ function _getHeapObjCoordinates(heapObj) {
 function _calcCoordinates(uid, parent) { 
 
   //child
-  var c = $("#" + uid);
-  var cw = c.width();
-  var ch = c.height();
+  // var c = $("#" + uid);
+  // var cw = c.width();
+  // var ch = c.height();
 
   //relative
   var element = document.getElementById(uid);
@@ -526,13 +575,13 @@ function _calcCoordinates(uid, parent) {
   var x = p.x ;
   var y = p.y ;
 
-  console.log(
-    '_gc) uid: ', uid,
-    '\n\t |cw: ', cw, ' |ch: ', ch,
-    '\n\t |r: ', r,
-    '\n\t |p: ', p,
-    '\n\t |w: ', w, ' |h ', h,
-    '\n');
+  // console.log(
+  //   '_gc) uid: ', uid,
+  //   '\n\t |cw: ', cw, ' |ch: ', ch,
+  //   '\n\t |r: ', r,
+  //   '\n\t |p: ', p,
+  //   '\n\t |w: ', w, ' |h ', h,
+  //   '\n');
 
   return {
       x: x + r.x

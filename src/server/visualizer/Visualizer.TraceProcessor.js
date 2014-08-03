@@ -49,10 +49,12 @@ Visualizer.prototype.processTrace = function(trace, code) {
     // RENDER
     self.prerender( snapshot );                                         //pre-renders: stack & frame -> text & html
 
-    // LAYOUT 
-    // ToDo: calculate the layout (on the frontend/browser).
-    // ToDo: extract the layout-info (after calculating the layout)
-    // snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
+    // LAYOUT (on the frontend/client-side/browser)
+    //  1) Calculate the layout
+    //  2) Extract the layout-info
+    //      snapshot.layoutInfo = me.extractLayoutInfo(snapshot);
+    //  3) Extract the Co-ordinate Info 
+    //      snapshot.coordinateInfo = me.extractCoordinateInfo(snapshot);
 
     // PUSH
     snapshots.push( snapshot );
