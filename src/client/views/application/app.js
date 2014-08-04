@@ -84,6 +84,12 @@ App.prototype.onSlider = function(evt, ui) {
     }
 }
 
+App.prototype.draw = function() {
+    console.log('app.draw');
+    this.appView.visualizer.draw.call(this.appView.visualizer);
+}
+
+
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------

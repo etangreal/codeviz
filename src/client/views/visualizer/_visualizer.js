@@ -41,29 +41,38 @@
         // Background
         // --------------------------------------------------------------------------
 
-        // var background = new famous.core.Surface({
-        //     size: [undefined,undefined],
-        //     properties: { 
-        //         backgroundColor: 'lightblue' 
-        //     }
-        // });
+        var background = new famous.core.Surface({
+            size: [undefined,undefined],
+            properties: { 
+                backgroundColor: 'lightblue' 
+            }
+        });
 
         // --------------------------------------------------------------------------
         // Canvas
         // --------------------------------------------------------------------------
 
+        var mod = new famous.core.Modifier({ 
+            transform: famous.core.Transform.translate(0,0,1)
+        });
+
         self._canvas = new famous.surfaces.CanvasSurface({
-            size: [undefined,undefined],
+            // size: [undefined,undefined],
+            size: [2000,2000],
             properties: {
-                backgroundColor: 'lightblue'
+                // backgroundColor: 'lightblue'
             }
         });
+
+        self._render = false;
+        self._canvas.render = _render.bind(this);
 
         // --------------------------------------------------------------------------
         // Add Components to Visualizer
         // --------------------------------------------------------------------------
 
-        self.add(self._canvas);
+        self.add(background);
+        self.add(mod).add(self._canvas);
         self.add(this._controller);
 
     }//Visualizer
@@ -106,7 +115,7 @@ _initSnapshot = function(snapshot) {
     if (snapshot.draw && snapshot.draw.isInit)
         return;
 
-    snapshot.draw.onDeployCompleted     = _onDeployCompleted.bind(snapshot);
+    snapshot.draw.onDeployCompleted     = _onDeployCompleted.bind({ self:self, snapshot:snapshot });
     snapshot.draw.extractCoordinateInfo = Visualizer.prototype.extractCoordinateInfo.bind(self);
     snapshot.draw.extractLayoutInfo     = Visualizer.prototype.extractLayoutInfo.bind(self);
 
@@ -259,10 +268,11 @@ function _newDrawNode(node) {
     // add functions to draw object
     // --------------------------------------------------------------------------
 
-    node.draw.show    = _show.bind(node);
-    node.draw.move    = _move.bind(node);
-    node.draw.log     = _log.bind(node);
-    node.draw.cleanup = _cleanup.bind(node);
+    node.draw.show       = _show.bind(node);
+    node.draw.move       = _move.bind(node);
+    node.draw.log        = _log.bind(node);
+    node.draw.cleanup    = _cleanup.bind(node);
+    node.draw.calcLayout = _calcLayout.bind(node);
 
     // --------------------------------------------------------------------------
     // add events to draw object
@@ -302,7 +312,8 @@ function _moveNode(node,x,y) {
     node.draw.position.x = x;
     node.draw.position.y = y;
 
-    node.draw.modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
+    //node.draw.modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
+    _moveModifier(node.draw.modifier, x, y);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -310,7 +321,6 @@ function _moveNode(node,x,y) {
 function _moveModifier(modifier,x,y) {
     modifier.transformFrom( famous.core.Transform.translate(x,y,0) );
 }
-
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -325,7 +335,7 @@ function _onDeploy() {
     var h   = node.draw.surface._currTarget.offsetHeight;
     var x   = 0;
     var y   = 0;
-    var d   = 20;                       //distance (between nodes)
+    var d   = 40;                       //distance (between nodes)
     var dt  = w - msw;                  //delta (width - maxStackWidth)
 
     var ox  = 0;                        // offset-x (from the root node)
@@ -361,10 +371,9 @@ function _onDeploy() {
 
     node.draw.move(x,y);
 
-    _getOffset(node);
-    _getCoordinates(node);
-
-    node.draw.show();
+    // _getOffset.call(self,node);
+    // _getCoordinates.call(self,node);
+    // node.draw.show();
     //node.draw.log();
 
     node.snapshot.draw.onDeployCompleted();
@@ -373,7 +382,13 @@ function _onDeploy() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _onDeployCompleted() {
-    var snapshot = this;
+    var self = this.self;
+    var snapshot = this.snapshot;
+
+    if(snapshot.draw.deployedCount >= count) {
+        console.warn('WARNING | _onDeployCompleted | deployedCount > count');
+        return;
+    }
 
     snapshot.draw.deployedCount += 1;
     //console.log('deployedCount: ', snapshot.draw.deployedCount);
@@ -383,17 +398,82 @@ function _onDeployCompleted() {
     if (snapshot.draw.deployedCount == count) {
         //console.log('DeployCompleted');
 
+        snapshot.stack.forEach(function(frame) {
+            frame.draw.calcLayout();
+        });
 
+        snapshot.heap.forEach(function(heapObj,i) {
+            if (i > 0) // #HACK skip the first 'dummy' object
+                heapObj.draw.calcLayout();
+        });
+
+        self._snapshot = snapshot;
+        self._render = true;
 
         // ToDo: update the current snapshot ... 
         //      snapshot.draw.extractCoordinateInfo(snapshot);
         //      snapshot.draw.extractLayoutInfo(snapshot);
         //      State.updateSnapshot(snapshot);
-
     }
 
-    if(snapshot.draw.deployedCount > count)
-        console.warn('WARNING | _onDeployCompleted | deployedCount > count');
+}//_onDeployCompleted
+
+// --------------------------------------------------------------------------------------------------------------------
+// CALC-LAYOUT
+// --------------------------------------------------------------------------------------------------------------------
+
+function _calcLayout() {
+    var node = this;
+
+    _getOffset(node);
+    _getCoordinates(node);
+    node.draw.show();
+    //node.draw.log();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// RENDER
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _render() {
+    var self = this;
+    var canvas = self._canvas;
+
+    // ------------------------------------------
+
+    if (!self._render)
+        return canvas.id;
+
+    self._render = false;
+    self.clearCanvas();
+
+    // ------------------------------------------
+
+    var co = (self._snapshot) ? self._snapshot.coordinates : {};
+    var pl = (self._snapshot) ? self._snapshot.plumbing : {};
+
+    for(var key in pl)
+      if ( pl.hasOwnProperty(key) ) {
+        var fromUID = key;
+        var toUIDs = pl[key];
+
+        var from = co[fromUID];
+        if( self.isUndefined(from) )
+          console.error("ERROR: _render => from is undefined.",fromUID);
+
+        toUIDs.forEach( function(toUID) {
+          var to = co[toUID];
+          if( self.isUndefined(to) )
+            console.error("ERROR: _render => to is undefined.",toUID);
+          else
+            self.drawArrow(from,to);
+        });//toUIDs.forEach
+
+      }//if
+
+    // ------------------------------------------
+
+    return canvas.id;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -403,14 +483,14 @@ function _getOffset(node) {
     var mods = [];
 
     var baseMod = node.snapshot.draw.baseMod;
-    var modSH = (node.draw.location == NodeLocationTypeEnum.STACK) ?
+    var heapStack = (node.draw.location == NodeLocationTypeEnum.STACK) ?
         node.snapshot.draw.stackMod : 
         node.snapshot.draw.heapMod ;
 
     mods.push(baseMod);
-    mods.push(modSH);
+    mods.push(heapStack);
 
-    var n = node; 
+    var n = node;
     while(n) {
         mods.push(n.draw.modifier);
         n = n.parent;
@@ -492,6 +572,7 @@ function _log() {
 
 };//log
 
+
 // --------------------------------------------------------------------------------------------------------------------
 // GET-COORDINATES
 // --------------------------------------------------------------------------------------------------------------------
@@ -558,9 +639,9 @@ function _getHeapObjCoordinates(heapObj) {
 function _calcCoordinates(uid, parent) { 
 
   //child
-  // var c = $("#" + uid);
-  // var cw = c.width();
-  // var ch = c.height();
+  var c = $("#" + uid);
+  var cw = c.width();
+  var ch = c.height();
 
   //relative
   var element = document.getElementById(uid);
@@ -584,8 +665,8 @@ function _calcCoordinates(uid, parent) {
   //   '\n');
 
   return {
-      x: x + r.x
-    , y: y + r.y
+      x: x + r.x + cw/2
+    , y: y + r.y + ch/2
     , z: 0
   };
 

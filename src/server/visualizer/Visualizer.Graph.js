@@ -133,15 +133,16 @@ Visualizer.prototype.newFrame = function(id,sid) {
         , height: 0
         , location: NodeLocationTypeEnum.STACK
 
-        // Draw Objects (future pointers)
+        // Future Draw Objects (pointers)
         , modifier: undefined           //famous.core.modifier (for current node position)
         , surface: undefined            //famous.core.Surface
 
-        // Draw Function (future pointers)
+        // Future Draw Functions (pointers)
         , show: undefined
         , move: undefined
         , log: undefined
         , cleanup: undefined
+        , calcLayout: undefined
 
         , onDeploy: undefined
         , subsribeToOnDeploy: undefined
@@ -213,15 +214,16 @@ Visualizer.prototype.newNode = function(id,sid) {
       , width: 0
       , height: 0
 
-      // Draw Objects (future pointers)
+      // Future Draw Objects (pointers)
       , modifier: undefined           //famous.core.modifier (for current node position)
       , surface: undefined            //famous.core.Surface
 
-      // Draw Function (future pointers)
+      // Future Draw Function (pointers)
       , show: undefined
       , move: undefined
       , log: undefined
       , cleanup: undefined
+      , calcLayout: undefined
 
       , onDeploy: undefined
       , subsribeToOnDeploy: undefined
