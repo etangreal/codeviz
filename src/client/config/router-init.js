@@ -63,7 +63,7 @@ Router.map(function() {
         // path: '/' + Route.docList,
         template: 'blank',
         onBeforeAction: function () {
-            app.showDocListTestView();
+            // app.showDocListTestView();
         }
     });
 

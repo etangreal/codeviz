@@ -40,7 +40,7 @@ Visualizer.prototype.processTrace = function(trace, code) {
 
     // REFERENCES
     me.registerSnapshotReferences( snapshot );                         //populate the references registry
-    self.extractReferencesInfo( snapshot );                            //extract the debug info of the references
+    //self.extractReferencesInfo( snapshot );                          //already done in registerSnapshotReferences
 
     // PLUMBING
     me.registerSnapshotPlumbing( snapshot );                           //populate the plumbing registry (used to draw the references)
@@ -429,8 +429,6 @@ Visualizer.prototype.addReferenceToPlumbing = function (from, to, plumbing) {
 
 // --------------------------------------------------------------------------------------------------------------------
 // PROPERTY | SNAPSHOT
-// --------------------------------------------------------------------------------------------------------------------
-
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.clearSnapshots = function() { 

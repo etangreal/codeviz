@@ -58,9 +58,9 @@
 
         self._canvas = new famous.surfaces.CanvasSurface({
             // size: [undefined,undefined],
-            size: [2000,2000],
+            size: [935,1000],
             properties: {
-                // backgroundColor: 'lightblue'
+                // backgroundColor: 'lightyellow'
             }
         });
 
@@ -76,6 +76,13 @@
         self.add(this._controller);
 
     }//Visualizer
+
+// --------------------------------------------------------------------------------------------------------------------
+// PUBLIC | METHODS
+// --------------------------------------------------------------------------------------------------------------------
+
+// _.extend(Visualizer.prototype, {
+// });
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PUBLIC | METHOD | CLEAR (canvas|nodes)
@@ -331,8 +338,14 @@ function _onDeploy() {
         console.error('ERROR|node.onDeploy| node has no snapshot!');
 
     var msw = node.snapshot.draw.maxStackWidth;                 //current maximum stack width
-    var w   = node.draw.surface._currTarget.offsetWidth;
-    var h   = node.draw.surface._currTarget.offsetHeight;
+
+    var n = $("#" + node.draw.uid).parent();
+    var w   = n.width();
+    var h   = n.height();
+
+    // var w   = node.draw.surface._currTarget.offsetWidth;
+    // var h   = node.draw.surface._currTarget.offsetHeight;
+
     var x   = 0;
     var y   = 0;
     var d   = 40;                       //distance (between nodes)
@@ -371,10 +384,10 @@ function _onDeploy() {
 
     node.draw.move(x,y);
 
-    // _getOffset.call(self,node);
+    // _getNodeDrawOffset.call(self,node);
     // _getCoordinates.call(self,node);
     // node.draw.show();
-    //node.draw.log();
+    // node.draw.log();
 
     node.snapshot.draw.onDeployCompleted();
 }
@@ -425,7 +438,7 @@ function _onDeployCompleted() {
 function _calcLayout() {
     var node = this;
 
-    _getOffset(node);
+    _getNodeDrawOffset(node);
     _getCoordinates(node);
     node.draw.show();
     //node.draw.log();
@@ -478,7 +491,7 @@ function _render() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _getOffset(node) {
+function _getNodeDrawOffset(node) {
 
     var mods = [];
 
@@ -571,7 +584,6 @@ function _log() {
 "  offset.y: " + node.draw.offset.y + Br);
 
 };//log
-
 
 // --------------------------------------------------------------------------------------------------------------------
 // GET-COORDINATES

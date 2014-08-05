@@ -23,9 +23,9 @@
 		// value
 		// -------------------------------
 
-		  get: _getSliderValue,
-		  set: _setSliderValue,
-		reset: _resetSlider,
+		  getSize: _getSliderSize,
+		  setSize: _setSliderSize,
+		   resize: _resize,
 
 		// -------------------------------
 		// UI
@@ -53,7 +53,7 @@ function _getSlider() {
 
 function _initSlider(size) {
 	// console.log('_initSlider');
-	size = size || 50;
+	size = size || 100;
 
   	var slider = _getSlider();
 
@@ -107,7 +107,7 @@ function _onSlide(evt, ui) {
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _resetSlider() { 
-  	var slider = _getSlider();
+  	//var slider = _getSlider();
 
   	//ToDo: reset the slider
 };
@@ -117,13 +117,47 @@ function _resetSlider() {
 function _setSliderValue(value) {
 	//ToDo: check that 'value' parameter is valid
 
-	_getSlider().slider( "value", value );
+	_getSlider().slider({ value: value});
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 
 function _getSliderValue() {
-	return _getSlider().slider( "value" );
+	return _getSlider().slider('option', 'value');
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// SLIDER | SIZE
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _getSliderSize() {
+	var size = undefined;
+
+	try {
+		size = _getSlider().slider('option', 'max');
+
+	} catch (e) {}
+
+	return size;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _setSliderSize(value) {
+	//ToDo: check that 'value' parameter is valid
+	_getSlider().slider({ max: value});
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _resize() {
+	if (!_getSlider()) return;
+
+    var count = State.CountSnapshots();
+    var size = navbar.slider.getSize();
+
+    if ( size && size !=  count-1)
+        navbar.slider.setSize(count-1);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -131,7 +165,7 @@ function _getSliderValue() {
 function _enableSlider() {
 	//_getSlider().attr('enabled', true);
 	//_getSlider().slider({ disabled: false });
-	_getSlider().slider( 'disable' );
+	_getSlider().slider('disable');
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -30,7 +30,7 @@ Meteor.startup(function() {
 
         //Views
         self.appView = new AppView();
-        self.docListTestView = EditorViewFactory.docListTestView();
+        // self.docListTestView = EditorViewFactory.docListTestView();
 
         //register with the slider's 
         navbar.slider.onSlide.push( self.onSlider.bind(self) );
@@ -76,6 +76,9 @@ App.prototype.showSnapshot = function() {
 App.prototype.onSlider = function(evt, ui) {
     var i = ui.value;
 
+    navbar.slider.resize();
+    editor.highlight();
+
     this.appView.visualizer.show( State.getCurrentSnapshot(), i );
 
     if (State.getDocumentId() && State.isPythonTutor() && State._pythonTutor) {
@@ -84,11 +87,12 @@ App.prototype.onSlider = function(evt, ui) {
     }
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 App.prototype.draw = function() {
     console.log('app.draw');
     this.appView.visualizer.draw.call(this.appView.visualizer);
 }
-
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

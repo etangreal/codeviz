@@ -76,6 +76,8 @@ function _ratios() {
 function _raiseEventToggle() {
 	if (State.onToggle)
 		State.onToggle( _ratios() );
+
+	editor.refresh();
 }
 
 // -------------------------------------------------------------------------------------------------

@@ -208,7 +208,7 @@ Visualizer.prototype.newNode = function(id,sid) {
     , draw: {
         uid: self.newUID()
       , location: NodeLocationTypeEnum.HEAP
-                                      // SEE: api.jquery.com/offset
+                                      // REFERENCE: api.jquery.com/offset
       , position: { x:0, y:0, z:0 }   //  current position relative to the offset parent
       , offset: { x:0, y:0 }          //  current position of an element relative to the root parent
       , width: 0

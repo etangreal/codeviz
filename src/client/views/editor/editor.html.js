@@ -172,6 +172,8 @@ Template.docItem.events({
 Template.editor.docid = function() {
 	var id = State.getDocumentId();
 
+	navbar.slider.resize();
+
 	if (id && State.isPythonTutor()) {
 		var data = State.getCurrentData();
 		var options = State.getPythonTutorFrontendOptions();
@@ -194,13 +196,7 @@ Template.editor.docid = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 Template.editor.config = function() {
-	return function(ace) {
-		// Set some options on the editor
-		ace.setTheme('ace/theme/monokai');
-		ace.getSession().setMode('ace/mode/python');
-		ace.setShowPrintMargin(false);
-		ace.getSession().setUseWrapMode(true);
-	}
+	return editor.config();
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

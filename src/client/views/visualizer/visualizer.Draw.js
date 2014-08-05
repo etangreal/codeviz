@@ -1,11 +1,15 @@
 
 
+// --------------------------------------------------------------------------------------------------------------------
+// PUBLIC | METHODS
+// --------------------------------------------------------------------------------------------------------------------
+
 _.extend(Visualizer.prototype, {
 
     // ----------------------------------------------------------------------------------------------------------------
 
     clearCanvas: _clearCanvas,
-    drawArrow: canvas_arrow
+    drawArrow: _drawArrow
 
     // ----------------------------------------------------------------------------------------------------------------
 
@@ -21,11 +25,10 @@ function _clearCanvas() {
 
 	//clears the canvas
 	var c = canvas.getContext('2d');
-	c.clearRect ( 0 , 0 , 1200, 1200 );
+	c.clearRect ( 0 , 0 , 935, 1000 );
 }
 
 // --------------------------------------------------------------------------------------------------------------------
-
 
 // stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
 function canvas_arrow(f,t){
@@ -37,6 +40,8 @@ function canvas_arrow(f,t){
     	fromy = f.y, 
     	tox = t.x, 
     	toy = t.y;
+
+    console.log('f:', f, '|t:', t);
 
     var headlen = 10;   // length of head in pixels
     var angle = Math.atan2(toy-fromy,tox-fromx);

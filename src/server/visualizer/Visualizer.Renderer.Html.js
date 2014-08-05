@@ -199,7 +199,7 @@ Visualizer.prototype.renderRefNodeAsHtml = function( node, TB ) {
   console.warn("WARNING: renderRefNodeAsHtml => we have a reference node. This was unexpected.");
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var value   = self.recurseValueRefsToHtmlUID(node.value, verbose);
   var cls     = "_heap _node _ref";
 
@@ -237,7 +237,7 @@ Visualizer.prototype.renderFuncNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _func";
 
   var table =
@@ -280,7 +280,7 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _class";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -327,7 +327,7 @@ Visualizer.prototype.renderInstanceNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _instance";
 
   var values    = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -367,7 +367,7 @@ Visualizer.prototype.renderListNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _list";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -404,7 +404,7 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
   var verbose = self.isVerbose();
 
   var duid    = node.draw.uid;
-  var uid     = self.uidAsHtmlUID('id:' + node.id + ' | ' + node.uid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _tuple";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -462,9 +462,8 @@ Visualizer.prototype.renderSetNodeAsHtml = function( node, TB ) {
 
   var verbose = self.isVerbose();
 
-  var duid     = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(node.uid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var duid    = node.draw.uid;
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _set";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -500,9 +499,9 @@ Visualizer.prototype.renderDictNodeAsHtml = function( node, TB ) {
 
   var verbose = self.isVerbose();
 
-  var duid     = node.draw.uid;
-  var uidHtml = self.uidAsHtmlUID(duid, verbose);
-  var id      = (!verbose) ? uidHtml : uidHtml + '{id:' + node.id + '}';
+  var duid    = node.draw.uid;
+  // var uidHtml = self.uidAsHtmlUID(duid, verbose);
+  var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _dict";
 
   var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
@@ -608,7 +607,7 @@ Visualizer.prototype.recurseValueRefsToHtmlUID = function(values, verbose) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.uidAsHtmlUID = function(uid, verbose) {
+Visualizer.prototype.uidAsHtmlUID = function(id, uid, verbose) {
   var me = Visualizer.prototype;
   var self = this;
 
@@ -617,7 +616,9 @@ Visualizer.prototype.uidAsHtmlUID = function(uid, verbose) {
   if( !me.isUID(uid) )
     return uid;
 
-  return self.asHtmlUID(uid/*=>uid*/,uid/*=>to-display*/, verbose);
+  var show_uid = 'id:' + id + ' | ' + uid;
+
+  return self.asHtmlUID(uid/*=>uid*/,show_uid/*=>to-display*/, verbose);
 };
 
 // --------------------------------------------------------------------------------------------------------------------

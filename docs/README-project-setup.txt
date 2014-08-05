@@ -45,6 +45,7 @@
 	mrt add iron-router
 
 	mrt add famono
+	npm install -g famono
 	
 	mrt add coffeescript
 	#mrt add typescript-libs
@@ -68,6 +69,8 @@
 
 	===============================================================================================
 	# atmospherejs.com/package/famono
+	# www.npmjs.org/package/famono
+	# github.com/raix/Meteor-famono
 
 	===============================================================================================
 	# atmospherejs.com/package/bootstrap-3

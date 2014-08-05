@@ -1,13 +1,151 @@
 
 // ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE
+// REQUIRE FAMOUS-POLYFILLS
 // ---------------------------------------------------------------------------------------------------------------------
 
 // famous.polyfills;
 // famous.core.famous;
 
-require("famous.polyfills");    // Add polyfills.
-require("famous/core/famous");  // Add the default CSS file.
+require('famous.polyfills');    // Add polyfills.
+require('famous/core/famous');  // Add the default CSS file.
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-CORE
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.core.Engine;
+// famous.core.Surface;
+// famous.core.Modifier;
+// famous.core.Transform;
+// famous.core.View;
+// famous.core.OptionsManager;
+// famous.core.EventHandler;
+// famous.core.RenderNode;
+// famous.core.ViewSequence;
+
+// require('famous/core/Engine');
+require('famous/core/Surface');
+// require('famous/core/Modifier');
+// require('famous/core/Transform');
+// require('famous/core/View');
+// require('famous/core/OptionsManager');
+// require('famous/core/EventHandler');
+// require('famous/core/RenderNode');
+// require('famous/core/ViewSequence');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-METEOR
+// ---------------------------------------------------------------------------------------------------------------------
+
+// library.meteor.core.ReactiveEntity;
+// library.meteor.core.PageView;
+// library.meteor.core.Surface;
+// library.meteor.core.ViewSequence;
+
+// require('library/meteor/core/ReactiveEntity');
+// require('library/meteor/core/PageView');
+// require('library/meteor/core/Surface');
+// require('library/meteor/core/ViewSequence');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-SURFACES
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.surfaces.ImageSurface;
+// famous.surfaces.ContainerSurface;
+
+// require('famous/surfaces/ImageSurface');
+// require('famous/surfaces/ContainerSurface');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-MODIFIERS
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.modifiers.StateModifier;
+// famous.modifiers.Draggable;
+
+// require('famous/modifiers/StateModifier');
+// require('famous/modifiers/Draggable');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-VIEWS
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.views.ContextualView;
+// famous.views.Deck;
+// famous.views.EdgeSwapper;
+// famous.views.FlexibleLayout;
+// famous.views.Flipper;
+// famous.views.GridLayout;
+// famous.views.HeaderFooterLayout;
+// famous.views.Lightbox;
+// famous.views.RenderController;
+// famous.views.ScrollContainer;
+// famous.views.Scroller;
+// famous.views.Scrollview;
+// famous.views.SequentialLayout;
+
+// require('famous/views/ContextualView');
+// require('famous/views/Deck');
+// require('famous/views/EdgeSwapper');
+// require('famous/views/FlexibleLayout');
+// require('famous/views/Flipper');
+// require('famous/views/GridLayout');
+// require('famous/views/HeaderFooterLayout');
+// require('famous/views/Lightbox');
+// require('famous/views/RenderController');
+// require('famous/views/ScrollContainer');
+// require('famous/views/Scroller');
+// require('famous/views/Scrollview');
+// require('famous/views/SequentialLayout');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-UTILITIES
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.utilities.Timer;
+// famous.utilities.Utility;
+
+// require('famous/utilities/Timer');
+// require('famous/utilities/Utility');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-WIDGETS
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.widgets.NavigationBar;
+// famous.widgets.Slider;
+// famous.widgets.TabBar;
+// famous.widgets.ToggleButton;
+
+// require('famous/widgets/NavigationBar');
+// require('famous/widgets/Slider');
+// require('famous/widgets/TabBar');
+// require('famous/widgets/ToggleButton');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-INPUTS
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.inputs.FastClick;
+
+// require('famous/inputs/FastClick');
+
+// ---------------------------------------------------------------------------------------------------------------------
+// REQUIRE | FAMOUS-TRANSITIONS
+// ---------------------------------------------------------------------------------------------------------------------
+
+// famous.transitions.Transitionable;
+// famous.transitions.Easing;
+// famous.transitions.SnapTransition;
+// famous.transitions.SpringTransition;
+// famous.transitions.TweenTransition;
+
+// require('famous/transitions/Transitionable');
+// require('famous/transitions/Easing');
+// require('famous/transitions/SnapTransition');
+// require('famous/transitions/SpringTransition');
+// require('famous/transitions/TweenTransition');
 
 // ---------------------------------------------------------------------------------------------------------------------
 // STARTUP
@@ -25,93 +163,6 @@ Meteor.startup(function() {
     // -----------------------------------------------------------------------------------------------------------------
 
 });//Meteor.Startup
-
-// ---------------------------------------------------------------------------------------------------------------------
-// EXPORT
-// ---------------------------------------------------------------------------------------------------------------------
-
-// this.Famous = {}; // Add everything to the global namespace 'Famous' to maintain a cleaner global scope.
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | CORE
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.Engine             = require('famous/core/Engine');
-//Famous.Surface            = require('famous/core/Surface');
-//Famous.Modifier           = require('famous/core/Modifier');
-//Famous.Transform          = require('famous/core/Transform');
-//Famous.View               = require('famous/core/View');
-//Famous.OptionsManager     = require("famous/core/OptionsManager");
-//Famous.EventHandler       = require("famous/core/EventHandler");
-//Famous.RenderNode         = require("famous/core/RenderNode");
-//Famous.ViewSequence       = require("famous/core/ViewSequence");
-
-//Famous.ReactiveEntity      = require("library/meteor/core/ReactiveEntity");
-//Famous.PageView            = require("library/meteor/core/PageView");
-//Famous.MeteorSurface       = require("library/meteor/core/Surface");
-//Famous.MeteorSequence      = require("library/meteor/core/ViewSequence");
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | SURFACES
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.ImageSurface        = require("famous/surfaces/ImageSurface");
-//Famous.ContainerSurface    = require("famous/surfaces/ContainerSurface");
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | MODIFIERS
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.StateModifier      = require('famous/modifiers/StateModifier');
-//Famous.Draggable          = require('famous/modifiers/Draggable');
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | VIEWS
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.ContextualView       = require("famous/views/ContextualView");
-//Famous.Deck                 = require('famous/views/Deck');
-//Famous.EdgeSwapper          = require("famous/views/EdgeSwapper");
-//Famous.FlexibleLayout       = require("famous/views/FlexibleLayout");
-//Famous.Flipper              = require("famous/views/Flipper");
-//Famous.GridLayout           = require("famous/views/GridLayout");
-//Famous.HeaderFooterLayout   = require("famous/views/HeaderFooterLayout");
-//Famous.Lightbox             = require("famous/views/Lightbox");
-//Famous.RenderController     = require("famous/views/RenderController");
-//Famous.ScrollContainer      = require('famous/views/ScrollContainer');
-//Famous.Scroller             = require('famous/views/Scroller');
-//Famous.Scrollview           = require('famous/views/Scrollview');
-//Famous.SequentialLayout     = require('famous/views/SequentialLayout');
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | UTILITIES
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.Timer                = require("famous/utilities/Timer");
-//Famous.Utility              = require("famous/utilities/Utility");
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | WIDGETS
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.TitleBar            = require("famous/widgets/TitleBar");
-//Famous.NavigationBar       = require("famous/widgets/NavigationBar");
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | INPUTS
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.FastClick           = require("famous/inputs/FastClick");
-
-// ---------------------------------------------------------------------------------------------------------------------
-// REQUIRE | TRANSITIONS
-// ---------------------------------------------------------------------------------------------------------------------
-
-//Famous.Transitionable     = require('famous/transitions/Transitionable');
-//Famous.Easing             = require('famous/transitions/Easing');
-//Famous.SnapTransition     = require('famous/transitions/SnapTransition');
-//Famous.SpringTransition   = require('famous/transitions/SpringTransition');
-//Famous.TweenTransition  = require("famous/transitions/TweenTransition");
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

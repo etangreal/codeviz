@@ -12,6 +12,7 @@ _.extend(this.State, {
 			  setDocumentId: _setDocumentId,
 
 		 // setCurrentSnapshots: _setCurrentSnapshots,
+		 	  CountSnapshots: _countSnapshots,
 			  getCurrentData: _getCurrentData,
 
 		   isEditingDocItem: _isEditingDocItem,
@@ -24,43 +25,6 @@ _.extend(this.State, {
 // -------------------------------------------------------------------------------------------------
 
 Meteor.startup(function () {
-
-	Documents.find().observe({
-
-		// ----------------------------------------------------------------------------------------
-
-		added: function(doc,id) {
-			// console.log('added. id: ', id);
-			// console.log('isSelectedDoc: ', _isDocumentId(id) );
-
-			// if ( _isDocumentId(id) )
-			// 	Session.set('ssn_snapshots', doc.snapshots);
-		},
-
-		// ----------------------------------------------------------------------------------------
-
-		changed: function(doc,id) {
-			// console.log('changed. id: ', id);
-			// console.log('isSelectedDoc: ', _isDocumentId(id) );
-			// console.log(doc);
-
-			// if ( _isDocumentId(id) )
-			// 	Session.set('ssn_snapshots', doc.snapshots);
-		},
-
-		// ----------------------------------------------------------------------------------------
-
-		removed: function(doc,id) {
-			// console.log('removed. id: ', id);
-			// console.log('isSelectedDoc: ', _isDocumentId(id) );
-
-			// if ( _isDocumentId(id) )
-			// 	Session.set('ssn_snapshots', undefined);
-		}
-
-		// ----------------------------------------------------------------------------------------
-
-	});//Documents.find().observe
 
 });//Meteor.startup
 
@@ -94,6 +58,15 @@ function _setCurrentSnapshots(id) {
 	Session.set('ssn_data', data);
 }
 
+// -------------------------------------------------------------------------------------------------
+
+function _countSnapshots() {
+	var snapshots = Session.get('ssn_snapshots');
+
+	var len = (snapshots) ? snapshots.length : 0;
+
+	return len;
+}
 
 // -------------------------------------------------------------------------------------------------
 
