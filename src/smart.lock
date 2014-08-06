@@ -3,7 +3,6 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {},
-      "typescript-libs": {},
       "sharejs": {},
       "jquery-ui": {},
       "jquery-ui-bootstrap": {},
@@ -15,11 +14,6 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.8.2",
         "commit": "05415a8891ea87a00fb1e2388585f2ca5a38e0da"
-      },
-      "typescript-libs": {
-        "git": "https://github.com/orefalo/meteor-typescript-libs.git",
-        "tag": "v0.1.16",
-        "commit": "9838eec81baf55ddf038d85c5ccc3172730ef0b0"
       },
       "sharejs": {
         "git": "https://github.com/mizzao/meteor-sharejs.git",

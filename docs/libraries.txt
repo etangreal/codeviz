@@ -11,31 +11,126 @@
 
 	npm install jointjs
 	bower install joint
+	famono add joint
+
+# -------------------------------------------------------------------------------------------------
+# LODASH
+# -------------------------------------------------------------------------------------------------
+
+	lodash.com
+
+	github.com/lodash/lodash
+
+	bower install lodash
+	famono add lodash
+
+	atmospherejs.com/package/lodash
+	github.com/alethes/meteor-lodash
+
+	mrt add lodash
 
 
 # -------------------------------------------------------------------------------------------------
-# CODE-MIRROR
+# dagred3
 # -------------------------------------------------------------------------------------------------
 
-	codemirror.net
+	atmospherejs.com/package/dagred3
+	github.com/kidovate/meteor-dagre-d3
 
-	atmospherejs.com/package/codemirror
-	github.com/digioak/meteor-codemirror
+	github.com/kidovate/meteor-dagre-d3-demo
 
-	mrt add codemirror
-
-	wmbest2/meteor-codemirror
+	mrt add dagred3
 
 # -------------------------------------------------------------------------------------------------
-# JS-PLUMB
+# BACKBONE
 # -------------------------------------------------------------------------------------------------
 
-	# tips:
-		jsplumb is working slow
-			groups.google.com/forum/#!topic/jsplumb/04E-t3h10zo
+	
 
-		jsPlumb.setSuspendDrawing(true);
-		jsPlumb.setSuspendDrawing(false, true);
+# -------------------------------------------------------------------------------------------------
+# UNDERSCORE
+# -------------------------------------------------------------------------------------------------
+	
+	underscorejs.org
+
+	npm install underscore
+	bower install underscore
+	famono add underscore
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | FAMONO
+# -------------------------------------------------------------------------------------------------
+
+	atmospherejs.com/package/famono
+	www.npmjs.org/package/famono
+
+	github.com/raix/Meteor-famono
+
+	mrt add famono
+	npm install -g famono
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | BOOTSTRAP-3 & ACCOUNTS-UI-BOOTSTRAP-3
+# -------------------------------------------------------------------------------------------------
+
+	atmospherejs.com/package/bootstrap-3
+	atmospherejs.com/package/accounts-ui-bootstrap-3
+	
+# -------------------------------------------------------------------------------------------------
+# METEOR | SHARE-JS
+# -------------------------------------------------------------------------------------------------
+
+	atmospherejs.com/package/sharejs
+	github.com/mizzao/meteor-sharejs
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | JQUERY-UI
+# -------------------------------------------------------------------------------------------------
+
+	atmospherejs.com/package/jquery-ui
+	github.com/TimHeckel/meteor-jquery-ui
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | JQUERY-UI-BOOTSTRAP
+# -------------------------------------------------------------------------------------------------
+
+	atmospherejs.com/package/jquery-ui-bootstrap
+	github.com/TimHeckel/meteor-jquery-ui-bootstrap
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | NPM
+# -------------------------------------------------------------------------------------------------
+
+	# ARTICLE: meteorhacks.com/complete-npm-integration-for-meteor.html
+	# 	  URL: atmospherejs.com/package/npm
+	#	  URL: github.com/arunoda/meteor-npm
+	#
+	# 	mrt add npm
+
+	<ALTERNATIVE-INSTALL>
+
+	# URL: www.npmjs.org/package/meteor-npm
+	#
+	# 	npm install -g meteor-npm
+	# 	meteor-npm
+
+# -------------------------------------------------------------------------------------------------
+# ZERORPC
+# -------------------------------------------------------------------------------------------------
+
+	zerorpc.dotcloud.com
+	www.npmjs.org/package/zerorpc
+
+	pip install zerorpc
+	npm install zerorpc
+
+# -------------------------------------------------------------------------------------------------
+# (SUNDRY)
+# -------------------------------------------------------------------------------------------------
+
+	sudo npm update npm -g
+
+	sudo easy_install pip
 
 # -------------------------------------------------------------------------------------------------
 # END

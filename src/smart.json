@@ -1,7 +1,6 @@
 {
   "packages": {
     "iron-router": {},
-    "typescript-libs": {},
     "sharejs": {},
     "jquery-ui": {},
     "jquery-ui-bootstrap": {},

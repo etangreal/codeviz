@@ -1,0 +1,95 @@
+
+# -------------------------------------------------------------------------------------------------
+# CODE-MIRROR
+# -------------------------------------------------------------------------------------------------
+
+	codemirror.net
+
+	atmospherejs.com/package/codemirror
+	github.com/digioak/meteor-codemirror
+
+	mrt add codemirror
+
+	wmbest2/meteor-codemirror
+
+# -------------------------------------------------------------------------------------------------
+# JS-PLUMB
+# -------------------------------------------------------------------------------------------------
+
+	# tips:
+		jsplumb is working slow
+			groups.google.com/forum/#!topic/jsplumb/04E-t3h10zo
+
+		jsPlumb.setSuspendDrawing(true);
+		jsPlumb.setSuspendDrawing(false, true);
+
+# -------------------------------------------------------------------------------------------------
+# GEVENT
+# -------------------------------------------------------------------------------------------------
+
+	# gevent:
+		www.gevent.org
+
+		# Tutorials:
+			www.gevent.org/intro.html
+			sdiehl.github.io/gevent-tutorial
+
+		# Installation:
+			pip install greenlet
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | PHANTOM-JS
+# -------------------------------------------------------------------------------------------------
+
+	# ARTICLE: Installing/Using Phantom.js with Meteor
+	#	  URL: stackoverflow.com/questions/23812163/installing-using-phantom-js-with-meteor
+
+	#	phantomjs (MOST POPULAR ON NPM)
+	#	  URL: www.npmjs.org/package/phantomjs
+
+		$ mrt add npm
+		
+		# in packages.json add:
+		{
+			"phantomjs": "1.9.7-15"
+		}
+
+		# to uses:
+		var phantomjs = Meteor.require('phantomjs');
+
+	<ALTERNATIVE>
+
+	#	phantom (MOST STARS ON GITHUB)
+	#		URL: www.npmjs.org/package/phantom
+
+		$ mrt add npm
+		
+		# in packages.json add:
+		{
+			"phantom": "0.6.5"
+		}
+
+		# to uses:
+		var phantom = Meteor.require('phantom');
+
+
+	sudo brew update && brew install phantomjs
+
+	# phantomjs.org/download.html
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | TYPESCRIPT-COMPILER (DO NOT ADD!)
+# -------------------------------------------------------------------------------------------------
+
+	# DON'T ADD: typescript-compiler doesn't work ...
+	# mrt add typescript-compiler
+
+# -------------------------------------------------------------------------------------------------
+# METEOR | TYPESCRIPT-COMPILER
+# -------------------------------------------------------------------------------------------------
+
+	#mrt add typescript-libs
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@
     this.VisualizerViewFactory = {
 
         //Views
-        visualizer: _visualizer,
+        visualizer: _jointVisualizer,
 
     }//VisualizerViewFactory
 
@@ -18,6 +18,13 @@
 function _visualizer() {
 
     return new Visualizer();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+function _jointVisualizer() {
+
+    return new JointVisualizer();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
