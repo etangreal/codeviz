@@ -68,11 +68,13 @@
 
 	npm install -g famono
 
-	meteor add underscore
-	mrt add backbone
+	#meteor add underscore
+	#meteor add backbone
 
 	# after adding: src/packages/joint -> github.com/kidovate/meteor-joint
-	echo joint >> .meteor/packages
+	# echo joint >> .meteor/packages
+
+	bower install handlebars
 
 # -------------------------------------------------------------------------------------------------
 # END
