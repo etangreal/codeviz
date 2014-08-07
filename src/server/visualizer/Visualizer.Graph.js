@@ -1,18 +1,6 @@
 
 // --------------------------------------------------------------------------------------------------------------------
-// VISUALIZER GRAPH
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.newUID = function() {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if (self._uid == undefined)
-      self._uid = 0;
-
-  return 'UID' + self._uid++;
-};
-
+// SNAPSHOT
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.newSnapshot = function(id) {
@@ -27,6 +15,9 @@ Visualizer.prototype.newSnapshot = function(id) {
    uid: self.newUID()                   // uid: unique id of this snapshot.
                                         //   Together docId & uid can be used by the client(i.e. browser) to keep track of which snapshots its seen. 
                                         //   Every time the snapshot is regenerated it will have the same docId but a new uid.
+
+    // ----------------------------------------------------------------------------------------------------------------
+
     //CORE
     , stack: []
     , heap: []
@@ -40,10 +31,14 @@ Visualizer.prototype.newSnapshot = function(id) {
       , stdout: 'UNDEFINED'
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
+
     //REGISTRY
     , references: {}                    //A mapping of the simple short integer id to a UID
     , plumbing: {}                      //A mapping of UIDs 'from' one object 'to' another object
     , coordinates: {}                   //Maps object's UID to {x,y} coordinates
+
+    // ----------------------------------------------------------------------------------------------------------------
 
     //UI DRAW/LAYOUT (client side only)
     , draw: {
@@ -65,10 +60,20 @@ Visualizer.prototype.newSnapshot = function(id) {
       , extractLayoutInfo: undefined
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //RENDER DATA-&-TEMPLATE
+    , render: {
+        stack: [],
+        heap: []
+    }
+
     //PRE-RENDERED (for debugging)
     , stackHtml: ''
     , heapHtml: ''
     , html: ''
+
+    // ----------------------------------------------------------------------------------------------------------------
 
     //DEBUG INFO
     , traceInfo: ''
@@ -86,7 +91,7 @@ Visualizer.prototype.newSnapshot = function(id) {
 };//newSnapshot
 
 // --------------------------------------------------------------------------------------------------------------------
-// STACK FRAME
+// FRAME
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.newFrame = function(id,sid) {
@@ -99,19 +104,64 @@ Visualizer.prototype.newFrame = function(id,sid) {
     , uid: self.newUID()              //  unique id
     , gid: ''                         //  global id -> id remains the same for the same object across snapshots
 
+    // ----------------------------------------------------------------------------------------------------------------
+
     //CORE
     , name: ''
     , locals: []
 
     //META-DATA
     , meta: {
-          is_highlighted: false
-        , is_parent: false
-        , func_name: ''
-        , is_zombie: false
-        , parent_frame_id_list: []
-        , unique_hash: ''
-      }
+        is_highlighted: false
+      , is_parent: false
+      , func_name: ''
+      , is_zombie: false
+      , parent_frame_id_list: []
+      , unique_hash: ''
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //POINTERS (client side only)
+    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
+    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //UI DRAW/LAYOUT DATA-&-METHODS (client side only)
+    , draw: {
+        uid: self.newUID()                
+                                              // SEE: api.jquery.com/offset
+      , position: { x:0, y:0, z:0 }           //  current position relative to the offset parent
+      , offset: { x:0, y:0 }                  //  current position of an element relative to the document
+      , width: 0
+      , height: 0
+      , location: NodeLocationTypeEnum.STACK
+
+      // Future Draw Objects (pointers)
+      , modifier: undefined           //famous.core.modifier (for current node position)
+      , surface: undefined            //famous.core.Surface
+
+      // Future Draw Functions (pointers)
+      , show: undefined
+      , move: undefined
+      , log: undefined
+      , cleanup: undefined
+      , calcLayout: undefined
+
+      , onDeploy: undefined
+      , subsribeToOnDeploy: undefined
+      , unsubscribeFromOnDeploy: undefined
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //RENDER DATA-&-TEMPLATE
+    , render: {
+        data: {}
+      , tmpl: ''
+      , html: ''
+    }
 
     //PRE-RENDERED TEXT & HTML
     , text: ''
@@ -119,45 +169,14 @@ Visualizer.prototype.newFrame = function(id,sid) {
 
     // ----------------------------------------------------------------------------------------------------------------
 
-    //Pointers (client side only)
-    , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
-    , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
-
-    //UI DRAW/LAYOUT DATA (client side only)
-    , draw: {
-          uid: self.newUID()                
-                                                // SEE: api.jquery.com/offset
-        , position: { x:0, y:0, z:0 }           //  current position relative to the offset parent
-        , offset: { x:0, y:0 }                  //  current position of an element relative to the document
-        , width: 0
-        , height: 0
-        , location: NodeLocationTypeEnum.STACK
-
-        // Future Draw Objects (pointers)
-        , modifier: undefined           //famous.core.modifier (for current node position)
-        , surface: undefined            //famous.core.Surface
-
-        // Future Draw Functions (pointers)
-        , show: undefined
-        , move: undefined
-        , log: undefined
-        , cleanup: undefined
-        , calcLayout: undefined
-
-        , onDeploy: undefined
-        , subsribeToOnDeploy: undefined
-        , unsubscribeFromOnDeploy: undefined
-      }
-
-      // --------------------------------------------------------------------------------------------------------------
-
     //DEBUG INFO
     , layoutInfo: ''
 
   };//frame
 
   return frame;
-};
+
+};//newFrame
 
 // --------------------------------------------------------------------------------------------------------------------
 // NODE LOCATION TYPE ENUM
@@ -187,6 +206,8 @@ Visualizer.prototype.newNode = function(id,sid) {
     , uid: self.newUID()              //unique id
     , gid: ''                         //global id -> id remains the same for the same object across snapshots
 
+    // ----------------------------------------------------------------------------------------------------------------
+
     //CORE
     , name: ''
     , inherits: []                    //todo: should change this to: "parents" so that it implies both "inherits" and "instanceof"
@@ -194,17 +215,15 @@ Visualizer.prototype.newNode = function(id,sid) {
     , pointer: []
     , pointerUID: []
 
-    //PRE-RENDERED TEXT & HTML
-    , text: ''
-    , html: ''
-
     // ----------------------------------------------------------------------------------------------------------------
 
-    //Pointers (client side only)
+    //POINTERS (client side only)
     , parent: undefined               //added during rendering. Pointer to the node 'above' in the render tree
     , snapshot: undefined             //added during rendering. Pointer to the snapshot this node belongs to
 
-    //UI DRAW/LAYOUT DATA (client side only)
+    // ----------------------------------------------------------------------------------------------------------------
+
+    //UI DRAW/LAYOUT DATA-&-METHODS (client side only)
     , draw: {
         uid: self.newUID()
       , location: NodeLocationTypeEnum.HEAP
@@ -232,17 +251,31 @@ Visualizer.prototype.newNode = function(id,sid) {
 
     // ----------------------------------------------------------------------------------------------------------------
 
+    //RENDER DATA-&-TEMPLATE
+    , render: {
+        data: {}
+      , tmpl: ''
+      , html: ''
+    }
+
+    //PRE-RENDERED TEXT & HTML
+    , text: ''
+    , html: ''
+
+    // ----------------------------------------------------------------------------------------------------------------
+
     //DEBUG INFO
     , layoutInfo: ''
 
   };//node
 
   return node;
-};
 
-// --------------------------------------------------------------------------------------------------------------------
+};//newNode
+
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // HASH FUNCTIONS (unused)
-// --------------------------------------------------------------------------------------------------------------------
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 Visualizer.prototype.getFrameHashCode = function(frame) {
 
@@ -293,6 +326,6 @@ String.prototype.hashCode = function() {
   return hash;
 };
 
-// --------------------------------------------------------------------------------------------------------------------
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // END
-// --------------------------------------------------------------------------------------------------------------------
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––

@@ -7,7 +7,7 @@
     this.VisualizerViewFactory = {
 
         //Views
-        visualizer: _jointVisualizer,
+        visualizer: _visualizer,
 
     }//VisualizerViewFactory
 

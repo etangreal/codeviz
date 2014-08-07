@@ -74,7 +74,7 @@
 	# after adding: src/packages/joint -> github.com/kidovate/meteor-joint
 	# echo joint >> .meteor/packages
 
-	bower install handlebars
+	#bower install handlebars
 
 # -------------------------------------------------------------------------------------------------
 # END

@@ -283,14 +283,14 @@ Visualizer.prototype.renderClassNodeAsHtml = function( node, TB ) {
   var uid     = self.uidAsHtmlUID(node.id, node.uid, verbose);
   var cls     = "_heap _node _class";
 
-  var values = self.recurseValueRefsToHtmlUID(node.value, verbose);
+  var values     = self.recurseValueRefsToHtmlUID(node.value, verbose);
   var properties = self.nodeValuesAsHtmlTable(values, TB);
 
   var table =
           TB +           '<table>'                            + Br +
           TB +           '<thead>'                            + Br +
           TB + Tb +        '<tr>'                             + Br +
-          TB + Tb + Tb +     '<td>' + uid + '</td>'           + Br +
+          TB + Tb + Tb +     '<td>' + uid +           '</td>' + Br +
           TB + Tb + Tb +     '<td>' + node.type +     '</td>' + Br +
           TB + Tb + Tb +     '<td>' + node.name +     '</td>' + Br +
           TB + Tb + Tb +     '<td>' + node.inherits + '</td>' + Br +
@@ -411,7 +411,7 @@ Visualizer.prototype.renderTupleNodeAsHtml = function( node, TB ) {
 
   var locals = "";
   values.forEach( function(value) {
-    locals += TB+Tb+Tb+Tb + '<td>' + value + '</td>' + Br ;
+    locals += TB+Tb+Tb+Tb + '<td>' + value + ', </td>' + Br ;
   });
 
   var localsTable =
@@ -591,8 +591,10 @@ Visualizer.prototype.recurseValueRefsToHtmlUID = function(values, verbose) {
   verbose = verbose || self.isVerbose();
   var isArr = (values instanceof Array);
 
-  if ( !isArr && me.isUID(values) )
-    return self.uidAsHtmlUID(values,verbose);
+  if ( !isArr && me.isUID(values) ) {
+    console.warn('WARNING | recurseValueRefsToHtmlUID | unexpected lone UID value:' + values);
+    return self.uidAsHtmlUID( 'n/a', values, verbose);
+  }
 
   if ( me.isRefObj(values) )
     return self.asHtmlUID( me.getRefUID(values), values, verbose );
@@ -623,27 +625,17 @@ Visualizer.prototype.uidAsHtmlUID = function(id, uid, verbose) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-Visualizer.prototype.asHtmlUID = function(uid, values, verbose) {
+Visualizer.prototype.asHtmlUID = function(uid, uidText, verbose) {
   var me = Visualizer.prototype;
   var self = this;
 
   verbose = verbose || self.isVerbose();
 
   var uid = (verbose) ?
-      '<div class="_val">' + values + '</div><div id="' + uid + '" class="_ptr"></div>' :
+      '<div class="_val">' + uidText + '</div><div id="' + uid + '" class="_ptr"></div>' :
       '<div id="' + uid + '" class="_ptr">' + '</div>';
 
   return '<div class="_uid" >'+uid+'</div>';
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-
-String.prototype.toDomElement = function () {
-  var wrapper = document.createElement('div');
-  wrapper.className = "toDomWrapper";
-  wrapper.innerHTML = this;
-
-  return wrapper;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
