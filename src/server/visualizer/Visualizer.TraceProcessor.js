@@ -1,6 +1,6 @@
 
 // --------------------------------------------------------------------------------------------------------------------
-// PROCESS TRACE (main function)
+// TRACE PROCESSOR
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.processTrace = function(trace, code) { 
@@ -64,7 +64,7 @@ Visualizer.prototype.processTrace = function(trace, code) {
 };//processTrace
 
 // --------------------------------------------------------------------------------------------------------------------
-// PROCESS | SNAPSHOT META-DATA
+// PROCESS | SNAPSHOT | META-DATA
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractSnapshotMeta = function(traceEntry) {
@@ -135,7 +135,7 @@ Visualizer.prototype.recursivelyProcessNodeRefs = function(values) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// PROCESS | STACK FRAMES
+// PROCESS | STACK | GLOBAL FRAME
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractGlobalFrame = function(traceEntry,sid) {
@@ -156,6 +156,8 @@ Visualizer.prototype.extractGlobalFrame = function(traceEntry,sid) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// PROCESS | STACK | META DATA
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractGlobalFrameMeta = function(traceEntry) {
 
@@ -172,6 +174,8 @@ Visualizer.prototype.extractGlobalFrameMeta = function(traceEntry) {
 
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// PROCESS | STACK
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.processStack = function(traceEntry,sid) {
@@ -194,6 +198,8 @@ Visualizer.prototype.processStack = function(traceEntry,sid) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// PROCESS | STACK | FRAME
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.processFrame = function(frameToProcess,sid) {
   var me = Visualizer.prototype;
@@ -212,6 +218,8 @@ Visualizer.prototype.processFrame = function(frameToProcess,sid) {
   return frame;
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// PROCESS | STACK | FRAME | LOCALS
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.processFrameLocals = function(localsToProcess, order) {
@@ -237,6 +245,8 @@ Visualizer.prototype.processFrameLocals = function(localsToProcess, order) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
+// PROCESS | STACK | FRAME | META DATA
+// --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.extractFrameMeta = function(frame) {
   return {
@@ -250,7 +260,7 @@ parent_frame_id_list: frame.parent_frame_id_list,
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// CREATE REGISTRY | SNAPSHOT REFERENCES ( A mapping of the short integer id => to a UID | for each object in the snapshot )
+// CREATE | SNAPSHOT | REGISTRY | REFERENCES ( A mapping of the short integer id => to a UID | for each object in the snapshot )
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.registerSnapshotReferences = function(snapshot) {
@@ -285,7 +295,7 @@ Visualizer.prototype.registerSnapshotReferences = function(snapshot) {
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// CREATE REGISTRY | SNAPSHOT PLUMBING ( A mapping of UIDs 'from' one object 'to' another object )
+// CREATE | SNAPSHOT | REGISTRY | PLUMBING ( A mapping of UIDs 'from' one object 'to' another object )
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.registerSnapshotPlumbing = function(snapshot) {
@@ -374,7 +384,7 @@ Visualizer.prototype.registerNodePointerPlumbing = function(node, references, pl
 };
 
 // --------------------------------------------------------------------------------------------------------------------
-// CREATE REGISTRY | PLUMBING
+// REGISTER | SNAPSHOT | INHERITANCE-PLUMBING
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.registerNodeInheritsPlumbing = function(node, references, plumbing) {
@@ -425,6 +435,216 @@ Visualizer.prototype.addReferenceToPlumbing = function (from, to, plumbing) {
   //else: if ('from' not in plumbing) add new entry
   else
     plumbing[from] = [to];
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | STACK | FRAME
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.newFrameNode = function(nodeInfo, id, name) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  var node = self.newNode( id );
+      node.location = NodeLocationTypeEnum.STACK;
+      node.name = name;
+
+  if ( me.isRefObj( nodeInfo ) ) {
+    var uid = self.newUID();
+    nodeInfo.push(uid);               //add the uid to the ref e.g: ["REF",2] -> ["REF",2,"UID101"]
+
+    node.type = NodeTypeEnum.POINTER;
+    node.value.push( nodeInfo );
+    node.pointer.push( nodeInfo[1] );
+    node.pointerUID.push( uid );
+
+  } else {
+    node.type = NodeTypeEnum.PRIMITIVE;
+    node.value = nodeInfo;
+  }
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// VISITOR | CREATE | HEAP | NODES
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.newHeapNode = function( heapObj, id, sid ) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  if ( heapObj == undefined || !me.isArray(heapObj) )
+    console.error("ERROR: newHeapNode => invalid heapObj.");
+
+  if ( self.isRefObj(heapObj) )                 //if the heap obj is a pointer (strange case, should actually not happen - just in case though)
+    return self.refNode( node, heapObj );
+
+  // ------------------------------------------------------------------------------------------------------------------
+  
+  var node = self.newNode( id, sid );
+      node.type = heapObj[0];                 //the first element is always the type
+      node.location = NodeLocationTypeEnum.HEAP;
+
+  var values = [];
+      _.extend(values, heapObj);  //true=>deep-copy
+      values.shift();             //drop the first element
+
+  var collected = self.recursivelyProcessNodeRefs(values);
+      node.pointer = collected.pointers;
+      node.pointerUID = collected.pointerUIDs;
+
+  // ------------------------------------------------------------------------------------------------------------------
+
+  if (node.type == NodeTypeEnum.FUNCTION)
+    return self.funcNode(node,values);
+
+  if (node.type == NodeTypeEnum.CLASS)
+    return self.classNode(node,values);
+
+  if (node.type == NodeTypeEnum.INSTANCE)
+    return self.instanceNode(node,values);
+
+  if(node.type == NodeTypeEnum.LIST)
+    return self.listNode(node,values);
+
+  if (node.type == NodeTypeEnum.TUPLE)
+    return self.tupleNode(node,values);
+
+  if (node.type == NodeTypeEnum.SET)
+    return self.setNode(node,values);
+
+  if (node.type == NodeTypeEnum.DICT)
+    return self.dictNode(node,values);
+
+  // ------------------------------------------------------------------------------------------------------------------
+
+  return self.errorNode(node,values);
+
+};//newHeapNode
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | EMPTY NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.emptyNode = function(id,sid) { 
+  var me = Visualizer.prototype;
+  var self = this;
+  
+  var node = self.newNode( id, sid );
+      node.type = NodeTypeEnum.NONE;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | REFERENCE NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.refNode = function( node, values ) {
+  node.value = values;
+  node.pointer = values[1];
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | FUNCTION NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.funcNode = function( node, values ) {
+  node.name = values[0];
+  values.shift();
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | CLASS NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.classNode = function( node, values ) { 
+  var me = Visualizer.prototype;
+  var self = this;
+
+  node.name = values[0];
+  values.shift();
+
+  node.inherits = node.inherits.concat( values[0] );
+  values.shift();
+
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | INSTANCE NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.instanceNode = function( node, values ) {
+  var me = Visualizer.prototype;
+  var self = this;
+
+  node.inherits = node.inherits.concat( values[0] );
+  values.shift();
+
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | LIST NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.listNode = function( node, values ) {
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | TUPLE NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.tupleNode = function( node, values ) {
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | SET NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.setNode = function( node, values ) {
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | DICTIONARY NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.dictNode = function( node, values ) {
+  node.value = values;
+
+  return node;
+};
+
+// --------------------------------------------------------------------------------------------------------------------
+// CREATE | HEAP | ERROR NODE
+// --------------------------------------------------------------------------------------------------------------------
+
+Visualizer.prototype.errorNode = function( node, values ) {
+  console.error("ERROR: errorNode => Unknown Type.");
+  node.name = NodeTypeEnum.UNKNOWN;
+  node.value = values;
+
+  return node;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -572,216 +792,6 @@ Visualizer.prototype.getCode = function() {
   return self._code;
 };
 
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | FRAME (STACK)
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.newFrameNode = function(nodeInfo, id, name) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  var node = self.newNode( id );
-      node.location = NodeLocationTypeEnum.STACK;
-      node.name = name;
-
-  if ( me.isRefObj( nodeInfo ) ) {
-    var uid = self.newUID();
-    nodeInfo.push(uid);               //add the uid to the ref e.g: ["REF",2] -> ["REF",2,"UID101"]
-
-    node.type = NodeTypeEnum.POINTER;
-    node.value.push( nodeInfo );
-    node.pointer.push( nodeInfo[1] );
-    node.pointerUID.push( uid );
-
-  } else {
-    node.type = NodeTypeEnum.PRIMITIVE;
-    node.value = nodeInfo;
-  }
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | HEAP
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.newHeapNode = function( heapObj, id, sid ) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  if ( heapObj == undefined || !me.isArray(heapObj) )
-    console.error("ERROR: newHeapNode => invalid heapObj.");
-
-  if ( self.isRefObj(heapObj) )                 //if the heap obj is a pointer (strange case, should actually not happen - just in case though)
-    return self.refNode( node, heapObj );
-
-  // ------------------------------------------------------------------------------------------------------------------
-  
-  var node = self.newNode( id, sid );
-      node.type = heapObj[0];                 //the first element is always the type
-      node.location = NodeLocationTypeEnum.HEAP;
-
-  var values = [];
-      _.extend(values, heapObj);  //true=>deep-copy
-      values.shift();             //drop the first element
-
-  var collected = self.recursivelyProcessNodeRefs(values);
-      node.pointer = collected.pointers;
-      node.pointerUID = collected.pointerUIDs;
-
-  // ------------------------------------------------------------------------------------------------------------------
-
-  if (node.type == NodeTypeEnum.FUNCTION)
-    return self.funcNode(node,values);
-
-  if (node.type == NodeTypeEnum.CLASS)
-    return self.classNode(node,values);
-
-  if (node.type == NodeTypeEnum.INSTANCE)
-    return self.instanceNode(node,values);
-
-  if(node.type == NodeTypeEnum.LIST)
-    return self.listNode(node,values);
-
-  if (node.type == NodeTypeEnum.TUPLE)
-    return self.tupleNode(node,values);
-
-  if (node.type == NodeTypeEnum.SET)
-    return self.setNode(node,values);
-
-  if (node.type == NodeTypeEnum.DICT)
-    return self.dictNode(node,values);
-
-  // ------------------------------------------------------------------------------------------------------------------
-
-  return self.errorNode(node,values);
-
-};//newHeapNode
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | EMPTY
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.emptyNode = function(id,sid) { 
-  var me = Visualizer.prototype;
-  var self = this;
-  
-  var node = self.newNode( id, sid );
-      node.type = NodeTypeEnum.NONE;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | REFERENCE
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.refNode = function( node, values ) {
-  node.value = values;
-  node.pointer = values[1];
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | FUNCTION
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.funcNode = function( node, values ) {
-  node.name = values[0];
-  values.shift();
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | CLASS
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.classNode = function( node, values ) { 
-  var me = Visualizer.prototype;
-  var self = this;
-
-  node.name = values[0];
-  values.shift();
-
-  node.inherits = node.inherits.concat( values[0] );
-  values.shift();
-
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NEW NODES | INSTANCE NODE
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.instanceNode = function( node, values ) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  node.inherits = node.inherits.concat( values[0] );
-  values.shift();
-
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | LIST
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.listNode = function( node, values ) {
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | TUPLE
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.tupleNode = function( node, values ) {
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | SET
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.setNode = function( node, values ) {
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | DICTIONARY
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.dictNode = function( node, values ) {
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// CREATE NODE | ERROR
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.errorNode = function( node, values ) {
-  console.error("ERROR: errorNode => Unknown Type.");
-  node.name = NodeTypeEnum.UNKNOWN;
-  node.value = values;
-
-  return node;
-};
-
-// --------------------------------------------------------------------------------------------------------------------
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // END
-// --------------------------------------------------------------------------------------------------------------------
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
