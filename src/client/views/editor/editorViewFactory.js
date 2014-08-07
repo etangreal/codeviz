@@ -37,9 +37,11 @@ function _docListView(classes) {
 
 	var docListAdd = new library.meteor.core.Surface({
 		template: Template.docListAdd,
-		size: [WIDTH, 37],
+		size: [WIDTH, 47],
 		classes: classes,
 		properties: {
+			marginTop: '10px', 
+			marginLeft: '5px',
 			overflow: 'hidden',
 			backgroundColor: 'white'
 		}
