@@ -19,6 +19,11 @@ Visualizer.prototype.prerender = function(snapshot, TB) {
 	//Visualizer.Renderer.Html.js
 	snapshot.stackHtml = me.renderStackAsHtml(snapshot.stack, TB);
 	snapshot.heapHtml = me.renderHeapAsHtml(snapshot.heap, TB);
+
+  //Visualizer.Renderer.Tmpl.js
+  me.renderStackTmpl(snapshot.stack);
+  me.renderHeapTmpl(snapshot.heap);
+
 }
 
 // --------------------------------------------------------------------------------------------------------------------

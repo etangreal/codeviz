@@ -7,12 +7,10 @@ Visualizer.prototype.renderStackTmpl = function(stack) {
   var me = Visualizer.prototype;
   var self = this;
 
-  var frames = [];
   stack.forEach(function(frame) {
-    frames.push( me.renderFrameTmpl(frame) ); 
+    frame.render = me.renderFrameTmpl(frame);
   });
 
-  return frames;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -68,7 +66,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
 
   // ------------------------------------------------------------------------------------
 
-  return {
+  frame.render = {
     data: data,
     tmpl: tmpl,
     html: html
@@ -84,16 +82,12 @@ Visualizer.prototype.renderHeapTmpl = function(heap) {
   var me = Visualizer.prototype;
   var self = this;
 
-  var heapObjs = [];
-
   heap.forEach(function(heapObj) {
     if (heapObj.type == NodeTypeEnum.NONE) // #HACK: skip the first 'dummy' object
       return;
 
-    heapObjs.push( self.renderHeapNodeTmpl(heapObj) );
+    heapObj.render = self.renderHeapNodeTmpl(heapObj);
   });
-
-  return heapObjs;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -174,7 +168,7 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
   var me = Visualizer.prototype;
   var self = this;
 
-  console.warn("WARNING: renderRefNodeTmpl => we have a reference node. This was unexpected.");
+  console.warn("WARNING | renderRefNodeTmpl | We have a reference node. This was unexpected: ", node);
 
   // ------------------------------------------------------------------------------------
 
@@ -430,7 +424,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
       duid: duid,
        uid: uid,
        cls: cls,
-      type: type,
+      type: node.type,
     values: values
   }
 
@@ -636,13 +630,34 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
-  console.error('ERROR: renderUnknownNodeTmpl => Unknown Node type.');
+  console.warn('WARNING | renderUnknownNodeTmpl | Unknown Node type: ', node);
+
+  // ------------------------------------------------------------------------------------
 
   var duid = node.draw.uid;
   var cls  = '_heap _unknown';
 
-  return '<div id="{{ duid }}" class="{{ cls }}">Unknown Node</div>';
-};
+  // ------------------------------------------------------------------------------------
+
+  var data = {
+    duid: duid,
+     cls: cls
+  }
+
+  // ------------------------------------------------------------------------------------
+
+  var tmpl = '<div id="{{ duid }}" class="{{ cls }}">Unknown Node</div>';
+  var html = '';
+
+  // ------------------------------------------------------------------------------------
+
+  return {
+      data: data,
+      tmpl: tmpl,
+      html: html
+  }
+
+};//renderUnknownNodeTmpl
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // FUNCTIONS | HELPERS
@@ -654,16 +669,26 @@ Visualizer.prototype.recurseValue_changingRefsToHtmlUID = function(values) {
 
   var isArr = (values instanceof Array);
 
-  if ( !isArr && me.isUID(values) ) //should not happen
-    return self.uidAsHtmlUID(''/*=>id*/,values/*=>uid*/);
+  // ------------------------------------------------------------------------------------
+  // Exit Conditions
+  // ------------------------------------------------------------------------------------
+
+  if ( !isArr && me.isUID(values) )
+    return self.uidAsHtmlUID(0/*=>id*/,values/*=>uid*/);
 
   if ( me.isRefObj(values) )
     return self.uidAsHtmlUID( me.getRefID(values), me.getRefUID(values) );
+
+  // ------------------------------------------------------------------------------------
+  // Recurse
+  // ------------------------------------------------------------------------------------
 
   if(isArr)
     values.forEach( function(value,i) {
       values[i] = self.recurseValue_changingRefsToHtmlUID(value);
     });
+
+  // ------------------------------------------------------------------------------------
 
   return values;
 
@@ -680,8 +705,11 @@ Visualizer.prototype.uidAsHtmlUID = function(id, uid) {
   var isNr  = me.isNumber(id);
   var isUID = me.isUID(uid);
 
-  if( !isNr || !isUID )
-    console.warn('WARNING | uidAsHtmlUID | invalid id/uid values: ', id, '/', uid);
+  if( !isNr )
+    console.warn('WARNING | uidAsHtmlUID | invalid id: ', id);
+
+  if( !isUID )
+    console.warn('WARNING | uidAsHtmlUID | invalid uid: ', uid);    
 
   // ------------------------------------------------------------------------------------
 

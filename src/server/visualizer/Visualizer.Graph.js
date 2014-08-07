@@ -62,11 +62,11 @@ Visualizer.prototype.newSnapshot = function(id) {
 
     // ----------------------------------------------------------------------------------------------------------------
 
-    //RENDER DATA-&-TEMPLATE
-    , render: {
-        stack: [],
-        heap: []
-    }
+    //RENDER TEMPLATES
+    // , templates: {
+    //     stack: [],
+    //     heap: []
+    // }
 
     //PRE-RENDERED (for debugging)
     , stackHtml: ''
