@@ -1,4 +1,32 @@
 
+
+    <div id="id-div-customizer" class="affix">
+
+        
+
+    </div>
+                <!-- RENDER.TMPL -->
+        <div id="id-div-renderTmpl" class="div-customizer-render wrap">
+            <label id="id-label-renderTmpl" for="id-textArea-renderTmpl">Template</label>
+            <textarea id="id-textArea-renderTmpl" class="textarea" wrap="off">{{renderTmpl}}</textarea>
+        </div>
+
+        <!-- RENDER.DATA -->
+        <div id="id-div-renderData" class="div-customizer-render wrap">
+            <label id="id-label-renderData" for="id-textArea-renderData">Data</label>
+            <textarea id="id-textArea-renderData" class="textarea" wrap="off">{{renderData}}</textarea>
+        </div>
+
+        <!-- RENDER.HTML -->
+        <div id="id-div-renderHtml" class="div-customizer-render wrap">
+            <label id="id-label-renderHtml" for="id-textArea-renderHtml">Html</label>
+            <textarea id="id-textArea-renderHtml" class="textarea" wrap="off">{{renderHtml}}</textarea>
+        </div>
+
+// -------------------------------------------------------------------------------------------------------
+
+
+
     Documents.find().observe({
 
         // ----------------------------------------------------------------------------------------

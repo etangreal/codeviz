@@ -60,7 +60,7 @@ function _initSlider(size) {
   	if ( slider.data('uiSlider') ) {
   		// If the data attribute for the slider is set, the slider has already been created
   		// If the slider is still around, we don't want to initialize it again
-  		console.error("ERROR: slider.navbar.main.html.js: bindSlider: slider is already initilized.");
+  		console.error("ERROR | slider.navbar.main.html.js | bindSlider | slider is already initilized.");
   		return;
   	}
 

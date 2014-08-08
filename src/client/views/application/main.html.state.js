@@ -24,6 +24,10 @@ _.extend(this.State, {
 
 	    isPythonTutor: _isPythonTutor,
 	togglePythonTutor: _togglePythonTutor,
+	updatePythonTutor: _updatePythonTutor,
+
+	      isCustomizer: _isCustomizer,
+	  toggleCustomizer: _toggleCustomizer,
 
 	      isDebugInfo: _isDebugInfo,
 	  toggleDebugInfo: _toggleDebugInfo,
@@ -39,13 +43,14 @@ Meteor.startup(function (){
 });
 
 // -------------------------------------------------------------------------------------------------
-// FUNCTIONS
+// INIT-STATE
 // -------------------------------------------------------------------------------------------------
 
 function _initState() {
 	Session.set('ssn_isFiles', true);
 	Session.set('ssn_isEditor', true);
 	Session.set('ssn_isVisualizer', true);
+	Session.set('ssn_isCustomizer', false);
 	Session.set('ssn_isPythonTutor', false);
 	Session.set('ssn_isDebugInfo', true);
 }
@@ -53,25 +58,33 @@ function _initState() {
 _initState();
 
 // -------------------------------------------------------------------------------------------------
+// RATIOS
+// -------------------------------------------------------------------------------------------------
 
 function _ratios() {
 	var files = _isFiles() ? true:0;
 	var editor = _isEditor() ? 1:0;
 	var visualizer = _isVisualizer() ? 2:0;
+	var customizer = _isCustomizer() ? 3:0;
 	var pythonTuotr = _isPythonTutor() ? 3:0;
 	var debugInfo = _isDebugInfo() ? 1:0;
 
-	var spacer = !(editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
+	var spacer = !(editor||visualizer||customizer||pythonTuotr||debugInfo) ? 1 : 0;
 
 	return [
 		files,
 		editor,
 		visualizer,
+		customizer,
 		pythonTuotr,
 		debugInfo,
 		spacer
 	];
 }
+
+// -------------------------------------------------------------------------------------------------
+// RAISE EVENT TOGGLE
+// -------------------------------------------------------------------------------------------------
 
 function _raiseEventToggle() {
 	if (State.onToggle)
@@ -80,6 +93,8 @@ function _raiseEventToggle() {
 	editor.refresh();
 }
 
+// -------------------------------------------------------------------------------------------------
+// FILES
 // -------------------------------------------------------------------------------------------------
 
 function _isFiles() {
@@ -96,6 +111,8 @@ function _toggleFiles(show) {
 }
 
 // -------------------------------------------------------------------------------------------------
+// EDITOR
+// -------------------------------------------------------------------------------------------------
 
 function _isEditor() {
 	return Session.get('ssn_isEditor');
@@ -110,6 +127,8 @@ function _toggleEditor(show) {
     return show;
 }
 
+// -------------------------------------------------------------------------------------------------
+// VISUALIZER
 // -------------------------------------------------------------------------------------------------
 
 function _isVisualizer() {
@@ -126,6 +145,25 @@ function _toggleVisualizer(show) {
 }
 
 // -------------------------------------------------------------------------------------------------
+// CUSTOMIZER
+// -------------------------------------------------------------------------------------------------
+
+function _isCustomizer() {
+	return Session.get('ssn_isCustomizer');
+}
+
+// -------------------------------------------------------------------------------------------------
+
+function _toggleCustomizer(show) {
+	show = (show != undefined) ? show : !Session.get('ssn_isCustomizer')
+	Session.set('ssn_isCustomizer', show);
+
+	return show;
+}
+
+// -------------------------------------------------------------------------------------------------
+// PYTHON TUTOR
+// -------------------------------------------------------------------------------------------------
 
 function _isPythonTutor() {
 	return Session.get('ssn_isPythonTutor');
@@ -137,9 +175,25 @@ function _togglePythonTutor(show) {
 	show = (show != undefined) ? show : !Session.get('ssn_isPythonTutor');
 	Session.set('ssn_isPythonTutor', show);
 
+	_updatePythonTutor();
+
 	return show;
 }
 
+// -------------------------------------------------------------------------------------------------
+
+function _updatePythonTutor() {
+    var id = State.getDocumentId();
+
+    if (id && State.isPythonTutor()) {
+        var data = State.getCurrentData();
+        var options = State.getPythonTutorFrontendOptions();
+        State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
+    }
+}
+
+// -------------------------------------------------------------------------------------------------
+// DEBUG INFO
 // -------------------------------------------------------------------------------------------------
 
 function _isDebugInfo() {

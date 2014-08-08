@@ -34,21 +34,29 @@ Template.header.events({
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    'click #id-btn-customizer': function(e,t) {
+        if ( State.toggleCustomizer() ) {
+            State.toggleFiles(false);
+            State.toggleEditor(false);
+            State.toggleVisualizer(true);
+            State.togglePythonTutor(false);
+            State.toggleDebugInfo(false);
+        }
+
+        State.triggerToggle();
+    },
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+
     'click #id-btn-pythonTutor': function(e,t) {
 
         if ( State.togglePythonTutor() ) {
             State.toggleFiles(false);
             State.toggleEditor(false);
             State.toggleVisualizer(true);
+            State.toggleCustomizer(false);
             State.toggleDebugInfo(false);
-
-            var id = State.getDocumentId();
-
-            if (id && State.isPythonTutor()) {
-                var data = State.getCurrentData();
-                var options = State.getPythonTutorFrontendOptions();
-                State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
-            }
         }
 
         State.triggerToggle();
@@ -61,6 +69,8 @@ Template.header.events({
         if ( State.toggleDebugInfo() ) {
             State.toggleFiles(false);
             State.toggleEditor(false);
+            State.toggleVisualizer(true);
+            State.toggleCustomizer(false);
             State.togglePythonTutor(false);
         }
         
@@ -89,31 +99,37 @@ Template.header.events({
 
 Template.navbar.helpers({
 
-    isFiles: function() {
+    isFilesActive: function() {
         return State.isFiles() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    isEditor: function() {
+    isEditorActive: function() {
         return State.isEditor() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    isVisualizer: function() {
+    isVisualizerActive: function() {
         return State.isVisualizer() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    isPythonTutor: function() {
+    isCustomizerActive: function() {
+        return State.isCustomizer() && 'active';
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    isPythonTutorActive: function() {
         return State.isPythonTutor() && 'active';
     },
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    isDebugInfo: function() {
+    isDebugInfoActive: function() {
         return State.isDebugInfo() && 'active';
     }
 

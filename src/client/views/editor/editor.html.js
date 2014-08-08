@@ -173,12 +173,7 @@ Template.editor.docid = function() {
 	var id = State.getDocumentId();
 
 	navbar.slider.resize();
-
-	if (id && State.isPythonTutor()) {
-		var data = State.getCurrentData();
-		var options = State.getPythonTutorFrontendOptions();
-		State._pythonTutor = new ExecutionVisualizer( $('#pythonTutor').attr('id') , data, options);
-	}
+	State.updatePythonTutor();
 
 	return  id || 'start';
 };

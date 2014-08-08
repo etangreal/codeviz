@@ -12,7 +12,7 @@ var fs = Npm.require('fs');
 
 Meteor.startup(function() {
 
-  //deleteAllDocuments();
+  // deleteAllDocuments();
   if (Documents.find().count() === 0) {
 
     console.log('serve/fixutes/documents.js | populateDocuments');

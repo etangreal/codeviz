@@ -94,6 +94,54 @@ App.prototype.draw = function() {
     this.appView.visualizer.draw.call(this.appView.visualizer);
 }
 
+App.prototype.showTemplate = function(tmpl, data) {
+    
+    data = JSON.stringify(data,undefined, 2);
+
+    app.appView.customizer._grid._tmplEditor.setValue(tmpl);
+    app.appView.customizer._grid._jsEditor.setValue(data);
+
+    if (app.setEditor) return;
+    app.setEditor = true;
+
+
+    var textarea = $('#tmplEditor');
+
+    var editor = ace.edit("editor");
+    // editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/html");
+
+    editor.getSession().on('change', function () {
+        textarea.val(editor.getSession().getValue());
+    });
+
+    // $('textarea[data-editor]').each(function () {
+    //  var textarea = $(this);
+
+    //  var mode = textarea.data('editor');
+
+    //  var editDiv = $('<div>', {
+    //      position: 'absolute',
+    //      width: textarea.width(),
+    //      height: textarea.height(),
+    //      'class': textarea.attr('class')
+    //  }).insertBefore(textarea);
+
+    //  textarea.css('visibility', 'hidden');
+
+    //  var editor = ace.edit(editDiv[0]);
+    //  editor.renderer.setShowGutter(false);
+    //  editor.getSession().setValue(textarea.val());
+    //  editor.getSession().setMode("ace/mode/" + mode);
+    //  // editor.setTheme("ace/theme/idle_fingers");
+
+    //  // // copy back to textarea on form submit...
+    //  // textarea.closest('form').submit(function () {
+    //  //  textarea.val(editor.getSession().getValue());
+    //  // })
+    // });
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 // END
 // ---------------------------------------------------------------------------------------------------------------------

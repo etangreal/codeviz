@@ -24,7 +24,7 @@ function _visualizer() {
 
 function _jointVisualizer() {
 
-    return new JointVisualizer();
+    // return new JointVisualizer();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

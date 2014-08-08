@@ -58,9 +58,9 @@
 
         self._canvas = new famous.surfaces.CanvasSurface({
             // size: [undefined,undefined],
-            size: [935,1000],
+            size: [10,10],
             properties: {
-                // backgroundColor: 'lightyellow'
+                backgroundColor: 'lightyellow'
             }
         });
 
@@ -285,11 +285,13 @@ function _newDrawNode(node) {
     // add events to draw object
     // --------------------------------------------------------------------------
 
+    node.draw.onClick                   = _onClick.bind(node);
     node.draw.onDeploy                  = _onDeploy.bind(node);
-    node.draw.subsribeToOnDeploy        = _subscribeToOnDeploy.bind(node);
-    node.draw.unsubscribeFromOnDeploy   = _unsubscribeFromOnDeploy.bind(node);
 
-    node.draw.subsribeToOnDeploy();
+    node.draw.subscribeToEvents         = _subscribeToEvents.bind(node);
+    node.draw.unsubscribeFromEvents     = _unsubscribeFromEvents.bind(node);
+
+    node.draw.subscribeToEvents();
 
     // --------------------------------------------------------------------------
 
@@ -331,7 +333,26 @@ function _moveModifier(modifier,x,y) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _onDeploy() {
+function _onClick() {
+    var node = this;    
+
+    var clone   = _.clone(node);
+    clone.draw  = _.clone(node.draw);
+    _cleanup.call(clone);
+
+    console.log(clone);
+    // console.log(node);
+
+    app.showTemplate(clone.render.tmpl, clone.render.data);
+
+    State.setSelectedObj(clone);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+// stackoverflow.com/questions/23342360/is-there-no-text-vertical-align-property-in-famo-us
+
+function _onDeploy(target) {
     var node = this;
 
     if (!node.snapshot)
@@ -539,16 +560,22 @@ function _updateDrawProperties(node) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
+// EVENTS
+// ---------------------------------------------------------------------------------------------------------------------
 
-function _subscribeToOnDeploy() {
+function _subscribeToEvents() {
     var node = this;
+
+    node.draw.surface.on('click', node.draw.onClick);
     node.draw.surface.on('deploy', node.draw.onDeploy);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _unsubscribeFromOnDeploy() {
+function _unsubscribeFromEvents() {
     var node = this;
+
+    node.draw.surface.removeListener('on', node.draw.onClick);
     node.draw.surface.removeListener('deploy', node.draw.onDeploy);
 }
 
@@ -557,10 +584,24 @@ function _unsubscribeFromOnDeploy() {
 function _cleanup() {
     var node = this;
 
+    node.draw.unsubscribeFromEvents();
+
+    node.parent = null;
+    node.snapshot = null;
     node.draw.modifier = null;
     node.draw.surface = null;
 
-    node.draw.unsubscribeFromOnDeploy();
+    node.draw.show       = null;
+    node.draw.move       = null;
+    node.draw.log        = null;
+    node.draw.cleanup    = null;
+    node.draw.calcLayout = null;
+
+    node.draw.onClick    = null;
+    node.draw.onDeploy   = null;
+
+    node.draw.subscribeToEvents         = null;
+    node.draw.unsubscribeFromEvents     = null;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

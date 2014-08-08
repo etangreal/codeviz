@@ -128,7 +128,7 @@ Visualizer.prototype.newFrame = function(id,sid) {
 
     // ----------------------------------------------------------------------------------------------------------------
 
-    //UI DRAW/LAYOUT DATA-&-METHODS (client side only)
+    //UI DRAW/LAYOUT PROPERTIES, METHODS & EVENTS (client side only)
     , draw: {
         uid: self.newUID()                
                                               // SEE: api.jquery.com/offset
@@ -149,9 +149,11 @@ Visualizer.prototype.newFrame = function(id,sid) {
       , cleanup: undefined
       , calcLayout: undefined
 
+      // Future Draw Object's Events (pointers)
       , onDeploy: undefined
-      , subsribeToOnDeploy: undefined
-      , unsubscribeFromOnDeploy: undefined
+      , onClick: undefined
+      , subsribeToEvents: undefined
+      , unsubscribeFromEvents: undefined
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -223,7 +225,7 @@ Visualizer.prototype.newNode = function(id,sid) {
 
     // ----------------------------------------------------------------------------------------------------------------
 
-    //UI DRAW/LAYOUT DATA-&-METHODS (client side only)
+    //UI DRAW/LAYOUT PROPERTIES, METHODS & EVENTS (client side only)
     , draw: {
         uid: self.newUID()
       , location: NodeLocationTypeEnum.HEAP
@@ -233,20 +235,22 @@ Visualizer.prototype.newNode = function(id,sid) {
       , width: 0
       , height: 0
 
-      // Future Draw Objects (pointers)
+      // Future Draw Object's (pointers)
       , modifier: undefined           //famous.core.modifier (for current node position)
       , surface: undefined            //famous.core.Surface
 
-      // Future Draw Function (pointers)
+      // Future Draw Object's Function (pointers)
       , show: undefined
       , move: undefined
       , log: undefined
       , cleanup: undefined
       , calcLayout: undefined
 
+      // Future Draw Object's Events (pointers)
       , onDeploy: undefined
-      , subsribeToOnDeploy: undefined
-      , unsubscribeFromOnDeploy: undefined
+      , onClick: undefined
+      , subsribeToEvents: undefined
+      , unsubscribeFromEvents: undefined
     }
 
     // ----------------------------------------------------------------------------------------------------------------

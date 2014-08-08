@@ -31,7 +31,8 @@
         //  footer }
         var headerFooter = AppViewFactory.HeaderFooter();
         var flexLayout   = headerFooter.content.flexLayout;
-        self.visualizer   = headerFooter.content.visualizer;
+        self.visualizer  = headerFooter.content.visualizer;
+        self.customizer  = headerFooter.content.customizer;
 
         State.onToggle = toggleViews.bind(flexLayout);
 

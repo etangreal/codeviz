@@ -78,12 +78,13 @@ function _createContentSection() {
     var docList     = EditorViewFactory.docListView();
     var editor      = EditorViewFactory.editorView();
     var visualizer  = VisualizerViewFactory.visualizer();
+    var customizer  = CustomizerViewFactory.customizerView();
     var pythonTutor = PythonTutorViewFactory.pythonTutorView();
     var debugInfo   = DebugInfoViewFactory.debugInfoView();
 
     var spacer      = new famous.core.Surface({
                         size: [undefined,undefined],
-                        properties: { backgroundColor: 'red' }
+                        properties: { backgroundColor: 'BLACK' }
                     });
 
     // -------------------------------------------------------------------------------------------------------------
@@ -92,6 +93,7 @@ function _createContentSection() {
     surfaces.push(docList);
     surfaces.push(editor);
     surfaces.push(visualizer);
+    surfaces.push(customizer);
     surfaces.push(pythonTutor);
     surfaces.push(debugInfo);
     surfaces.push(spacer);
@@ -105,7 +107,8 @@ function _createContentSection() {
            docList: docList, 
             editor: editor, 
         visualizer: visualizer, 
-       pythonTutor: pythonTutor, 
+        customizer: customizer,
+       pythonTutor: pythonTutor,
          debugInfo: debugInfo 
     };
 
