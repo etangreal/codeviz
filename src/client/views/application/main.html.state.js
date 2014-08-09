@@ -65,11 +65,11 @@ function _ratios() {
 	var files = _isFiles() ? true:0;
 	var editor = _isEditor() ? 1:0;
 	var visualizer = _isVisualizer() ? 2:0;
-	var customizer = _isCustomizer() ? 3:0;
+	var customizer = _isCustomizer() ? true:0;
 	var pythonTuotr = _isPythonTutor() ? 3:0;
 	var debugInfo = _isDebugInfo() ? 1:0;
 
-	var spacer = !(editor||visualizer||customizer||pythonTuotr||debugInfo) ? 1 : 0;
+	var spacer = !(editor||visualizer||pythonTuotr||debugInfo) ? 1 : 0;
 
 	return [
 		files,

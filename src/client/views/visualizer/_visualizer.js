@@ -351,6 +351,7 @@ function _onClick() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 // stackoverflow.com/questions/23342360/is-there-no-text-vertical-align-property-in-famo-us
+// stackoverflow.com/questions/23021796/is-it-possible-to-set-surface-sizes-based-on-percentages-in-famo-us
 
 function _onDeploy(target) {
     var node = this;

@@ -98,22 +98,21 @@ App.prototype.showTemplate = function(tmpl, data) {
     
     data = JSON.stringify(data,undefined, 2);
 
-    app.appView.customizer._grid._tmplEditor.setValue(tmpl);
-    app.appView.customizer._grid._jsEditor.setValue(data);
+    $('#tmplContent').val(tmpl);
 
-    if (app.setEditor) return;
-    app.setEditor = true;
+    // app.appView.customizer._grid._tmplEditor.setValue(tmpl);
+    // app.appView.customizer._grid._jsEditor.setValue(data);
 
 
-    var textarea = $('#tmplEditor');
+    // var textarea = $('#tmplEditor');
 
-    var editor = ace.edit("editor");
-    // editor.setTheme("ace/theme/twilight");
-    editor.getSession().setMode("ace/mode/html");
+    // var editor = ace.edit("editor");
+    // // editor.setTheme("ace/theme/twilight");
+    // editor.getSession().setMode("ace/mode/html");
 
-    editor.getSession().on('change', function () {
-        textarea.val(editor.getSession().getValue());
-    });
+    // editor.getSession().on('change', function () {
+    //     textarea.val(editor.getSession().getValue());
+    // });
 
     // $('textarea[data-editor]').each(function () {
     //  var textarea = $(this);
