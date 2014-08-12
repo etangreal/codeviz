@@ -98,7 +98,7 @@ App.prototype.showTemplate = function(tmpl, data) {
     
     data = JSON.stringify(data,undefined, 2);
 
-    $('#tmplContent').val(tmpl);
+    // $('#tmplEditor').val(tmpl);
 
     // app.appView.customizer._grid._tmplEditor.setValue(tmpl);
     // app.appView.customizer._grid._jsEditor.setValue(data);

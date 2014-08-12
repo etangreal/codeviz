@@ -9,45 +9,31 @@ Template.customizer.renderData = function() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-Template.customizer.renderTmpl = function() {
-	return State.getRenderTmpl();
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-
 Template.customizer.renderHtml = function() {
-	return State.getRenderHtml();
+	var html = State.getRenderHtml();
+	console.log(html);
+
+	return html;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// TEMPLATE | CUSTOMIZER | RENDERED
+// TEMPLATE | TMPL-EDITOR | PROPERTIES/FUNCTIONS
 // ---------------------------------------------------------------------------------------------------------------------
 
-	// $('textarea[data-editor]').each(function () {
-	// 	var textarea = $(this);
+Template.tmplEditor.renderTmpl = function() {
+	var tmpl = State.getRenderTmpl();
+	console.log(tmpl);
 
-	// 	var mode = textarea.data('editor');
+	return tmpl;
+}
 
-	// 	var editDiv = $('<div>', {
-	// 		position: 'absolute',
-	// 		width: textarea.width(),
-	// 		height: textarea.height(),
-	// 		'class': textarea.attr('class')
-	// 	}).insertBefore(textarea);
+// ---------------------------------------------------------------------------------------------------------------------
+// TEMPLATE | TMPL-EDITOR | RENDERED
+// ---------------------------------------------------------------------------------------------------------------------
 
-	// 	textarea.css('visibility', 'hidden');
-
-	// 	var editor = ace.edit(editDiv[0]);
-	// 	editor.renderer.setShowGutter(false);
-	// 	editor.getSession().setValue(textarea.val());
-	// 	editor.getSession().setMode("ace/mode/" + mode);
-	// 	// editor.setTheme("ace/theme/idle_fingers");
-
-	// 	// // copy back to textarea on form submit...
-	// 	// textarea.closest('form').submit(function () {
-	// 	// 	textarea.val(editor.getSession().getValue());
-	// 	// })
-	// });
+Template.tmplEditor.rendered = function() {
+	
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // END

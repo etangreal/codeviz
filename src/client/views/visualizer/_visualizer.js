@@ -513,6 +513,9 @@ function _render() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
+// Related Discussions to Size Calculations
+//  stackoverflow.com/questions/23777756/famo-us-fit-parent-size
+
 function _getNodeDrawOffset(node) {
 
     var mods = [];
@@ -587,10 +590,10 @@ function _cleanup() {
 
     node.draw.unsubscribeFromEvents();
 
-    node.parent = null;
-    node.snapshot = null;
-    node.draw.modifier = null;
-    node.draw.surface = null;
+    node.parent          = null;
+    node.snapshot        = null;
+    node.draw.modifier   = null;
+    node.draw.surface    = null;
 
     node.draw.show       = null;
     node.draw.move       = null;

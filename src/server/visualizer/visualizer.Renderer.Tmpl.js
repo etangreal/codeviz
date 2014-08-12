@@ -592,7 +592,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
       duid: duid,
        uid: uid,
        cls: cls,
-      type: type,
+      type: node.type,
     values: values
   }
 

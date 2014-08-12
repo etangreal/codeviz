@@ -19,56 +19,99 @@ this.CustomizerViewFactory = {
 
 	function _customizerView() {
 
-        // ------------------------------------------------------------------------------------------------------------
+        var tmpl    = _tmplEditor();
+        var s1      = _surface('orange');
+        var s2      = _surface('green');
+        var flex    = _flexLayout();
 
-        var grid = _grid();
+        // ----------------------------------------------------------------------------------------
 
-        // ------------------------------------------------------------------------------------------------------------
+        fs = [];
+        flex.sequenceFrom(fs);
+        fs.push(tmpl);
+        fs.push(s2);
 
-        // var tabBar = new famous.widgets.TabBar({
-        //     size: [undefined, undefined],
-        //     properties: {
-        //         backgroundColor: 'RED'
-        //     }
-        // });
+        // ----------------------------------------------------------------------------------------
+
+        return tmpl;
+	}
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // SURFACE (test)
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _surface(color) {
+        color = color || 'yellow';
 
         var surface = new famous.core.Surface({
             size: [undefined, undefined],
             properties: {
-                backgroundColor: 'red'
+                backgroundColor: color
             }
         });
 
-        // ------------------------------------------------------------------------------------------------------------
-
-        var flex = _flex();
-
-        var fs = []
-        flex.sequenceFrom(fs);
-        fs.push(grid);
-        fs.push(surface);
-
-        flex._grid = grid;
-        flex._tabBar = surface;
-
-        // ------------------------------------------------------------------------------------------------------------
-
-        return _tmplEditor();
-	}
+        return surface;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // FLEX-LAYOUT
     // -----------------------------------------------------------------------------------------------------------------
 
-    function _flex() {
-        ratios = [2,1];
+    function _flexLayout() {
+        var ratios = [2,1];
 
         var flex = new famous.views.FlexibleLayout({
-            direction: 1,
-            ratios : ratios
+            direction: famous.utilities.Utility.Direction.Y,
+            ratios: ratios
         });
 
         return flex;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TAB-VIEW
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _tabView() {
+
+        var view    = new famous.core.View();
+
+        var s1      = _surface();
+        var s2      = _surface('blue');
+        var tabs    = _tabBar();
+        var grid    = _grid();
+
+        // ----------------------------------------------------------------------------------------
+
+        var gs = [];
+        grid.sequenceFrom(gs);
+        gs.push(s1);
+        gs.push(s2);
+
+        // ----------------------------------------------------------------------------------------
+
+        view.add(grid);
+
+        return view;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TAB-BAR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _tabBar() {
+
+        var tabBar = new famous.widgets.TabBar({
+            size: [undefined, 50],
+            direction: famous.utilities.Utility.Direction.X,
+            properties: {
+                backgroundColor: 'RED'
+            }
+        });
+
+        // ----------------------------------------------------------------------------------------
+
+        return tabBar;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -76,125 +119,110 @@ this.CustomizerViewFactory = {
     // -----------------------------------------------------------------------------------------------------------------
 
     function _grid() {
+
         var grid = new famous.views.GridLayout({
             dimensions: [2, 1]
         });
-
-        grid._jsEditor = _jsEditor();
-        grid._tmplEditor = _tmplEditor();
-
-        var gs = [];
-        grid.sequenceFrom(gs);
-        gs.push( grid._jsEditor );
-        gs.push( grid._tmplEditor );
 
         return grid;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // TEMPLATE-EDITOR
+    // TEMPLATE EDITOR
     // -----------------------------------------------------------------------------------------------------------------
-
-    // jsfiddle.net/deepumohanp/tGF6y
-    // gist.github.com/duncansmart/5267653
 
     function _tmplEditor() {
 
-        var view = new famous.core.View();
+        var content = 
+            '<div id="id-div-tmpl">div</div>' +
+            '<textarea id="id-textarea-tmpl" name="name-textarea-tmpl" class="textarea">textarea</textarea>';
 
-        var modifier = new famous.core.Modifier({
-            size: [600, undefined]
+        // ----------------------------------------------------------------------------------------
+
+        var modPos = new famous.core.Modifier({
+            size: [320,320],
+            origin: [0, 0.5]
         });
 
-        var tmplEditor = new famous.surfaces.TextareaSurface({
+        var modBox = new famous.core.Modifier({
+            size: [300,300],
+            origin: [0.5, 0.5]
+        });
+
+        var surface = new famous.core.Surface({
+            content: content,
             size: [undefined, undefined],
             properties: {
-                id: 'tmplEditor',
-                jsEditor: "html",
-                backgroundColor: 'SEASHELL'
+                backgroundColor: 'blue'
             }
         });
 
-        view.add(modifier).add(tmplEditor);
-
-        tmplEditor.on('deploy', function(t/*=target*/){
-            var s = this.getSize();
-            var w = s[0] == true ? t.offsetWidth  : s[0] ;
-            var h = s[1] == true ? t.offsetHeight : s[1] ;
-
-            console.log('w: ', w, "|h: ", h);
+        var con = new famous.surfaces.ContainerSurface({
+            size: [undefined, undefined],
+            properties: {
+                overflow: 'hidden'
+            }
         });
 
+        // ----------------------------------------------------------------------------------------
 
-        // tmplEditor.on('deploy', function(t/*=target*/) {
-        //     console.log('tmplEditor | textarea onDeploy');
+        var pos = con.add(modPos);
+        var box = pos.add(modBox);
+            box.add(surface);
 
-        //     var s = this.getSize();
-        //     var w = s[0] == true ? t.offsetWidth  : s[0] ;
-        //     var h = s[1] == true ? t.offsetHeight : s[1] ;
+        // ----------------------------------------------------------------------------------------
 
-        //     console.log('w: ', w, "|h: ", h);
-        // });
+        surface.on( 'deploy', _onDeploy.bind(surface) );
 
-        // var content = 
-        //     '<div id="tmplEditor"</div>'+
-        //     '<textarea id="tmplTextarea" name="tmplTextarea" class="textarea"></textarea>';
-
-        // var surface = new famous.core.Surface({
-        //     content: content,
-        //     size: [true, undefined],
-        //     properties: {
-        //         backgroundColor: 'blue'
-        //     }
-        // });
-
-        // surface.on('deploy', function(target) {
-        //     console.log('tmplTextarea | surface onDeploy');
-
-        //     // var size    = this.getSize();
-        //     // var width   = size[0] == true ? target.offsetWidth  : size[0] ;
-        //     // var height  = size[1] == true ? target.offsetHeight : size[1] ;
-
-        //     var n = $('#tmplEditor').parent();
-        //     var w   = n.width();
-        //     var h   = n.height();
-
-        //     console.log('w: ', w, "|h: ", h);
-
-        //     var textarea = $('#tmplTextarea');
-
-        //     var div = $('#tmplEditor');
-        //         div.width( w*2 );
-        //         div.height( h );
-
-        //     var editor = ace.edit('tmplEditor');
-        //     // editor.setTheme('ace/theme/twilight');
-        //     editor.getSession().setMode('ace/mode/html');
-
-        //     editor.getSession().on('change', function () {
-        //         textarea.val(editor.getSession().getValue());
-        //     });
-
-        //     textarea.val(editor.getSession().getValue());
-        // });
-
-        return view;
+        return con;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    // ON-DEPLOY
+    // -----------------------------------------------------------------------------------------------------------------
 
-    function _jsEditor() {
+    // Examples of how to use ACE EDITOR
+    //  jsfiddle.net/deepumohanp/tGF6y
+    //  gist.github.com/duncansmart/5267653
 
-        var jsEditor = new famous.surfaces.TextareaSurface({
-            size: [undefined, undefined],
-            properties: {
-                jsEditor: "javascript",
-                backgroundColor: 'SNOW'
-            }
+    function _onDeploy(t/*=target*/) {
+        // var me = this;
+
+        var $textarea = $('#id-textarea-tmpl');
+        var $editor   = $('#id-div-tmpl');
+
+        var s = this.getSize();
+        var w = s[0] == true ? t.offsetWidth  : s[0] ;
+        var h = s[1] == true ? t.offsetHeight : s[1] ;
+
+        // console.log('w: ', w, "|h: ", h);
+
+        $editor.width( w );
+        $editor.height( h );
+        $editor.attr( 'overflow', 'scroll' );
+        $editor.attr( 'class', $textarea.attr('class') );
+        $textarea.css('visibility', 'hidden');
+
+        var editor = ace.edit('id-div-tmpl');
+            editor.renderer.setShowGutter(false);
+            editor.getSession().setValue($textarea.val());
+            editor.getSession().setMode("ace/mode/html");
+            editor.setTheme("ace/theme/idle_fingers");
+
+        editor.getSession().on('change', function () {
+            $textarea.val( editor.getSession().getValue() );
         });
 
-        return jsEditor;
-    }
+        Deps.autorun(function (c) {
+          var tmpl = State.getRenderTmpl();
+          editor.getSession().setValue(tmpl);
+        });
+
+        // textarea.on('input propertychange', function() {
+        //     editor.getSession.setValue( textarea.val() );
+        // });
+
+    }//_onDeploy
 
 // -----------------------------------------------------------------------------------------------------------------
 // END
