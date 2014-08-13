@@ -19,145 +19,21 @@ this.CustomizerViewFactory = {
 
 	function _customizerView() {
 
-        var tmpl    = _tmplEditor();
-        var s1      = _surface('orange');
-        var s2      = _surface('green');
-        var flex    = _flexLayout();
-
-        // ----------------------------------------------------------------------------------------
-
-        fs = [];
-        flex.sequenceFrom(fs);
-        fs.push(tmpl);
-        fs.push(s2);
-
-        // ----------------------------------------------------------------------------------------
-
-        return tmpl;
+        return _layout();
+ 
 	}
 
     // -----------------------------------------------------------------------------------------------------------------
-    // SURFACE (test)
+    // Layout
     // -----------------------------------------------------------------------------------------------------------------
 
-    function _surface(color) {
-        color = color || 'yellow';
-
-        var surface = new famous.core.Surface({
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: color
-            }
-        });
-
-        return surface;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // FLEX-LAYOUT
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _flexLayout() {
-        var ratios = [2,1];
-
-        var flex = new famous.views.FlexibleLayout({
-            direction: famous.utilities.Utility.Direction.Y,
-            ratios: ratios
-        });
-
-        return flex;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TAB-VIEW
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _tabView() {
-
-        var view    = new famous.core.View();
-
-        var s1      = _surface();
-        var s2      = _surface('blue');
-        var tabs    = _tabBar();
-        var grid    = _grid();
+    function _layout() {
 
         // ----------------------------------------------------------------------------------------
-
-        var gs = [];
-        grid.sequenceFrom(gs);
-        gs.push(s1);
-        gs.push(s2);
-
+        // Container
         // ----------------------------------------------------------------------------------------
 
-        view.add(grid);
-
-        return view;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TAB-BAR
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _tabBar() {
-
-        var tabBar = new famous.widgets.TabBar({
-            size: [undefined, 50],
-            direction: famous.utilities.Utility.Direction.X,
-            properties: {
-                backgroundColor: 'RED'
-            }
-        });
-
-        // ----------------------------------------------------------------------------------------
-
-        return tabBar;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // GRID-LAYOUT
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _grid() {
-
-        var grid = new famous.views.GridLayout({
-            dimensions: [2, 1]
-        });
-
-        return grid;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TEMPLATE EDITOR
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _tmplEditor() {
-
-        var content = 
-            '<div id="id-div-tmpl">div</div>' +
-            '<textarea id="id-textarea-tmpl" name="name-textarea-tmpl" class="textarea">textarea</textarea>';
-
-        // ----------------------------------------------------------------------------------------
-
-        var modPos = new famous.core.Modifier({
-            size: [320,320],
-            origin: [0, 0.5]
-        });
-
-        var modBox = new famous.core.Modifier({
-            size: [300,300],
-            origin: [0.5, 0.5]
-        });
-
-        var surface = new famous.core.Surface({
-            content: content,
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: 'blue'
-            }
-        });
-
-        var con = new famous.surfaces.ContainerSurface({
+        var container = new famous.surfaces.ContainerSurface({
             size: [undefined, undefined],
             properties: {
                 overflow: 'hidden'
@@ -165,32 +41,189 @@ this.CustomizerViewFactory = {
         });
 
         // ----------------------------------------------------------------------------------------
+        // Javascript TabView
+        // ----------------------------------------------------------------------------------------
 
-        var pos = con.add(modPos);
-        var box = pos.add(modBox);
-            box.add(surface);
+        var jsw = 400;
+        var jsh = 460;
+
+        var javascript  = _javascriptTabView(jsw, jsh);
+
+        var modPosJS = new famous.core.Modifier({
+            size: [jsw+20,jsh+20],
+            align: [0, 0]
+        });
+
+        var modBoxJS = new famous.core.Modifier({
+            size: [jsw,jsh],
+            origin: [0.5, 0.5]
+        });
+
+        // var posJS = container.add(modPosJS);
+        // var boxJS = posJS.add(modBoxJS);
+        //     boxJS.add(javascript);
+
+        // ----------------------------------------------------------------------------------------
+        // Template Tabview
+        // ----------------------------------------------------------------------------------------
+
+        var tmplTabView = _templateTabView();
+
+        var tmplW = tmplTabView._tmpl._width;
+        var tmplH = tmplTabView._tmpl._height + 40;
+
+        var tmplModPos = new famous.core.Modifier({
+            size: [tmplW + 20, tmplH + 20],
+            origin: [0, 1]
+        });
+
+        var tmplModBox = new famous.core.Modifier({
+            size: [tmplW, tmplH],
+            origin: [0.5, 0.5]
+        });
+
+        var tmplPos = container.add(tmplModPos);
+        var tmplBox = tmplPos.add(tmplModBox);
+            tmplBox.add(tmplTabView);
 
         // ----------------------------------------------------------------------------------------
 
-        surface.on( 'deploy', _onDeploy.bind(surface) );
-
-        return con;
+        return container;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // ON-DEPLOY
+    // TAB-VIEW
     // -----------------------------------------------------------------------------------------------------------------
 
-    // Examples of how to use ACE EDITOR
-    //  jsfiddle.net/deepumohanp/tGF6y
-    //  gist.github.com/duncansmart/5267653
+    function _templateTabView() {
 
-    function _onDeploy(t/*=target*/) {
-        // var me = this;
+        // ----------------------------------------------------------------------------------------
+        // Imports
+        // ----------------------------------------------------------------------------------------
 
-        var $textarea = $('#id-textarea-tmpl');
+        var tabs = _templateTabBar();
+        var tmpl = _template();
+
+        // ----------------------------------------------------------------------------------------        
+        // Declarations
+        // ----------------------------------------------------------------------------------------
+
+        var tabview = new famous.views.HeaderFooterLayout({
+            headerSize: 40,
+            footerSize: 0
+        });
+
+        // ----------------------------------------------------------------------------------------
+        // Composition
+        // ----------------------------------------------------------------------------------------
+
+        tabview.header.add(tabs);
+        tabview.content.add(tmpl);
+
+        tabview._tabs = tabs;
+        tabview._tmpl = tmpl;
+
+        // ----------------------------------------------------------------------------------------
+        // Export
+        // ----------------------------------------------------------------------------------------
+
+        return tabview;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TAB-BAR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _templateTabBar() {
+
+        var content =
+'<nav class="navbar navbar-inverse" role="navigation">\n' +
+'<div class="container"> \n\n' +
+
+'   <div class="navbar-header"> \n' +
+'       <ul class="nav"> \n' +
+'           <li class="active"> \n' +
+'               <a href="#id-div-nav-tmpl" data-toggle="tab">Template</a> \n' +
+'           </li> \n' +
+'           <li ><a href="#id-div-html" data-toggle="tab">HTML</a></li> \n' +
+'           <li> \n' +
+'               <a href="#id-div-result" data-toggle="tab">Result</a> \n' +
+'           </li> \n' +
+'       </ul> \n' +
+'   </div> \n\n' +
+
+' </div> \n'
+'</nav>';
+
+        // ----------------------------------------------------------------------------------------
+
+        var navbar = new famous.core.Surface({
+            content: content,
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'lightgrey'
+            }
+        });
+
+        // ----------------------------------------------------------------------------------------
+
+        return navbar;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TEMPLATE EDITOR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _template() {
+
+        var content = '\n\
+<div class="tab-content"> \n\
+\n\
+    <div id="id-div-result" class="tab-pane">result</div> \n\
+    <div id="id-div-html" class="tab-pane">html</div> \n\
+ \n\
+    <div id="id-div-nav-tmpl" class="tab-pane"> \n\
+        <div id="id-div-tmpl"></div> \n\
+        <textarea id="id-textarea-tmpl"></textarea> \n\
+    </div> \n\
+\n\
+<div>';
+
+        // ----------------------------------------------------------------------------------------
+
+        var width = 600;
+        var height = 220
+
+        var surface = new famous.core.Surface({
+            content: content,
+            size: [width, height],
+            properties: {
+                backgroundColor: 'teal'
+            }
+        });
+
+        surface.on( 'deploy', _onDeployTemplate );
+
+        surface._width = width;
+        surface._height = height
+
+        // ----------------------------------------------------------------------------------------
+
+        return surface;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TEMPLATE EDITOR ON-DEPLOY
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _onDeployTemplate(t/*=target*/) {
+        // Examples of how to use ACE EDITOR
+        //  jsfiddle.net/deepumohanp/tGF6y
+        //  gist.github.com/duncansmart/5267653
+
         var $editor   = $('#id-div-tmpl');
-
+        var $textarea = $('#id-textarea-tmpl');
+        
         var s = this.getSize();
         var w = s[0] == true ? t.offsetWidth  : s[0] ;
         var h = s[1] == true ? t.offsetHeight : s[1] ;
@@ -207,7 +240,131 @@ this.CustomizerViewFactory = {
             editor.renderer.setShowGutter(false);
             editor.getSession().setValue($textarea.val());
             editor.getSession().setMode("ace/mode/html");
-            editor.setTheme("ace/theme/idle_fingers");
+            editor.setTheme("ace/theme/monokai");
+
+        editor.getSession().on('change', function () {
+            $textarea.val( editor.getSession().getValue() );
+        });
+
+        Deps.autorun(function (c) {
+          var tmpl = State.getRenderTmpl();
+          editor.getSession().setValue(tmpl);
+        });
+
+        // textarea.on('input propertychange', function() {
+        //     editor.getSession.setValue( textarea.val() );
+        // });
+
+    }//_onDeployTemplate
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // JAVASCRIPT TABVIEW
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _javascriptTabView(width, height) {
+
+        // ----------------------------------------------------------------------------------------
+        // Imports
+        // ----------------------------------------------------------------------------------------
+
+        var tabs = _javascriptTabBar();
+        var tmpl = _javascript(width, height);
+
+        // ----------------------------------------------------------------------------------------        
+        // Declarations
+        // ----------------------------------------------------------------------------------------
+
+        var tabview = new famous.views.HeaderFooterLayout({
+            headerSize: 40,
+            footerSize: 0
+        });
+
+        // ----------------------------------------------------------------------------------------
+        // Composition
+        // ----------------------------------------------------------------------------------------
+
+        tabview.header.add(tabs);
+        tabview.content.add(tmpl);
+
+        // ----------------------------------------------------------------------------------------
+        // Export
+        // ----------------------------------------------------------------------------------------
+
+        return tabview;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // JAVASCRIPT TAB-BAR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _javascriptTabBar() {
+        return undefined;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // JAVASCRIPT EDITOR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _javascript(width, height) {
+
+        var content = '\n\
+<div class="tab-content"> \n\
+\n\
+    <div id="id-div-js" class="tab-pane">div</div> \n\
+    <textarea id="id-textarea-js" class="textarea"></textarea> \n\
+\n\
+    <div id="id-div-inspector" class="tab-pane">Inspector</div> \n\
+\n\
+<div>';
+
+        // ----------------------------------------------------------------------------------------
+
+        var surface = new famous.core.Surface({
+            content: content,
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'blue'
+            }
+        });
+
+        // ----------------------------------------------------------------------------------------
+
+        surface.on( 'deploy', _onDeployJavaScript );
+
+        return surface;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // ON-DEPLOY-JAVASCRIPT
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // Examples of how to use ACE EDITOR
+    //  jsfiddle.net/deepumohanp/tGF6y
+    //  gist.github.com/duncansmart/5267653
+
+    function _onDeployJavaScript(t/*=target*/) {
+        // var me = this;
+
+        var $textarea = $('#id-textarea-js');
+        var $editor   = $('#id-div-js');
+
+        var s = this.getSize();
+        var w = s[0] == true ? t.offsetWidth  : s[0] ;
+        var h = s[1] == true ? t.offsetHeight : s[1] ;
+
+        // console.log('w: ', w, "|h: ", h);
+
+        $editor.width( w );
+        $editor.height( h );
+        $editor.attr( 'overflow', 'scroll' );
+        $editor.attr( 'class', $textarea.attr('class') );
+        $textarea.css('visibility', 'hidden');
+
+        var editor = ace.edit('id-div-js');
+            editor.renderer.setShowGutter(false);
+            editor.getSession().setValue($textarea.val());
+            editor.getSession().setMode("ace/mode/javascript");
+            editor.setTheme("ace/theme/monokai");
 
         editor.getSession().on('change', function () {
             $textarea.val( editor.getSession().getValue() );
@@ -223,6 +380,22 @@ this.CustomizerViewFactory = {
         // });
 
     }//_onDeploy
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // INSPECTOR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _inspector() {
+
+        var surface = new famous.core.Surface({
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'red'
+            }
+        });
+
+        return surface;
+    }
 
 // -----------------------------------------------------------------------------------------------------------------
 // END
