@@ -142,11 +142,11 @@ this.CustomizerViewFactory = {
             <div class="tab-content">
 
                 <div id="id-div-tmpl" class="tab-pane">template</div>
-                <textarea id="id-textarea-tmpl"></textarea>
-
                 <div id="id-div-html" class="tab-pane">html</div>
                 <div id="id-div-result" class="tab-pane">result</div>
 
+                <textarea id="id-textarea-tmpl"></textarea>
+                <textarea id="id-textarea-html"></textarea>
             <div>
         */});
 
@@ -177,9 +177,11 @@ this.CustomizerViewFactory = {
         var w = s[0] == true ? t.offsetWidth  : s[0] ;
         var h = s[1] == true ? t.offsetHeight : s[1] ;
 
-        var getValueFn = function() { return State.getRenderTmpl() };
+        var tmplValueFn = function() { return State.getRenderTmpl() };
+        _applyAce('id-div-tmpl', 'id-textarea-tmpl', 'html', w, h, tmplValueFn);
 
-        _applyAce('id-div-tmpl', 'id-textarea-tmpl', 'html', w, h, getValueFn);
+        var htmlValueFn = function() { return State.getRenderHtml() };
+        _applyAce('id-div-html', 'id-textarea-html', 'html', w, h, htmlValueFn);
 
     }//_onDeployTemplate
 
@@ -198,7 +200,7 @@ this.CustomizerViewFactory = {
                                 <a href="#id-div-js" data-toggle="tab">Javascript</a>
                             </li>
                             <li>
-                                <a href="#id-div-inspector" data-toggle="tab">Inspector</a>
+                                <a href="#id-div-data" data-toggle="tab">Inspector</a>
                             </li>
                         </ul>
                     </div>
@@ -217,10 +219,11 @@ this.CustomizerViewFactory = {
         var content = multiline(function(){/*
             <div class="tab-content">
 
-                <div id="id-div-js" class="tab-pane">div</div>
-                <textarea id="id-textarea-js"></textarea>
+                <div id="id-div-js" class="tab-pane">js</div>
+                <div id="id-div-data" class="tab-pane">Inspector</div>
 
-                <div id="id-div-inspector" class="tab-pane">Inspector</div>
+                <textarea id="id-textarea-js"></textarea>
+                <textarea id="id-textarea-data"></textarea>
 
             <div>
         */});
@@ -246,46 +249,17 @@ this.CustomizerViewFactory = {
     // ON-DEPLOY-JAVASCRIPT
     // -----------------------------------------------------------------------------------------------------------------
 
-    // Examples of how to use ACE EDITOR
-    //  jsfiddle.net/deepumohanp/tGF6y
-    //  gist.github.com/duncansmart/5267653
-
     function _onDeployJavaScript(t/*=target*/) {
-        // var me = this;
-
-        var $textarea = $('#id-textarea-js');
-        var $editor   = $('#id-div-js');
 
         var s = this.getSize();
         var w = s[0] == true ? t.offsetWidth  : s[0] ;
         var h = s[1] == true ? t.offsetHeight : s[1] ;
 
-        // console.log('w: ', w, "|h: ", h);
+        var codeValueFn = function() { return State.getRenderCode(); };
+        _applyAce('id-div-js', 'id-textarea-js', 'javascript', w, h, codeValueFn);
 
-        $editor.width( w );
-        $editor.height( h );
-        $editor.attr( 'overflow', 'scroll' );
-        $editor.attr( 'class', $textarea.attr('class') );
-        $textarea.css('visibility', 'hidden');
-
-        var editor = ace.edit('id-div-js');
-            editor.renderer.setShowGutter(false);
-            editor.getSession().setValue( $textarea.val() );
-            editor.getSession().setMode("ace/mode/javascript");
-            editor.setTheme("ace/theme/monokai");
-
-        editor.getSession().on('change', function () {
-            $textarea.val( editor.getSession().getValue() );
-        });
-
-        Deps.autorun(function (c) {
-          var code = State.getRenderCode();
-          editor.getSession().setValue(code);
-        });
-
-        // textarea.on('input propertychange', function() {
-        //     editor.getSession.setValue( textarea.val() );
-        // });
+        var dataValueFn = function() { return State.getRenderData(); };
+        _applyAce('id-div-data', 'id-textarea-data', 'javascript', w, h, dataValueFn);
 
     }//_onDeploy
 

@@ -26,15 +26,15 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
   var duid   = frame.draw.uid;
   var cls    = (frame.meta.is_highlighted) ? '_frame _active' : '_frame';
 
-  // var locals = [];
+  var locals = [];
 
-  // frame.locals.forEach( function(node) {
-  //   locals.push({
-  //     name: node.name,
-  //    value: node.value
-  //    // value: self.recurseValue_changingRefsToHtmlUID(node.value)
-  //   });
-  // });
+  frame.locals.forEach( function(node) {
+    locals.push({
+      name: node.name,
+     value: _.clone( node.value )
+  // value: self.recurseValue_changingRefsToHtmlUID(node.value)
+    });
+  });
 
   // ------------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
       duid: duid,
        cls: cls,
       name: frame.name,
-    locals: frame.locals
+    locals: locals
   }
 
   var code = 'console.log("code");';
@@ -196,7 +196,7 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
         uid: node.uid,
        type: node.type,
        name: node.name,
-      value: node.value,
+      value: _.clone( node.value ),
     pointer: node.pointer
   }
 
@@ -306,6 +306,12 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
   var cls     = "_heap _class";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values   = [];
+  // _.extend(values, node.value);
+
+  // var inherits= [];
+  // _.extend(inherits, node.inherits);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -315,8 +321,8 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
          uid: node.uid,
         type: node.type,
         name: node.name,
-    inherits: node.inherits,
-      values: node.value
+    inherits: _.clone( node.inherits ),
+      values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
@@ -377,6 +383,12 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
   var cls     = "_heap _instance";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values   = [];
+  // _.extend(values, node.value);
+
+  // var inherits= [];
+  // _.extend(inherits, node.inherits);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -386,8 +398,8 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
          uid: node.uid,
         type: node.type,
         name: node.name,
-    inherits: node.inherits,
-      values: node.value
+    inherits: _.clone( node.inherits ),
+      values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
@@ -449,6 +461,9 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
   var cls     = "_heap _list";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values   = [];
+  // _.extend(values, node.value);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -457,7 +472,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: node.value
+    values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
@@ -508,6 +523,9 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
   var cls     = "_heap _tuple";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values  = [];
+  // _.extend(values, node.value);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -516,7 +534,7 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: node.value
+    values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
@@ -573,6 +591,9 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
   var cls     = "_heap _set";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values  = [];
+  // _.extend(values, node.value);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -581,7 +602,7 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: node.value
+    values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
@@ -632,6 +653,9 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
   var cls     = "_heap _dict";
 //var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
+  // var values  = [];
+  // _.extend(values, node.value);
+
   // ------------------------------------------------------------------------------------
 
   var data = {
@@ -640,7 +664,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: node.value
+    values: _.clone( node.value )
   }
 
   var code = 'console.log("code");';
