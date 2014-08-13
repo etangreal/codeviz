@@ -161,6 +161,7 @@ Visualizer.prototype.newFrame = function(id,sid) {
     //RENDER DATA-&-TEMPLATE
     , render: {
         data: {}
+      , code: ''
       , tmpl: ''
       , html: ''
     }
@@ -258,6 +259,7 @@ Visualizer.prototype.newNode = function(id,sid) {
     //RENDER DATA-&-TEMPLATE
     , render: {
         data: {}
+      , code: ''
       , tmpl: ''
       , html: ''
     }

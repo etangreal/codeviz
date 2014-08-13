@@ -11,6 +11,7 @@ _.extend(this.State, {
 	setSelectedObj: _setSelectedObj,
 
 	getRenderData: _getRenderData,
+	getRenderCode: _getRenderCode,
 	getRenderTmpl: _getRenderTmpl,
 	getRenderHtml: _getRenderHtml
 
@@ -59,12 +60,22 @@ function _getRenderData() {
 
 // -------------------------------------------------------------------------------------------------
 
+function _getRenderCode() {
+	var self = this;
+	if (!self.isCustomizer()) return '';
+
+	var obj = _getSelectedObj();
+
+	return (obj && obj.render && obj.render.code) ? obj.render.code : '';
+}
+
+// -------------------------------------------------------------------------------------------------
+
 function _getRenderTmpl() {
 	var self = this;
 	if (!self.isCustomizer()) return '';
 
 	var obj = _getSelectedObj();
-	// var snapshot = _getCurrentSnapshot();
 
 	return (obj && obj.render && obj.render.tmpl) ? obj.render.tmpl : '';
 }
@@ -76,7 +87,6 @@ function _getRenderHtml() {
 	if (!self.isCustomizer()) return '';
 
 	var obj = _getSelectedObj();
-	// var snapshot = _getCurrentSnapshot();
 
 	return (obj && obj.render && obj.render.html) ? obj.render.Html : '';
 }

@@ -341,9 +341,6 @@ function _onClick() {
     _cleanup.call(clone);
 
     console.log(clone);
-    // console.log(node);
-
-    app.showTemplate(clone.render.tmpl, clone.render.data);
 
     State.setSelectedObj(clone);
 }
@@ -361,7 +358,7 @@ function _onDeploy(target) {
 
     var msw = node.snapshot.draw.maxStackWidth;                 //current maximum stack width
 
-    var n = $("#" + node.draw.uid).parent();
+    var n   = $("#" + node.draw.uid).parent();
     var w   = n.width();
     var h   = n.height();
 
@@ -376,7 +373,7 @@ function _onDeploy(target) {
     var ox  = 0;                        // offset-x (from the root node)
     var oy  = 0;                        // offset-y (form the root node)
 
-    node.draw.width = w;
+    node.draw.width  = w;
     node.draw.height = h;
 
     if (node.draw.location == NodeLocationTypeEnum.STACK) {

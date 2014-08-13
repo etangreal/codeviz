@@ -25,42 +25,48 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
 
   var duid   = frame.draw.uid;
   var cls    = (frame.meta.is_highlighted) ? '_frame _active' : '_frame';
-  var locals = [];
 
-  frame.locals.forEach( function(node) {
-    locals.push({
-      name: node.name,
-      value: self.recurseValue_changingRefsToHtmlUID(node.value)
-    });
-  });
+  // var locals = [];
+
+  // frame.locals.forEach( function(node) {
+  //   locals.push({
+  //     name: node.name,
+  //    value: node.value
+  //    // value: self.recurseValue_changingRefsToHtmlUID(node.value)
+  //   });
+  // });
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+        id: frame.id,
       duid: duid,
        cls: cls,
       name: frame.name,
-    locals: locals
+    locals: frame.locals
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-      <tr><td><div class="_fname">{{ name }}</div></td></tr> \n\
-      <tr><td> \n\
-        <table class="_locals"> \n\
-        {{#each locals}} \n\
-          <tr> \n\
-            <td><div class="_name">{{ this.name }}</div></td> \n\
-            <td><div class="_value">{{ this.value }}</div></td> \n\
-          </tr> \n\
-        {{/each}} \n\
-        </table> \n\
-      </td></tr> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr><td><div class="_fname">{{ name }}</div></td></tr>
+    <tr><td>
+      <table class="_locals">
+        {{#each locals}}
+          <tr>
+            <td><div class="_name">{{ this.name }}</div></td>
+            <td><div class="_value">{{ this.value }}</div></td>
+          </tr>
+        {{/each}}
+      </table>
+    </td></tr>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -68,6 +74,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -145,6 +152,8 @@ Visualizer.prototype.renderEmptyNodeTmpl = function() {
     cls: cls
   }
 
+  var code = 'console.log("code");';
+
   // ------------------------------------------------------------------------------------
 
   var tmpl = '<div id="{{ uid }}" class="{{ cls }}">Unknown Node</div>';
@@ -154,6 +163,7 @@ Visualizer.prototype.renderEmptyNodeTmpl = function() {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -173,36 +183,40 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _ref";
-  var value   = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var value   = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+         id: node.id,
        duid: duid,
         cls: cls,
-        uid: uid,
+        uid: node.uid,
        type: node.type,
        name: node.name,
-      value: value,
+      value: node.value,
     pointer: node.pointer
   }
 
+  var code = 'console.log("code");';
+
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-  <table> \n\
-    <tr> \n\
-      <td>{{ uid }}</td> \n\
-      <td>{{ type }}</td> \n\
-      <td>{{ name }}</td> \n\
-      <td>{{ value }}</td> \n\
-      <td>{{ pointer }}</td> \n\
-    </tr> \n\
-  </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr>
+      <td>{{ uid }}</td>
+      <td>{{ type }}</td>
+      <td>{{ name }}</td>
+      <td>{{ value }}</td>
+      <td>{{ pointer }}</td>
+    </tr>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -210,6 +224,7 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -227,37 +242,41 @@ Visualizer.prototype.renderFuncNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _func";
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+      id: node.id,
     duid: duid,
      cls: cls,
-     uid: uid,
+     uid: node.uid,
     type: node.type,
     name: node.name
   }
 
+  var code = 'console.log("code");';
+
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-      <thead> \n\
-        <tr> \n\
-          <td colspan="2">{{ type }} </td> \n\
-        </tr> \n\
-      </thead> \n\
-      <tbody> \n\
-        <tr> \n\
-        <td>{{ uid }}</td> \n\
-        <td>{{ name </td> \n\
-        </tr> \n\
-      </tbody> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <thead>
+      <tr>
+        <td colspan="2">{{ type }} </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td>{{ uid }}</td>
+      <td>{{ name </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -265,6 +284,7 @@ Visualizer.prototype.renderFuncNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -282,48 +302,52 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _class";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+          id: node.id,
         duid: duid,
          cls: cls,
-         uid: uid,
+         uid: node.uid,
         type: node.type,
         name: node.name,
     inherits: node.inherits,
-      values: values
+      values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-    <thead> \n\
-        <tr> \n\
-          <td>{{ uid }}</td> \n\
-          <td>{{ type }}</td> \n\
-          <td>{{ name }}</td> \n\
-          <td>{{ inherits }}</td> \n\
-        </tr> \n\
-    <thead> \n\
-    <tbody> \n\
-      <tr> \n\
-        <table class="_properties"> \n\
-          <tr> \n\
-            {{#each values}} \n\
-              <td>{{ this }}</td> \n\
-            {{/each}} \n\
-          </tr> \n\
-        </table> \n\
-      </tr> \n\
-    </tbody> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+  <thead>
+      <tr>
+        <td>{{ uid }}</td>
+        <td>{{ type }}</td>
+        <td>{{ name }}</td>
+        <td>{{ inherits }}</td>
+      </tr>
+  <thead>
+  <tbody>
+    <tr>
+      <table class="_properties">
+        <tr>
+          {{#each values}}
+            <td>{{ this }}</td>
+          {{/each}}
+        </tr>
+      </table>
+    </tr>
+  </tbody>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -331,6 +355,7 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -348,48 +373,53 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _instance";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+          id: node.id,
         duid: duid,
          cls: cls,
-         uid: uid,
+         uid: node.uid,
         type: node.type,
         name: node.name,
     inherits: node.inherits,
-      values: values
+      values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-    <thead> \n\
-        <tr> \n\
-          <td>{{ uid }}</td> \n\
-          <td>{{ type }}</td> \n\
-          <td>{{ name }}</td> \n\
-          <td>{{ inherits }}</td> \n\
-        </tr> \n\
-    <thead> \n\
-    <tbody> \n\
-      <tr> \n\
-        <table class="_properties"> \n\
-          <tr> \n\
-            {{#each values}} \n\
-              <td>{{ this }}</td> \n\
-            {{/each}} \n\
-          </tr> \n\
-        </table> \n\
-      </tr> \n\
-    </tbody> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+  <thead>
+      <tr>
+        <td>{{ uid }}</td>
+        <td>{{ type }}</td>
+        <td>{{ name }}</td>
+        <td>{{ inherits }}</td>
+      </tr>
+  <thead>
+  <tbody>
+    <tr>
+      <table class="_properties">
+        <tr>
+          {{#each values}}
+            <td>{{ this }}</td>
+          {{/each}}
+        </tr>
+      </table>
+    </tr>
+  </tbody>
+  </table>
+</div>
+*/});
+
 
   var html = '';
 
@@ -397,6 +427,7 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -414,36 +445,40 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _list";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+        id: node.id,
       duid: duid,
-       uid: uid,
+       uid: node.uid,
        cls: cls,
       type: node.type,
-    values: values
+    values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
- '<div id="{{ duid }}" class="{{ cls }}"> \n\
-  <table> \n\
-    <tr> \n\
-      <td>{{ uid }}</td> \n\
-      <td>{{ type }}</td> \n\
-      <td> \n\
-        {{#each values}} \n\
-          {{ this }} \n\
-        {{/each}}} \n\
-      </td> \n\
-    </tr> \n\
-  </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr>
+      <td>{{ uid }}</td>
+      <td>{{ type }}</td>
+      <td>
+        {{#each values}}
+          {{ this }}
+        {{/each}}}
+      </td>
+    </tr>
+  </table>
+</div>
+*/});
 
   html = '';
 
@@ -451,6 +486,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -468,42 +504,46 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _tuple";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+        id: node.id,
       duid: duid,
-       uid: uid,
+       uid: node.uid,
        cls: cls,
       type: node.type,
-    values: values
+    values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
- '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-      <thead> \n\
-        <tr> \n\
-            <td colspan="2">{{ type }}</td> \n\
-        </tr> \n\
-      </thead> \n\
-      <tbody> \n\
-        <tr> \n\
-            <td>{{ uid }}</td> \n\
-            <td> \n\
-              {{#each values}} \n\
-                {{ this }} \n\
-              {{/each}} \n\
-            </td> \n\
-        </tr> \n\
-      </tbody> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <thead>
+      <tr>
+          <td colspan="2">{{ type }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>{{ uid }}</td>
+          <td>
+            {{#each values}}
+              {{ this }}
+            {{/each}}
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -511,6 +551,7 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -528,36 +569,40 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _set";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+        id: node.id,
       duid: duid,
-       uid: uid,
+       uid: node.uid,
        cls: cls,
       type: node.type,
-    values: values
+    values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-    <table> \n\
-      <tr> \n\
-        <td></td> \n\
-        <td>{{ type }}</td> \n\
-        <td> \n\
-          {{#each values}} \n\
-            {{ this }} \n\
-          {{/each}} \n\
-        </td> \n\
-      </tr> \n\
-    </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr>
+      <td></td>
+      <td>{{ type }}</td>
+      <td>
+        {{#each values}}
+          {{ this }}
+        {{/each}}
+      </td>
+    </tr>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -565,6 +610,7 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -582,36 +628,40 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var duid    = node.draw.uid;
-  var uid     = self.uid_ToHtmlUID(node.id, node.uid);
+//var uid     = self.uid_ToHtmlUID(node.id, node.uid);
   var cls     = "_heap _dict";
-  var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
+//var values  = self.recurseValue_changingRefsToHtmlUID(node.value);
 
   // ------------------------------------------------------------------------------------
 
   var data = {
+        id: node.id,
       duid: duid,
-       uid: uid,
+       uid: node.uid,
        cls: cls,
       type: node.type,
-    values: values
+    values: node.value
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl =
-  '<div id="{{ duid }}" class="{{ cls }}"> \n\
-  <table> \n\
-    <tr> \n\
-      <td>{{ uid }}</td> \n\
-      <td>{{ type }}</td> \n\
-      <td> \n\
-        {{#each values}} \n\
-          {{ this }} \n\
-        {{/each}} \n\
-      </td> \n\
-    </tr> \n\
-  </table> \n\
-  </div>';
+  var tmpl = multiline(function(){/*
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr>
+      <td>{{ uid }}</td>
+      <td>{{ type }}</td>
+      <td>
+        {{#each values}}
+          {{ this }}
+        {{/each}}
+      </td>
+    </tr>
+  </table>
+</div>
+*/});
 
   var html = '';
 
@@ -619,6 +669,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
 
   return {
     data: data,
+    code: code,
     tmpl: tmpl,
     html: html
   }
@@ -640,9 +691,12 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
   // ------------------------------------------------------------------------------------
 
   var data = {
+      id: node.id,
     duid: duid,
      cls: cls
   }
+
+  var code = 'console.log("code");';
 
   // ------------------------------------------------------------------------------------
 
@@ -653,6 +707,7 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
 
   return {
       data: data,
+      code: code,
       tmpl: tmpl,
       html: html
   }
