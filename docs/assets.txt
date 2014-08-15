@@ -26,6 +26,17 @@
 	CMD\> vagrant --version
 
 # -------------------------------------------------------------------------------------------------
+# PYTHON
+# -------------------------------------------------------------------------------------------------
+
+	www.python.org
+
+		www.python.org/download/releases/3.4.1
+		www.python.org/downloads/release/python-341
+
+		www.python.org/download/releases/2.7.8
+
+# -------------------------------------------------------------------------------------------------
 # METEOR
 # -------------------------------------------------------------------------------------------------
 
@@ -59,27 +70,6 @@
 		pip install zerorpc
 
 # -------------------------------------------------------------------------------------------------
-# GOOGLE APPENGINE
-# -------------------------------------------------------------------------------------------------
-
-	developers.google.com/appengine
-	developers.google.com/appengine/downloads
-
-	registry.hub.docker.com/u/turnkeylinux/appengine-python-13.0
-	www.turnkeylinux.org/appengine-python
-
-# -------------------------------------------------------------------------------------------------
-# PYTHON
-# -------------------------------------------------------------------------------------------------
-
-	www.python.org
-
-		www.python.org/download/releases/3.4.1
-		www.python.org/downloads/release/python-341
-
-		www.python.org/download/releases/2.7.8
-
-# -------------------------------------------------------------------------------------------------
 # COREOS
 # -------------------------------------------------------------------------------------------------
 
@@ -87,7 +77,7 @@
 	coreos.com/docs/running-coreos/platforms/vagrant
 
 	github.com/coreos/coreos-vagrant
-	
+
 		CMD\> git clone https://github.com/coreos/coreos-vagrant.git
 
 # -------------------------------------------------------------------------------------------------
@@ -100,21 +90,6 @@
 
 	docs.docker.com/installation/mac
 	github.com/boot2docker/osx-installer/releases
-
-# -------------------------------------------------------------------------------------------------
-# DOCKER-BASH TOOL
-# -------------------------------------------------------------------------------------------------
-
-	github.com/phusion/passenger-docker#docker_bash
-
-	mkdir docker-bash
-	cd dockerbash
-
-	curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz
-	tar xzf master.tar.gz
-
-	# From inside CoreOS, run:
-	sudo ./baseimage-docker-master/install-tools.sh
 
 # -------------------------------------------------------------------------------------------------
 # PHUSION-PASSENGER-DOCKER

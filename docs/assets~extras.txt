@@ -1,3 +1,46 @@
+
+# -------------------------------------------------------------------------------------------------
+# NODE-JS
+# -------------------------------------------------------------------------------------------------
+
+	www.nodejs.org
+	nodejs.org/download
+
+	brew install node
+	brew install npm
+
+# -------------------------------------------------------------------------------------------------
+# PHYTHON
+# -------------------------------------------------------------------------------------------------
+
+	dockerfile.github.io/#/python
+	registry.hub.docker.com/u/dockerfile/python
+
+# -------------------------------------------------------------------------------------------------
+# GOOGLE APPENGINE
+# -------------------------------------------------------------------------------------------------
+
+	developers.google.com/appengine
+	developers.google.com/appengine/downloads
+
+	registry.hub.docker.com/u/turnkeylinux/appengine-python-13.0
+	www.turnkeylinux.org/appengine-python
+
+# -------------------------------------------------------------------------------------------------
+# DOCKER-BASH TOOL
+# -------------------------------------------------------------------------------------------------
+
+	github.com/phusion/passenger-docker#docker_bash
+
+	mkdir docker-bash
+	cd dockerbash
+
+	curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz
+	tar xzf master.tar.gz
+
+	# From inside CoreOS, run:
+	sudo ./baseimage-docker-master/install-tools.sh
+
 # -------------------------------------------------------------------------------------------------
 # PHUSION-PASSANGER
 # -------------------------------------------------------------------------------------------------
@@ -9,11 +52,18 @@
 	Ubuntu: www.phusionpassenger.com/documentation/Users%20guide%20Standalone.html#install_on_debian_ubuntu
 
 # -------------------------------------------------------------------------------------------------
-# PHYTHON
+# PHANTOM-JS
 # -------------------------------------------------------------------------------------------------
 
-	dockerfile.github.io/#/python
-	registry.hub.docker.com/u/dockerfile/python
+	phantomjs.org
+
+	sudo brew update && brew install phantomjs
+
+# -------------------------------------------------------------------------------------------------
+# UNGIT
+# -------------------------------------------------------------------------------------------------
+
+	github.com/FredrikNoren/ungit
 
 # -------------------------------------------------------------------------------------------------
 # END
