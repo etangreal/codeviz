@@ -25,7 +25,7 @@ THE SOFTWARE.
 @license
 */
 /* exported Handlebars */
-var Handlebars = (function() {
+Handlebars = (function() {
 // handlebars/safe-string.js
 var __module3__ = (function() {
   "use strict";

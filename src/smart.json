@@ -5,6 +5,7 @@
     "jquery-ui": {},
     "jquery-ui-bootstrap": {},
     "npm": {},
-    "famono": {}
+    "famono": {},
+    "plain-handlebars": {}
   }
 }

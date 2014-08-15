@@ -340,7 +340,7 @@ function _onClick() {
     clone.draw  = _.clone(node.draw);
     _cleanup.call(clone);
 
-    console.log(clone);
+    // console.log(clone);
 
     State.setSelectedObj(clone);
 }

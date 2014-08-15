@@ -65,7 +65,6 @@ function _getRenderCode() {
 	if (!self.isCustomizer()) return '';
 
 	var obj = _getSelectedObj();
-
 	return (obj && obj.render && obj.render.code) ? obj.render.code : '';
 }
 
@@ -76,7 +75,6 @@ function _getRenderTmpl() {
 	if (!self.isCustomizer()) return '';
 
 	var obj = _getSelectedObj();
-
 	return (obj && obj.render && obj.render.tmpl) ? obj.render.tmpl : '';
 }
 
@@ -87,8 +85,7 @@ function _getRenderHtml() {
 	if (!self.isCustomizer()) return '';
 
 	var obj = _getSelectedObj();
-
-	return (obj && obj.render && obj.render.html) ? obj.render.Html : '';
+	return (obj && obj.render && obj.render.html) ? obj.render.html : '';
 }
 
 // -------------------------------------------------------------------------------------------------

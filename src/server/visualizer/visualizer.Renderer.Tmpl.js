@@ -40,35 +40,53 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
 
   var data = {
         id: frame.id,
+       uid: frame.uid,
       duid: duid,
        cls: cls,
       name: frame.name,
     locals: locals
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+
+          data.locals.forEach(function(local) {
+              local.value = helper.wrapUIDs(local.value);
+          });
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <tr><td><div class="_fname">{{ name }}</div></td></tr>
-    <tr><td>
-      <table class="_locals">
-        {{#each locals}}
-          <tr>
-            <td><div class="_name">{{ this.name }}</div></td>
-            <td><div class="_value">{{ this.value }}</div></td>
-          </tr>
-        {{/each}}
+  var tmpl = multiline.stripIndent(function(){/*
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <tr><td><div class="_fname">{{ name }}</div></td></tr>
+        <tr><td>
+          <table class="_locals">
+            {{#each locals}}
+              <tr>
+                <td><div class="_name">{{ this.name }}</div></td>
+                <td><div class="_value">{{ this.value }}</div></td>
+              </tr>
+            {{/each}}
+          </table>
+        </td></tr>
       </table>
-    </td></tr>
-  </table>
-</div>
-*/});
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -152,12 +170,19 @@ Visualizer.prototype.renderEmptyNodeTmpl = function() {
     cls: cls
   }
 
-  var code = 'console.log("code");';
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = '<div id="{{ uid }}" class="{{ cls }}">Unknown Node</div>';
-  var html = '';
+  
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -200,25 +225,37 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
     pointer: node.pointer
   }
 
-  var code = 'console.log("code");';
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.value = helper.wrapUIDs(data.value);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <tr>
-      <td>{{ uid }}</td>
-      <td>{{ type }}</td>
-      <td>{{ name }}</td>
-      <td>{{ value }}</td>
-      <td>{{ pointer }}</td>
-    </tr>
-  </table>
-</div>
-*/});
+  var tmpl = multiline.stripIndent(function(){/*
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <tr>
+          <td>{{ uid }}</td>
+          <td>{{ type }}</td>
+          <td>{{ name }}</td>
+          <td>{{ value }}</td>
+          <td>{{ pointer }}</td>
+        </tr>
+      </table>
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -256,29 +293,42 @@ Visualizer.prototype.renderFuncNodeTmpl = function(node) {
     name: node.name
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <thead>
-      <tr>
-        <td colspan="2">{{ type }} </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <td>{{ uid }}</td>
-      <td>{{ name </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-*/});
+  var tmpl = multiline.stripIndent(function(){/*
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="2">{{ type }} </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <td>{{ uid }}</td>
+          <td>{{ name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -325,37 +375,51 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
       values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-  <thead>
-      <tr>
-        <td>{{ uid }}</td>
-        <td>{{ type }}</td>
-        <td>{{ name }}</td>
-        <td>{{ inherits }}</td>
-      </tr>
-  <thead>
-  <tbody>
-    <tr>
-      <table class="_properties">
+  var tmpl = multiline.stripIndent(function(){/*
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+      <thead>
+          <tr>
+            <td>{{ uid }}</td>
+            <td>{{ type }}</td>
+            <td>{{ name }}</td>
+            <td>{{ inherits }}</td>
+          </tr>
+      <thead>
+      <tbody>
         <tr>
-          {{#each values}}
-            <td>{{ this }}</td>
-          {{/each}}
+          <table class="_properties">
+            <tr>
+              {{#each values}}
+                <td>{{ this }}</td>
+              {{/each}}
+            </tr>
+          </table>
         </tr>
+      </tbody>
       </table>
-    </tr>
-  </tbody>
-  </table>
-</div>
-*/});
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -402,38 +466,51 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
       values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-  <thead>
-      <tr>
-        <td>{{ uid }}</td>
-        <td>{{ type }}</td>
-        <td>{{ name }}</td>
-        <td>{{ inherits }}</td>
-      </tr>
-  <thead>
-  <tbody>
-    <tr>
-      <table class="_properties">
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+      <thead>
+          <tr>
+            <td>{{ uid }}</td>
+            <td>{{ type }}</td>
+            <td>{{ name }}</td>
+            <td>{{ inherits }}</td>
+          </tr>
+      <thead>
+      <tbody>
         <tr>
-          {{#each values}}
-            <td>{{ this }}</td>
-          {{/each}}
+          <table class="_properties">
+            <tr>
+              {{#each values}}
+                <td>{{ this }}</td>
+              {{/each}}
+            </tr>
+          </table>
         </tr>
+      </tbody>
       </table>
-    </tr>
-  </tbody>
-  </table>
-</div>
-*/});
+    </div>
+  */});
 
+  // ------------------------------------------------------------------------------------
 
-  var html = '';
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -475,27 +552,39 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
     values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <tr>
-      <td>{{ uid }}</td>
-      <td>{{ type }}</td>
-      <td>
-        {{#each values}}
-          {{ this }}
-        {{/each}}}
-      </td>
-    </tr>
-  </table>
-</div>
-*/});
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <tr>
+          <td>{{ uid }}</td>
+          <td>{{ type }}</td>
+          <td>
+            {{#each values}}
+              {{ this }}
+            {{/each}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  */});
 
-  html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -537,33 +626,47 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
     values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <thead>
-      <tr>
-          <td colspan="2">{{ type }}</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>{{ uid }}</td>
-          <td>
-            {{#each values}}
-              {{ this }}
-            {{/each}}
-          </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-*/});
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <thead>
+          <tr>
+              <td colspan="2">{{ type }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td>{{ uid }}</td>
+              <td>
+                {{#each values}}
+                  {{ this }}
+                {{/each}}
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -605,27 +708,41 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
     values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <tr>
-      <td></td>
-      <td>{{ type }}</td>
-      <td>
-        {{#each values}}
-          {{ this }}
-        {{/each}}
-      </td>
-    </tr>
-  </table>
-</div>
-*/});
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <tr>
+          <td></td>
+          <td>{{ type }}</td>
+          <td>
+            {{#each values}}
+              {{ this }}
+            {{/each}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -667,27 +784,41 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
     values: _.clone( node.value )
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function(){/*
+      "use strict";
+
+      (function (data,helper) {
+          data.uid = helper.wrapUID(data.id, data.uid);
+          data.uid = helper.reduceToSingleLine(data.uid);
+          data.values = helper.wrapUIDs(data.values);
+
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = multiline(function(){/*
-<div id="{{ duid }}" class="{{ cls }}">
-  <table>
-    <tr>
-      <td>{{ uid }}</td>
-      <td>{{ type }}</td>
-      <td>
-        {{#each values}}
-          {{ this }}
-        {{/each}}
-      </td>
-    </tr>
-  </table>
-</div>
-*/});
+    <div id="{{ duid }}" class="{{ cls }}">
+      <table>
+        <tr>
+          <td>{{ uid }}</td>
+          <td>{{ type }}</td>
+          <td>
+            {{#each values}}
+              {{ this }}
+            {{/each}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  */});
 
-  var html = '';
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -720,12 +851,23 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
      cls: cls
   }
 
-  var code = 'console.log("code");';
+  // ------------------------------------------------------------------------------------
+
+  var code = multiline.stripIndent(function() {/*
+      "use strict";
+
+      (function (data,helper) {
+          return data;
+      });
+  */}).trim();
 
   // ------------------------------------------------------------------------------------
 
   var tmpl = '<div id="{{ duid }}" class="{{ cls }}">Unknown Node</div>';
-  var html = '';
+
+  // ------------------------------------------------------------------------------------
+
+  var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
 
@@ -737,89 +879,6 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
   }
 
 };//renderUnknownNodeTmpl
-
-// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-// FUNCTIONS | HELPERS
-// ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
-Visualizer.prototype.recurseValue_changingRefsToHtmlUID = function(values) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  return values;
-
-  var isArr = (values instanceof Array);
-
-  // ------------------------------------------------------------------------------------
-  // Exit Conditions
-  // ------------------------------------------------------------------------------------
-
-  if ( !isArr && me.isUID(values) )
-    return self.uid_ToHtmlUID(-1/*=>id*/,values/*=>uid*/);
-
-  if ( me.isRefObj(values) )
-    return self.uid_ToHtmlUID( me.getRefID(values), me.getRefUID(values) );
-
-  // ------------------------------------------------------------------------------------
-  // Recurse
-  // ------------------------------------------------------------------------------------
-
-  if(isArr)
-    values.forEach( function(value,i) {
-      values[i] = self.recurseValue_changingRefsToHtmlUID(value);
-    });
-
-  // ------------------------------------------------------------------------------------
-
-  return values;
-
-};//recurseValue_changingRefsToHtmlUID
-
-// --------------------------------------------------------------------------------------------------------------------
-
-Visualizer.prototype.uid_ToHtmlUID = function(id, uid) {
-  var me = Visualizer.prototype;
-  var self = this;
-
-  return uid;
-
-  // ------------------------------------------------------------------------------------
-
-  var isNr  = me.isNumber(id);
-  var isUID = me.isUID(uid);
-
-  if( !isNr )
-    console.warn('WARNING | uid_ToHtmlUID | invalid id: ', id);
-
-  if( !isUID )
-    console.warn('WARNING | uid_ToHtmlUID | invalid uid: ', uid);    
-
-  // ------------------------------------------------------------------------------------
-
-  if (id < 0)  //ToDo: think about this ...
-    id = 'n/a';
-
-  // ------------------------------------------------------------------------------------
-
-  var data = {
-     id: id,
-    uid: uid
-  }
-
-  // ------------------------------------------------------------------------------------
-
-  var tmpl =
-  '<div class="_uid" > \n\
-    <div class="_val">id: {{ id }}|</div><div id="{{ uid }}" class="_ptr"></div> \n\
-  </div>';
-
-  var html = '';
-
-  // ------------------------------------------------------------------------------------
-
-  return tmpl; //ToDo: return merged template...
-
-}; //uid_ToHtmlUID
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // END

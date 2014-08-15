@@ -18,9 +18,7 @@ this.CustomizerViewFactory = {
 // -----------------------------------------------------------------------------------------------------------------
 
 	function _customizerView() {
-
         return _layout();
- 
 	}
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -57,6 +55,14 @@ this.CustomizerViewFactory = {
 
         var jsTabView  = _tabView( _javascriptTabBarContent(), _javascript() );
 
+        jsTabView._tabBar.on('deploy', function() {
+            $('#id-btn-compile').click(function() {
+                console.log('compile button clicked ...');
+                var obj = State.getSelectedObj();
+                console.log(obj);
+            });
+        });
+
         var jsW = 650;
         var jsH = 400;
 
@@ -79,6 +85,12 @@ this.CustomizerViewFactory = {
         // ----------------------------------------------------------------------------------------
 
         var tmplTabView = _tabView( _templateTabBarContent(), _template() );
+
+        tmplTabView._tabBar.on('deploy', function() {
+            $('#id-btn-apply').click(function() {
+                console.log('apply button clicked ...');
+            });
+        });
 
         var tmplW = 650;
         var tmplH = 320;
@@ -105,87 +117,6 @@ this.CustomizerViewFactory = {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // TEMPLATE TAB-BAR
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _templateTabBarContent() {
-        return multiline(function(){/*
-            <nav class="navbar navbar-inverse" role="navigation">
-                <div class="container">
-
-                    <div class="navbar-header">
-                        <ul class="nav">
-                            <li class="active">
-                               <a href="#id-div-tmpl" data-toggle="tab">Template</a>
-                            </li>
-                            <li>
-                                <a href="#id-div-html" data-toggle="tab">HTML</a>
-                            </li>
-                            <li>
-                               <a href="#id-div-result" data-toggle="tab">Result</a>
-                            </li>
-                        </ul>
-                   </div>
-
-                </div>
-            </nav> 
-        */});
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TEMPLATE EDITOR
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _template() {
-
-        var content = multiline(function(){/*
-            <div class="tab-content">
-
-                <div id="id-div-tmpl" class="tab-pane">template</div>
-                <div id="id-div-html" class="tab-pane">html</div>
-                <div id="id-div-result" class="tab-pane">result</div>
-
-                <textarea id="id-textarea-tmpl"></textarea>
-                <textarea id="id-textarea-html"></textarea>
-            <div>
-        */});
-
-        // ----------------------------------------------------------------------------------------
-
-        var tmpl = new famous.core.Surface({
-            content: content,
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: 'white'
-            }
-        });
-
-        tmpl.on( 'deploy', _onDeployTemplate );
-
-        // ----------------------------------------------------------------------------------------
-
-        return tmpl;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TEMPLATE EDITOR ON-DEPLOY
-    // -----------------------------------------------------------------------------------------------------------------
-
-    function _onDeployTemplate(t/*=target*/) {
-
-        var s = this.getSize();
-        var w = s[0] == true ? t.offsetWidth  : s[0] ;
-        var h = s[1] == true ? t.offsetHeight : s[1] ;
-
-        var tmplValueFn = function() { return State.getRenderTmpl() };
-        _applyAce('id-div-tmpl', 'id-textarea-tmpl', 'html', w, h, tmplValueFn);
-
-        var htmlValueFn = function() { return State.getRenderHtml() };
-        _applyAce('id-div-html', 'id-textarea-html', 'html', w, h, htmlValueFn);
-
-    }//_onDeployTemplate
-
-    // -----------------------------------------------------------------------------------------------------------------
     // JAVASCRIPT TAB-BAR
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -201,6 +132,12 @@ this.CustomizerViewFactory = {
                             </li>
                             <li>
                                 <a href="#id-div-data" data-toggle="tab">Inspector</a>
+                            </li>
+                        </ul>
+
+                        <ul id="ul-nav-js-btns" class="nav pull-right">
+                            <li>
+                                <button type="button" id="id-btn-compile" class="btn btn-default navbar-btn">compile</button>
                             </li>
                         </ul>
                     </div>
@@ -230,13 +167,7 @@ this.CustomizerViewFactory = {
 
         // ----------------------------------------------------------------------------------------
 
-        var js = new famous.core.Surface({
-            content: content,
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: 'white'
-            }
-        });
+        var js = _surface(content);
 
         js.on( 'deploy', _onDeployJavaScript );
 
@@ -264,20 +195,91 @@ this.CustomizerViewFactory = {
     }//_onDeploy
 
     // -----------------------------------------------------------------------------------------------------------------
-    // INSPECTOR
+    // TEMPLATE TAB-BAR
     // -----------------------------------------------------------------------------------------------------------------
 
-    function _inspector() {
+    // ToDo: see jquery tabs
+    //  URL: jqueryui.com/tabs
 
-        var surface = new famous.core.Surface({
-            size: [undefined, undefined],
-            properties: {
-                backgroundColor: 'red'
-            }
+    function _templateTabBarContent() {
+        return multiline(function(){/*
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container">
+
+                    <div class="navbar-header">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#id-div-tmpl" data-toggle="tab">Template</a>
+                            </li>
+                            <li>
+                                <a href="#id-div-html" data-toggle="tab">HTML</a>
+                            </li>
+                            <li>
+                                <a href="#id-div-result" data-toggle="tab">Result</a>
+                            </li>
+                        </ul>
+
+                        <ul id="ul-nav-tmpl-btns" class="nav pull-right">
+                            <li>
+                                <button type="button" id="id-btn-apply" class="btn btn-default navbar-btn">apply</button>
+                            </li>
+                        </ul>
+                   </div>
+
+                </div>
+            </nav> 
+        */});
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TEMPLATE EDITOR
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _template() {
+
+        var content = multiline(function(){/*
+            <div class="tab-content">
+                <div id="id-div-tmpl" class="tab-pane">template</div>
+                <div id="id-div-html" class="tab-pane">html</div>
+                <div id="id-div-result" class="tab-pane">result</div>
+
+                <textarea id="id-textarea-tmpl"></textarea>
+                <textarea id="id-textarea-html"></textarea>
+            <div>
+        */});
+
+        // ----------------------------------------------------------------------------------------
+
+        var tmpl = _surface(content);
+        tmpl.on( 'deploy', _onDeployTemplate );
+
+        // ----------------------------------------------------------------------------------------
+
+        return tmpl;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // TEMPLATE EDITOR ON-DEPLOY
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _onDeployTemplate(t/*=target*/) {
+
+        var s = this.getSize();
+        var w = s[0] == true ? t.offsetWidth  : s[0] ;
+        var h = s[1] == true ? t.offsetHeight : s[1] ;
+
+        var tmplValueFn = function() { return State.getRenderTmpl() };
+        _applyAce('id-div-tmpl', 'id-textarea-tmpl', 'html', w, h, tmplValueFn);
+
+        var htmlValueFn = function() { return State.getRenderHtml() };
+        _applyAce('id-div-html', 'id-textarea-html', 'html', w, h, htmlValueFn);
+
+        var $result = $('#id-div-result');
+        Deps.autorun(function (c) {
+            $result.html( State.getRenderHtml() );
         });
 
-        return surface;
-    }
+    }//_onDeployTemplate
 
 // -----------------------------------------------------------------------------------------------------------------
 // HELPERS
@@ -302,9 +304,12 @@ this.CustomizerViewFactory = {
         // Composition
         // ----------------------------------------------------------------------------------------
 
-        tabview.header.add( _tabBar(htmlAsStr) );
-        tabview.content.add(content);
+        var tabBar = _tabBar(htmlAsStr)
 
+        tabview.header.add( tabBar );
+        tabview.content.add( content );
+
+        tabview._tabBar = tabBar;
         tabview._content = content;
 
         // ----------------------------------------------------------------------------------------
@@ -358,6 +363,7 @@ this.CustomizerViewFactory = {
         var editor = ace.edit( divId );
 
         editor.renderer.setShowGutter(false);
+        // editor.getSession().setUseWrapMode(false);
         editor.getSession().setValue( $textarea.val() );
         editor.getSession().setMode("ace/mode/" + mode);
         editor.setTheme("ace/theme/monokai");
@@ -371,6 +377,20 @@ this.CustomizerViewFactory = {
         });
 
         return editor;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // SURFACE
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _surface(content) {
+        return new famous.core.Surface({
+            content: content,
+            size: [undefined, undefined],
+            properties: {
+                backgroundColor: 'lightblue'
+            }
+        });
     }
 
 // -----------------------------------------------------------------------------------------------------------------

@@ -55,10 +55,6 @@
 	meteor add bootstrap
 	meteor add less
 
-	# mrt add bootstrap-3
-	# mrt remove bootstrap-3
-	# mrt add accounts-ui-bootstrap-3
-
 	mrt add sharejs
 
 	mrt add jquery-ui
@@ -66,15 +62,27 @@
 
 	mrt add npm
 
-	npm install -g famono
+	mrt add plain-handlebars
 
-	#meteor add underscore
-	#meteor add backbone
+	_________________________________________________________________________________________________
+	# REMOVED/ABANDONED PACKAGES
 
-	# after adding: src/packages/joint -> github.com/kidovate/meteor-joint
+	# mrt add bootstrap-3
+	# mrt remove bootstrap-3
+	# mrt add accounts-ui-bootstrap-3
+
+	# meteor add underscore
+	# meteor add backbone
+
+	##after adding: src/packages/joint -> github.com/kidovate/meteor-joint
 	# echo joint >> .meteor/packages
+	# meteor add joint
 
-	#bower install handlebars
+	# bower install handlebars
+
+	##custom package... see: codeviz/src/packages/handlebars
+	# meteor add handlebars
+	# meteor remove handlebars
 
 # -------------------------------------------------------------------------------------------------
 # END

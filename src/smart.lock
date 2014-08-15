@@ -7,7 +7,8 @@
       "jquery-ui": {},
       "jquery-ui-bootstrap": {},
       "npm": {},
-      "famono": {}
+      "famono": {},
+      "plain-handlebars": {}
     },
     "packages": {
       "iron-router": {
@@ -37,8 +38,13 @@
       },
       "famono": {
         "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.6.9",
-        "commit": "893cdd0e0d68804b7812ea9ca73702f3bdfd7cd2"
+        "tag": "v0.7.3",
+        "commit": "cec0dbd8a5afa561fb65ba86ac02f91ab26b4d98"
+      },
+      "plain-handlebars": {
+        "git": "https://github.com/awwx/meteor-plain-handlebars.git",
+        "tag": "v1.0.0.2",
+        "commit": "ca56af835cfb05595bba671747e478fa5e3f39fd"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
