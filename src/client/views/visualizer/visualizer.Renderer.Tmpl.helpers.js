@@ -3,10 +3,11 @@
 // FUNCTIONS | HELPERS
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-Visualizer.prototype.compile = function(data, code, tmpl){
+Visualizer.prototype.compile = function(data, code, tmpl) {
+  var me = Visualizer.prototype;
   var self = this;
 
-  var helper = self.getHelper(); 
+  var helper = me.getHelper(); 
 
   //data (re-declare)
   var data   = _.extend({}, data);
@@ -25,6 +26,7 @@ Visualizer.prototype.compile = function(data, code, tmpl){
 // --------------------------------------------------------------------------------------------------------------------
 
 Visualizer.prototype.getHelper = function(){
+  var me = Visualizer.prototype;
   var self = this;
 
   return {

@@ -55,13 +55,7 @@ this.CustomizerViewFactory = {
 
         var jsTabView  = _tabView( _javascriptTabBarContent(), _javascript() );
 
-        jsTabView._tabBar.on('deploy', function() {
-            $('#id-btn-compile').click(function() {
-                console.log('compile button clicked ...');
-                var obj = State.getSelectedObj();
-                console.log(obj);
-            });
-        });
+        jsTabView._tabBar.on('deploy', _onDeployJSTabView);
 
         var jsW = 650;
         var jsH = 400;
@@ -86,11 +80,7 @@ this.CustomizerViewFactory = {
 
         var tmplTabView = _tabView( _templateTabBarContent(), _template() );
 
-        tmplTabView._tabBar.on('deploy', function() {
-            $('#id-btn-apply').click(function() {
-                console.log('apply button clicked ...');
-            });
-        });
+        tmplTabView._tabBar.on('deploy', _onDeployTmplTabView);
 
         var tmplW = 650;
         var tmplH = 320;
@@ -114,6 +104,56 @@ this.CustomizerViewFactory = {
         container.add(background);
 
         return container;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // ON-DEPLOY JAVASCRIPT TABVIEW
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _onDeployJSTabView() {
+
+        $('#id-btn-compile').click(function() {
+            
+            var obj  = State.getSelectedObj();
+            var cmpl = Visualizer.prototype.compile;
+            var tmpl = ace.edit('id-div-tmpl');
+            var js   = ace.edit('id-div-js');
+
+            var data = obj.render.data;
+            var code = js.getSession().getValue();
+            var tmpl = tmpl.getSession().getValue();
+
+            var html = cmpl(data, code, tmpl);
+            
+            obj.render.code = code;
+            obj.render.tmpl = tmpl;
+            obj.render.html = html;
+
+            State.setSelectedObj(obj);
+
+            // console.log('\n------------------------------------------------------------------------------');
+            // console.log(code);
+            // console.log('------------------------------------------------------------------------------');
+            // console.log(data);
+            // console.log('------------------------------------------------------------------------------');
+            // console.log(tmpl);
+            // console.log('------------------------------------------------------------------------------');
+            // console.log(html);
+            // console.log('------------------------------------------------------------------------------');
+        });
+
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // ON-DEPLOY TEMPLATE TABVIEW
+    // -----------------------------------------------------------------------------------------------------------------
+
+    function _onDeployTmplTabView() {
+
+        $('#id-btn-apply').click(function() {
+            console.log('apply button clicked ...');
+        });
+
     }
 
     // -----------------------------------------------------------------------------------------------------------------
