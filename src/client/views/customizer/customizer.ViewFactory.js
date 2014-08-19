@@ -142,7 +142,7 @@ this.CustomizerViewFactory = {
             // console.log('------------------------------------------------------------------------------');
         });
 
-    }
+    }//_onDeployJSTabView
 
     // -----------------------------------------------------------------------------------------------------------------
     // ON-DEPLOY TEMPLATE TABVIEW
@@ -151,7 +151,7 @@ this.CustomizerViewFactory = {
     function _onDeployTmplTabView() {
 
         $('#id-btn-apply').click(function() {
-            console.log('apply button clicked ...');
+            State.saveSelectedObj();
         });
 
     }

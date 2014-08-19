@@ -607,6 +607,17 @@ function _cleanup() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
+function _cleanupSnapshot() {
+    var snapshot = this;
+
+    snapshot.draw.onDeployCompleted     = undefined;
+    snapshot.draw.extractCoordinateInfo = undefined;
+    snapshot.draw.extractLayoutInfo     = undefined;
+
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 function _log() {
     var node = this;
     var Br = "\n";

@@ -9,6 +9,7 @@ _.extend(this.State, {
 
 	getSelectedObj: _getSelectedObj,
 	setSelectedObj: _setSelectedObj,
+   saveSelectedObj: _saveSelectedObj,
 
 	getRenderData: _getRenderData,
 	getRenderCode: _getRenderCode,
@@ -16,7 +17,6 @@ _.extend(this.State, {
 	getRenderHtml: _getRenderHtml
 
 });//this.State
-
 
 // -------------------------------------------------------------------------------------------------
 
@@ -28,6 +28,69 @@ function _getSelectedObj() {
 
 function _setSelectedObj(obj) {
 	Session.set('ssn_selectedObj', obj);
+}
+
+// -------------------------------------------------------------------------------------------------
+
+function _saveSelectedObj() {
+	var obj   	  = State.getSelectedObj();
+	var objPtr 	  = undefined;
+	var snapshots = State.getCurrentSnapshots();
+
+	var snapshot  = (snapshots && obj.sid < snapshots.length) ? snapshots[obj.sid] : undefined;
+
+	if (!snapshot) {
+		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | snapshot undefined.');
+		return;
+	}
+
+	if (obj.draw.location == NodeLocationTypeEnum.STACK) {
+		snapshot.stack.forEach(function(o) {
+			if (o.uid == obj.uid) {
+				objPtr = o;
+				return;
+			}
+		});
+
+	} else if (obj.draw.location == NodeLocationTypeEnum.HEAP) {
+		snapshot.heap.forEach(function(o) {
+			if (o.uid == obj.uid) {
+				objPtr = o;
+				return;
+			}
+		});
+
+	} else {
+		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | unknown obj.');
+		return;
+	}
+
+	console.log('----------------------------------------------------------------');
+	console.log(obj);
+	console.log('----------------------------------------------------------------');
+	console.log(objPtr);	
+	console.log('----------------------------------------------------------------');
+	console.log(snapshot);
+
+	if (!objPtr) {
+		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | undefined objPtr.');
+		return;
+	}
+
+	objPtr.render = obj.render;
+	objPtr.html = obj.render.html;
+
+	console.log('----------------------------------------------------------------');
+	console.log(objPtr);
+
+	snapshot.draw.isInit = false;
+	app.appView.visualizer.show( snapshot );
+}
+
+// -------------------------------------------------------------------------------------------------
+
+function _getUpdateSnapshots() {
+	return Session.get('ssn_snapshots');
 }
 
 // -------------------------------------------------------------------------------------------------

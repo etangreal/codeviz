@@ -99,7 +99,8 @@ Visualizer.prototype.newFrame = function(id,sid) {
   var self = this;
 
   var frame = {
-      id: id || 0                     //   frame id -> derived from the trace data
+      // idx: 0                       // ToDo: save the object's index in the stack (this is useful later)
+       id: id || 0                    //   frame id -> derived from the trace data
     , sid: sid || 0                   //snapshot id
     , uid: self.newUID()              //  unique id
     , gid: ''                         //  global id -> id remains the same for the same object across snapshots
@@ -204,6 +205,7 @@ Visualizer.prototype.newNode = function(id,sid) {
   var self = this;
 
   var node = {
+   // idx: 0                          // ToDo: save the object's index in the stack (this is useful later)
        id: id || 0                    //id -> derived from the trace data
     , sid: sid || 0                   //snapshot id
     , uid: self.newUID()              //unique id
