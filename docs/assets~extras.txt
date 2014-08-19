@@ -27,6 +27,13 @@
 	www.turnkeylinux.org/appengine-python
 
 # -------------------------------------------------------------------------------------------------
+# PACKER
+# -------------------------------------------------------------------------------------------------
+
+	www.packer.io
+	github.com/mitchellh/packer
+
+# -------------------------------------------------------------------------------------------------
 # DOCKER-BASH TOOL
 # -------------------------------------------------------------------------------------------------
 
@@ -52,18 +59,60 @@
 	Ubuntu: www.phusionpassenger.com/documentation/Users%20guide%20Standalone.html#install_on_debian_ubuntu
 
 # -------------------------------------------------------------------------------------------------
+# PHUSION-PASSENGER-DOCKER
+# -------------------------------------------------------------------------------------------------
+
+	_________________________________________________________
+	Phusion-Passenger on Docker Hub
+
+		hub.docker.com/u/phusion
+
+		1) registry.hub.docker.com/u/phusion/baseimage
+		2) registry.hub.docker.com/u/phusion/passenger-full
+		3) registry.hub.docker.com/u/phusion/passenger-nodejs
+		4) registry.hub.docker.com/u/phusion/passenger-customizable
+
+	_________________________________________________________
+	1) Passenger-BaseImage-Docker
+
+			registry.hub.docker.com/u/phusion/baseimage
+
+		phusion.github.io/baseimage-docker
+		github.com/phusion/baseimage-docker
+			CMD\> git clone https://github.com/phusion/baseimage-docker.git
+		
+	_________________________________________________________
+	2) Passenger-Docker | A Docker base image for Ruby, Python, Node.js and Meteor web apps
+
+		registry.hub.docker.com/u/phusion/passenger-full
+
+		github.com/phusion/passenger-docker
+			CMD\> git clone https://github.com/phusion/passenger-docker.git
+
+		NOTE: See Version Info
+			github.com/phusion/passenger-docker/blob/master/Changelog.md
+
+	_________________________________________________________
+	3) Node.js and Meteor images
+
+		registry.hub.docker.com/u/phusion/passenger-nodejs
+
+		github.com/phusion/passenger-docker
+
+	_________________________________________________________
+	4) phusion / passenger-customizable
+
+		registry.hub.docker.com/u/phusion/passenger-customizable
+
+		github.com/phusion/passenger-docker
+
+# -------------------------------------------------------------------------------------------------
 # PHANTOM-JS
 # -------------------------------------------------------------------------------------------------
 
 	phantomjs.org
 
 	sudo brew update && brew install phantomjs
-
-# -------------------------------------------------------------------------------------------------
-# UNGIT
-# -------------------------------------------------------------------------------------------------
-
-	github.com/FredrikNoren/ungit
 
 # -------------------------------------------------------------------------------------------------
 # END
