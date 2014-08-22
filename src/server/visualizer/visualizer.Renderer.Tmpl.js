@@ -482,7 +482,7 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
+  var tmpl = multiline.stripIndent(function(){/*
     <div id="{{ duid }}" class="{{ cls }}">
       <table>
       <thead>
@@ -566,7 +566,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
+  var tmpl = multiline.stripIndent(function(){/*
     <div id="{{ duid }}" class="{{ cls }}">
       <table>
         <tr>
@@ -642,7 +642,7 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
+  var tmpl = multiline.stripIndent(function(){/*
     <div id="{{ duid }}" class="{{ cls }}">
       <table>
         <thead>
@@ -724,7 +724,7 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
+  var tmpl = multiline.stripIndent(function(){/*
     <div id="{{ duid }}" class="{{ cls }}">
       <table>
         <tr>
@@ -800,7 +800,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
 
   // ------------------------------------------------------------------------------------
 
-  var tmpl = multiline(function(){/*
+  var tmpl = multiline.stripIndent(function(){/*
     <div id="{{ duid }}" class="{{ cls }}">
       <table>
         <tr>

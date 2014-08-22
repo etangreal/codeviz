@@ -37,60 +37,60 @@ function _saveSelectedObj() {
 	var objPtr 	  = undefined;
 	var snapshots = State.getCurrentSnapshots();
 
+	snapshots.forEach(function(snapshot) {
+		snapshot.draw.isInit = false;
+
+		if (obj.draw.location == NodeLocationTypeEnum.STACK) {
+			snapshot.stack.forEach(function(o) {
+				if (o.id == obj.id) {
+					o.render = obj.render;
+					o.html = obj.render.html
+				}
+			});
+
+		} else if (obj.draw.location == NodeLocationTypeEnum.HEAP) {
+			snapshot.heap.forEach(function(o) {
+				if (o.id == obj.id) {
+					o.render = obj.render;
+					o.html = obj.render.html
+				}
+			});
+
+		} else {
+			console.error('ERROR | customizer.html.state.js | _saveSelectedObj | unknown obj.');
+			return;
+		}
+
+	});//snapshots.forEach
+
+	// console.log('----------------------------------------------------------------');
+	// console.log(obj);
+	// console.log('----------------------------------------------------------------');
+	// console.log(objPtr);	
+	// console.log('----------------------------------------------------------------');
+	// console.log(snapshot);
+
+	// if (!objPtr) {
+	// 	console.error('ERROR | customizer.html.state.js | _saveSelectedObj | undefined objPtr.');
+	// 	return;
+	// }
+
+	// objPtr.render = obj.render;
+	// objPtr.html = obj.render.html;
+
+	// console.log('----------------------------------------------------------------');
+	// console.log(objPtr);
+
 	var snapshot  = (snapshots && obj.sid < snapshots.length) ? snapshots[obj.sid] : undefined;
 
-	if (!snapshot) {
-		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | snapshot undefined.');
-		return;
-	}
-
-	if (obj.draw.location == NodeLocationTypeEnum.STACK) {
-		snapshot.stack.forEach(function(o) {
-			if (o.uid == obj.uid) {
-				objPtr = o;
-				return;
-			}
-		});
-
-	} else if (obj.draw.location == NodeLocationTypeEnum.HEAP) {
-		snapshot.heap.forEach(function(o) {
-			if (o.uid == obj.uid) {
-				objPtr = o;
-				return;
-			}
-		});
-
-	} else {
-		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | unknown obj.');
-		return;
-	}
-
-	console.log('----------------------------------------------------------------');
-	console.log(obj);
-	console.log('----------------------------------------------------------------');
-	console.log(objPtr);	
-	console.log('----------------------------------------------------------------');
-	console.log(snapshot);
-
-	if (!objPtr) {
-		console.error('ERROR | customizer.html.state.js | _saveSelectedObj | undefined objPtr.');
-		return;
-	}
-
-	objPtr.render = obj.render;
-	objPtr.html = obj.render.html;
-
-	console.log('----------------------------------------------------------------');
-	console.log(objPtr);
-
-	snapshot.draw.isInit = false;
 	app.appView.visualizer.show( snapshot );
+
 }
 
 // -------------------------------------------------------------------------------------------------
 
-function _getUpdateSnapshots() {
-	return Session.get('ssn_snapshots');
+function _updateSnapshots(snapshots) {
+	return Session.set('ssn_snapshots', snapshots);
 }
 
 // -------------------------------------------------------------------------------------------------

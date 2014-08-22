@@ -47,7 +47,7 @@ Visualizer.prototype.processTrace = function(trace, code) {
     self.extractPlumbingInfo( snapshot );                              //extract the debug info of the plumbing registry
 
     // RENDER
-    self.prerender( snapshot );                                         //pre-renders: stack & frame -> text & html
+    self.prerender( snapshot );                                        //pre-renders: stack & frame -> text & html
 
     // LAYOUT (on the frontend/client-side/browser)
     //  1) Calculate the layout
