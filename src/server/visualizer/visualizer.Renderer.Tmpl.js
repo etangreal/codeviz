@@ -31,7 +31,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
   frame.locals.forEach( function(node) {
     locals.push({
       name: node.name,
-     value: _.clone( node.value )
+     value: _clone(node.value)
   // value: self.recurseValue_changingRefsToHtmlUID(node.value)
     });
   });
@@ -57,7 +57,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
           data.uid = helper.reduceToSingleLine(data.uid);
 
           data.locals.forEach(function(local) {
-              local.value = helper.wrapUIDs(local.value);
+            local.value = helper.wrapUIDs(local.value);
           });
 
           return data;
@@ -221,7 +221,7 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
         uid: node.uid,
        type: node.type,
        name: node.name,
-      value: _.clone( node.value ),
+      value: _clone( node.value ),
     pointer: node.pointer
   }
 
@@ -371,8 +371,8 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
          uid: node.uid,
         type: node.type,
         name: node.name,
-    inherits: _.clone( node.inherits ),
-      values: _.clone( node.value )
+    inherits: _clone( node.inherits ),
+      values: _clone( node.value )
   }
 
   // ------------------------------------------------------------------------------------
@@ -462,8 +462,8 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
          uid: node.uid,
         type: node.type,
         name: node.name,
-    inherits: _.clone( node.inherits ),
-      values: _.clone( node.value )
+    inherits: _clone( node.inherits ),
+      values: _clone( node.value )
   }
 
   // ------------------------------------------------------------------------------------
@@ -549,7 +549,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: _.clone( node.value )
+    values: _clone( node.value )
   }
 
   var code = multiline.stripIndent(function(){/*
@@ -623,7 +623,7 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: _.clone( node.value )
+    values: _clone( node.value )
   }
 
   // ------------------------------------------------------------------------------------
@@ -705,7 +705,7 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: _.clone( node.value )
+    values: _clone( node.value )
   }
 
   // ------------------------------------------------------------------------------------
@@ -781,7 +781,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
        uid: node.uid,
        cls: cls,
       type: node.type,
-    values: _.clone( node.value )
+    values: _clone( node.value )
   }
 
   // ------------------------------------------------------------------------------------
@@ -879,6 +879,14 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
   }
 
 };//renderUnknownNodeTmpl
+
+// --------------------------------------------------------------------------------------------------------------------
+// HELPER FUNCTION
+// --------------------------------------------------------------------------------------------------------------------
+
+function _clone(data) {
+  return JSON.parse(JSON.stringify(data));
+}
 
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 // END

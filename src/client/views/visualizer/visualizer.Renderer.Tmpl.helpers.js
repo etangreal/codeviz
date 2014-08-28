@@ -9,8 +9,8 @@ Visualizer.prototype.compile = function(data, code, tmpl) {
 
   var helper = me.getHelper(); 
 
-  //data (re-declare)
-  var data   = _.extend({}, data);
+    //data (clone & redeclare)
+  var data   = _clone(data);
 
   //code
   var func   = eval(code);
@@ -21,6 +21,12 @@ Visualizer.prototype.compile = function(data, code, tmpl) {
   var html   = helper.htmlStrToStr( cmpl(data) );
 
   return html;
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+function _clone(data) {
+  return JSON.parse(JSON.stringify(data));
 }
 
 // --------------------------------------------------------------------------------------------------------------------
