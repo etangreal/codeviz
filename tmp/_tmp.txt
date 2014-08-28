@@ -1,4 +1,129 @@
 
+// -------------------------------------------------------------------------------------------------------
+
+    var obj       = State.getSelectedObj();
+    var snapshots = State.getCurrentSnapshots();
+
+    snapshots.forEach(function(snapshot) {
+        // snapshot.draw.isInit = false;
+
+        if (obj.draw.location == NodeLocationTypeEnum.STACK)
+            snapshot.stack.forEach(function(o) {
+                if (o.id == obj.id) {
+
+                    o.render = obj.render;
+                    o.html = obj.render.html;
+                }
+            });//snapshot.stack.forEach
+
+        else if (obj.draw.location == NodeLocationTypeEnum.HEAP)
+            snapshot.heap.forEach(function(o) {
+                if (o.id == obj.id) {
+                    o.render = obj.render;
+                    o.html = obj.render.html;
+                }
+            });//snapshot.heap.forEach
+
+    });//snapshots.forEach
+
+    // _updateSnapshots( snapshots );
+
+    if (snapshots && obj.sid < snapshots.length) {
+        snapshots[obj.sid].draw.isInit = false;
+        app.appView.visualizer.show(snapshots[obj.sid]);
+    }
+    else
+        console.error('no matching snapshot!');
+
+
+    var obj       = State.getSelectedObj();
+    var objPtr    = undefined;
+    var snapshots = State.getCurrentSnapshots();
+
+    var snapshot  = (snapshots && obj.sid < snapshots.length) ? snapshots[obj.sid] : undefined;
+
+    if (!snapshot) {
+        console.error('ERROR | customizer.html.state.js | _saveSelectedObj | snapshot undefined.');
+        return;
+    }
+
+    if (obj.draw.location == NodeLocationTypeEnum.STACK) {
+        snapshot.stack.forEach(function(o) {
+            if (o.uid == obj.uid) {
+                objPtr = o;
+                return;
+            }
+        });
+
+    } else if (obj.draw.location == NodeLocationTypeEnum.HEAP) {
+        snapshot.heap.forEach(function(o) {
+            if (o.uid == obj.uid) {
+                objPtr = o;
+                return;
+            }
+        });
+
+    } else {
+        console.error('ERROR | customizer.html.state.js | _saveSelectedObj | unknown obj.');
+        return;
+    }
+
+    console.log('----------------------------------------------------------------');
+    console.log(obj);
+    console.log('----------------------------------------------------------------');
+    console.log(objPtr);    
+    console.log('----------------------------------------------------------------');
+    console.log(snapshot);
+
+    if (!objPtr) {
+        console.error('ERROR | customizer.html.state.js | _saveSelectedObj | undefined objPtr.');
+        return;
+    }
+
+    objPtr.render = obj.render;
+    objPtr.html = obj.render.html;
+
+    console.log('----------------------------------------------------------------');
+    console.log(objPtr);
+
+    _updateSnapshots( snapshots );
+
+    snapshot.draw.isInit = false;
+    app.appView.visualizer.show( snapshot );
+
+
+// -------------------------------------------------------------------------------------------------------
+
+"use strict";
+
+(function (data,helper) {
+    data.uid = helper.wrapUID(data.id, data.uid);
+    data.uid = helper.reduceToSingleLine(data.uid);
+    //data.values = helper.wrapUIDs(data.values);
+
+    var values = data.values;
+    var M = [];
+
+    var j=0;
+    var r=[];
+    for(var i=0; i<values.length; i++) {
+        r.push(values[i]);
+
+        if ( (i+1) % 4 == 0) {
+            M.push(r);
+            r = [];
+        }
+    }
+
+    if (r.length > 0) M.push(r)
+
+    console.log(M);
+    data.matrix = M;
+
+    return data;
+});
+
+// -------------------------------------------------------------------------------------------------------
 
     <div id="id-div-customizer" class="affix">
 
@@ -24,8 +149,6 @@
         </div>
 
 // -------------------------------------------------------------------------------------------------------
-
-
 
     Documents.find().observe({
 

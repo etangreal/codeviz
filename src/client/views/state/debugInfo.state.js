@@ -7,16 +7,13 @@ this.State = this.State || {};
 
 _.extend(this.State, {
 
-	getCurrentSnapshots: _getCurrentSnapshots,
-	 getCurrentSnapshot: _getCurrentSnapshot,
-
-		   getTraceInfo: _getTraceInfo,
-		   getStackInfo: _getStackInfo,
-		   getStackHtml: _getStackHtml,
-		    getHeapInfo: _getHeapInfo,
-		    getHeapHtml: _getHeapHtml,
-		  getLayoutInfo: _getLayoutInfo,
-	  getReferencesInfo: _getReferencesInfo,
+	   getTraceInfo: _getTraceInfo,
+	   getStackInfo: _getStackInfo,
+	   getStackHtml: _getStackHtml,
+	    getHeapInfo: _getHeapInfo,
+	    getHeapHtml: _getHeapHtml,
+	  getLayoutInfo: _getLayoutInfo,
+  getReferencesInfo: _getReferencesInfo,
 
 });//this.State
 
@@ -32,33 +29,12 @@ Meteor.startup(function (){
 // FUNCTIONS
 // -------------------------------------------------------------------------------------------------
 
-function _getCurrentSliderIndex() {
-	return Session.get('ssn_sliderValue') || 0;
-}
-
-// -------------------------------------------------------------------------------------------------
-
-function _getCurrentSnapshots() {
-	return Session.get('ssn_snapshots');
-}
-
-// -------------------------------------------------------------------------------------------------
-
-function _getCurrentSnapshot() {
-	var idx = _getCurrentSliderIndex();
-	var snapshots = _getCurrentSnapshots();
-
-	return (snapshots && idx < snapshots.length) ? snapshots[idx] : undefined;
-}
-
-// -------------------------------------------------------------------------------------------------
-
 function _getTraceInfo() {
 	var self = this;
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.traceInfo) ? snapshot.traceInfo : 'no-traceInfo. idx: ' + idx;
 }
@@ -70,7 +46,7 @@ function _getStackInfo() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.stackInfo) ? snapshot.stackInfo : 'no-stackInfo. idx: ' + idx;
 }
@@ -82,7 +58,7 @@ function _getStackHtml() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.stackHtml) ? snapshot.stackHtml : 'no-stackHtml. idx: ' + idx;
 }
@@ -94,7 +70,7 @@ function _getHeapInfo() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.heapInfo) ? snapshot.heapInfo : 'no-heapInfo. idx: ' + idx;
 }
@@ -106,7 +82,7 @@ function _getHeapHtml() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.heapHtml) ? snapshot.heapHtml : 'no-heapInfo. idx: ' + idx;
 }
@@ -118,7 +94,7 @@ function _getLayoutInfo() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	return (snapshot && snapshot.layoutInfo) ? snapshot.layoutInfo : 'no-layoutInfo. idx: ' + idx;
 }
@@ -130,7 +106,7 @@ function _getReferencesInfo() {
 	if (!self.isDebugInfo()) return '';
 
 	var idx = _getCurrentSliderIndex();
-	var snapshot = _getCurrentSnapshot();
+	var snapshot = State.getCurrentSnapshot();
 
 	if (snapshot)
 	  var refInfo =
