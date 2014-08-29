@@ -107,6 +107,8 @@ Visualizer.prototype.show = function(snapshot, i) {
         return;
     }
 
+    self._controller.hide();
+
     _initSnapshot.call(self, snapshot);
     self._controller.show(snapshot.draw.baseNode);
 
@@ -119,8 +121,10 @@ Visualizer.prototype.show = function(snapshot, i) {
 _initSnapshot = function(snapshot) {
     var self = this;
 
-    if (snapshot.draw && snapshot.draw.isInit)
+    if (snapshot.draw && snapshot.draw.isInit) {
+        //console.log(snapshot);
         return;
+    }
 
     snapshot.draw.onDeployCompleted     = _onDeployCompleted.bind({ self:self, snapshot:snapshot });
     snapshot.draw.extractCoordinateInfo = Visualizer.prototype.extractCoordinateInfo.bind(self);

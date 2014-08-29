@@ -8,8 +8,8 @@ this.State = this.State || {};
 
 _.extend(this.State, {
 
-        _pythonTutor: undefined,
-		getPythonTutorFrontendOptions: _getPythonTutorFrontendOptions
+    _pythonTutor: undefined,
+	getPythonTutorFrontendOptions: _getPythonTutorFrontendOptions
 
 });//this.State
 

@@ -181,7 +181,6 @@ Visualizer.prototype.renderEmptyNodeTmpl = function() {
   // ------------------------------------------------------------------------------------
 
   var tmpl = '<div id="{{ uid }}" class="{{ cls }}">Unknown Node</div>';
-  
   var html = self.compile(data,code,tmpl);
 
   // ------------------------------------------------------------------------------------
