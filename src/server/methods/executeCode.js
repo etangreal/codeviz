@@ -40,12 +40,17 @@ Meteor.startup(function() {
 _executeCode = function(id) {
 	try {
 		_checkIsValidId(id);
-
+		
 		var doc = _getDoc(id);
 
+
+		console.log(doc);
 		var user_script = _getCode(doc);
+		console.log('\n ======================================================================== \n ');
+
 		var raw_input_json = '';
 		var options_json = JSON.stringify( _getBackendOptions() );
+		console.log(user_script);
 
 		var res = _rpcExecuteCode(user_script, raw_input_json, options_json);
 		var data = _getData(res);

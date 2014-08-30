@@ -75,6 +75,14 @@
         self.add(mod).add(self._canvas);
         self.add(this._controller);
 
+        // --------------------------------------------------------------------------
+        // Subscribe to reactive data-source: snapshots
+        // --------------------------------------------------------------------------
+
+        Deps.autorun(function (c) {
+            self.snapshots = State.getCurrentSnapshots();
+        });
+
     }//Visualizer
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -100,6 +108,7 @@ Visualizer.prototype.clear = function() {
 
 Visualizer.prototype.show = function(snapshot, i) {
     var self = this;
+    //var snapshot = self.snapshots[i];
 
     if (!snapshot) {
         self.clear();
@@ -107,9 +116,9 @@ Visualizer.prototype.show = function(snapshot, i) {
         return;
     }
 
-    self._controller.hide();
-
     _initSnapshot.call(self, snapshot);
+
+    //self._controller.show(null);
     self._controller.show(snapshot.draw.baseNode);
 
 }//Visualizer.prototype.show
@@ -122,6 +131,7 @@ _initSnapshot = function(snapshot) {
     var self = this;
 
     if (snapshot.draw && snapshot.draw.isInit) {
+        console.log('snapshot is already initialized...');
         //console.log(snapshot);
         return;
     }
@@ -231,6 +241,7 @@ function _initDrawObj(snapshot) {
 
     chain = heapNode;
     parent = undefined;
+
     snapshot.heap.forEach( function(heapObj, i) {
         if (heapObj.id == 0) return; //ToDo: #HACK the first heap object is a "dummy/fill-in" this is because the trace object id starts from 1!
         var node = _newDrawNode(heapObj);
