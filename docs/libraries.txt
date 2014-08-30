@@ -31,8 +31,14 @@
 # METEOR | SHARE-JS
 # -------------------------------------------------------------------------------------------------
 
-	atmospherejs.com/package/sharejs
-	github.com/mizzao/meteor-sharejs
+	package:
+		atmospherejs.com/package/sharejs
+
+	repository:
+		github.com/mizzao/meteor-sharejs
+
+	documentation:
+		github.com/share/ShareJS/wiki/Server-api
 
 # -------------------------------------------------------------------------------------------------
 # METEOR | JQUERY-UI

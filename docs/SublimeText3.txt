@@ -1,0 +1,21 @@
+
+
+# -------------------------------------------------------------------------------------------------
+# COFFEE-SCRIPT
+# -------------------------------------------------------------------------------------------------
+
+	Better CoffeeScript
+		github.com/aponxi/sublime-better-coffeescript
+
+		Open the Command Pallete (ctrl+shift+P or cmd+shift+P).
+		Type "Install Package" and hit return.
+		Type "Better CoffeeScript" and hit return.
+
+		<or>
+
+		cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
+		git clone https://github.com/aponxi/sublime-better-coffeescript.git "Better CoffeeScript"
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

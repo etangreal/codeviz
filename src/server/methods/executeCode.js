@@ -41,16 +41,9 @@ _executeCode = function(id) {
 	try {
 		_checkIsValidId(id);
 		
-		var doc = _getDoc(id);
-
-
-		console.log(doc);
-		var user_script = _getCode(doc);
-		console.log('\n ======================================================================== \n ');
-
+		var user_script = _getCode(id);
 		var raw_input_json = '';
 		var options_json = JSON.stringify( _getBackendOptions() );
-		console.log(user_script);
 
 		var res = _rpcExecuteCode(user_script, raw_input_json, options_json);
 		var data = _getData(res);
@@ -200,19 +193,16 @@ function _checkIsValidId(id) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _getDoc(id) {
-	var doc = Docs.findOne(id);
+function _getCode(id) {
+	// var code = doc.data.snapshot;
+	var code = '_getCode';
 
-	if (!doc)
-		throw 'ERROR: _getDoc | Unable to find document for id:' + id;
+	ShareJS.model.getSnapshot(id, function(err,res) {
+		if (err)
+			console.log('err: ', err);
 
-	return doc;
-}
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-function _getCode(doc) {
-	var code = doc.data.snapshot;
+		code = res.snapshot;
+	});
 
 	code = code.trim();
 
