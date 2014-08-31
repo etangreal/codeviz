@@ -27,6 +27,9 @@
 		  setSize: _setSliderSize,
 		   resize: _resize,
 
+		  getSliderValue: _getSliderValue,
+		  setSliderValue: _setSliderValue,
+
 		// -------------------------------
 		// UI
 		// -------------------------------
@@ -99,8 +102,7 @@ function _onSlide(evt, ui) {
 	if (evt.originalEvent) {
 		// if this value was changed pragmatically, then evt.originalEvent will be undefined
 		// however, if this value was changed by a user-initiated event then this code should be executed ...
-		var i = ui.value;
-		Session.set('ssn_sliderValue', i);
+		Session.set('ssn_sliderValue', ui.value);
 	}
 };
 
@@ -114,10 +116,11 @@ function _resetSlider() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _setSliderValue(value) {
+function _setSliderValue(i) {
 	//ToDo: check that 'value' parameter is valid
 
-	_getSlider().slider({ value: value});
+	_getSlider().slider({ value: i });
+	Session.set('ssn_sliderValue', i);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

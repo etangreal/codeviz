@@ -80,7 +80,7 @@
         // --------------------------------------------------------------------------
 
         Deps.autorun(function (c) {
-            self.snapshots = State.getCurrentSnapshots();
+            // self.snapshots = State.getCurrentSnapshots();
         });
 
     }//Visualizer

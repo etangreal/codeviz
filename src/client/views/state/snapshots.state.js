@@ -7,14 +7,15 @@ this.State = this.State || {};
 
 _.extend(this.State, {
 
-	setCurrentSnapshots: _setCurrentSnapshots,
-	getCurrentSnapshots: _getCurrentSnapshots,
+		setCurrentSnapshots: _setCurrentSnapshots,
+		getCurrentSnapshots: _getCurrentSnapshots,
 
-	 getCurrentSnapshot: _getCurrentSnapshot,
-		 CountSnapshots: _countSnapshots,
+ setCurrentSnapshotsSession: _setCurrentSnapshotsSession,
 
-		 getCurrentData: _getCurrentData,
+		 getCurrentSnapshot: _getCurrentSnapshot,
+			 CountSnapshots: _countSnapshots,
 
+	 		 getCurrentData: _getCurrentData,
 });//this.State
 
 // -------------------------------------------------------------------------------------------------
@@ -61,6 +62,12 @@ function _setCurrentSnapshots(id) {
 
 		return data;
 	}
+
+// -------------------------------------------------------------------------------------------------
+
+function _setCurrentSnapshotsSession(snapshots) {
+	Session.set('ssn_snapshots', snapshots);
+}
 
 // -------------------------------------------------------------------------------------------------
 

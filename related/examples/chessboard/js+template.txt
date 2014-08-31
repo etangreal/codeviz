@@ -1,4 +1,53 @@
 
+
+# -------------------------------------------------------------------------------------------------
+
+    data.values.forEach(function(value,i) {
+        value = helper.toBin64( value );
+        value = helper.toChessboard( value );
+
+        data.values[i] = value;
+    });
+
+    handlebars.registerHelper('displayNonZero', function(value) {
+        return (value > 0) ? value : '';
+    });
+
+<div id="{{ duid }}" class="{{ cls }}">
+
+	<table>
+		<tr>
+			<td>{{ uid }}</td>
+			<td> {{ type }}</td>
+			<td colspan=10></td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			{{#each values}}
+			<td>
+			  <div class="_chess">
+			  <table class="_chess">
+			    {{#each this}}
+			    <tr>
+			      {{#each this}}
+			      <td>
+			          {{ displayNonZero this }}
+			      </td>
+			      {{/each}}
+			    </tr>
+			    {{/each}}
+			  </table>
+			  </div>
+			</td>
+			{{/each}}
+		</tr>
+	</table>
+
+</div>
+
+
 # -------------------------------------------------------------------------------------------------
 
     data.values.forEach(function(value,i) {
@@ -11,8 +60,6 @@
 
         data.values[i] = board;
     });
-
-# -------------------------------------------------------------------------------------------------
 
 <div id="{{ duid }}" class="{{ cls }}">
 
@@ -46,6 +93,32 @@
 		</tr>
 	</table>
 
+</div>
+
+# -------------------------------------------------------------------------------------------------
+
+    data.values.forEach(function(value,i) {
+        value = helper.toBin64( value );
+        data.values[i] = value;
+    });
+
+<div id="{{ duid }}" class="{{ cls }}">
+  <table>
+    <tr>
+      <td>{{ uid }}</td>
+      <td>{{ type }}</td>
+    </tr>
+  </table>
+  
+    <table>
+      {{#each values}}
+      <tr>
+          <td>
+              {{ this }}
+          </td>
+      </tr>
+      {{/each}}
+    </table>
 </div>
 
 # -------------------------------------------------------------------------------------------------

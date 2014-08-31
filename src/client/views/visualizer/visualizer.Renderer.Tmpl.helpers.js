@@ -46,20 +46,20 @@ Visualizer.prototype.getHelper = function(){
     reduceToSingleLine: _reduceToSingleLine,
                wrapUID: _uid_ToHtmlUID,
               wrapUIDs: _recurseValue_changingRefsToHtmlUID,
-                 toBin: _num2Bin,
+                 toBin: _toBin,
                toBin64: _toBin64,
-            chessboard: _chessboard
+          toChessboard: _toChessboard
   }
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
-function _num2Bin(num) {
+function _toBin(num) {
 
     if(num >= 0) {
         return num.toString(2);
-    
-    }else {
+
+    } else {
         /* Here you could represent the number in 2s compliment but this is not what 
            JS uses as its not sure how many bits are in your number range. There are 
            some suggestions http://stackoverflow.com/questions/10936600/javascript-decimal-to-binary-64-bit 
@@ -80,7 +80,7 @@ function _toBin64(num) {
     return sub;
   }
 
-  var val = _num2Bin(num);
+  var val = _toBin(num);
   var len = val.length;
 
   val = pad(len) + val;
@@ -90,25 +90,16 @@ function _toBin64(num) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-function _chessboard(str) {
-
-  var bba = []
-  for(i=0; i<8; i++) {
-    bba.append( str.slice(0,7).split("") );
+function _toChessboard(bits) {
+  
+  var board = []; 
+  for(var j=0; j<8; j++) {
+    board.push( bits.slice(j*8,j*8+8).split("") );
   }
 
-  console.log(bba);
-
-  var tmpl = multiline.stripIndent(function(){/*
-    <table>
-        {{#each bits}}
-      <tr>
-      </tr>
-    </table>
-  */});
-
-
+  return board;
 }
+
 // --------------------------------------------------------------------------------------------------------------------
 
 function _encodeStrToHtmlStr(str) {

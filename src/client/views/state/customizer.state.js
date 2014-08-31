@@ -33,27 +33,38 @@ function _setSelectedObj(obj) {
 // -------------------------------------------------------------------------------------------------
 
 function _saveSelectedObj() {
-	var obj   	  = State.getSelectedObj();
-	var objPtr 	  = undefined;
-	var snapshots = State.getCurrentSnapshots();
+	var docId 		= State.getDocumentId();
+	var obj   	  	= State.getSelectedObj();
+	var snapshots 	= State.getCurrentSnapshots();
+
+    var cmpl 		= Visualizer.prototype.compile;
+    var code 		= obj.render.code;
+    var tmpl 		= obj.render.tmpl;
+
+    function update(o,obj) {
+		if (o.id == obj.id) {
+			var data = o.render.data;
+			var html = cmpl(data, code, tmpl);
+
+			o.render.code = code;
+			o.render.tmpl = tmpl;
+			o.render.html = html;
+			o.html = html;
+		}
+    }
+
+    // --------------------------------------------------------------------------------------------
 
 	snapshots.forEach(function(snapshot) {
-		snapshot.draw.isInit = false;
 
 		if (obj.draw.location == NodeLocationTypeEnum.STACK) {
 			snapshot.stack.forEach(function(o) {
-				if (o.id == obj.id) {
-					o.render = obj.render;
-					o.html = obj.render.html
-				}
+				update(o,obj);
 			});
 
 		} else if (obj.draw.location == NodeLocationTypeEnum.HEAP) {
 			snapshot.heap.forEach(function(o) {
-				if (o.id == obj.id) {
-					o.render = obj.render;
-					o.html = obj.render.html
-				}
+				update(o,obj);
 			});
 
 		} else {
@@ -63,28 +74,19 @@ function _saveSelectedObj() {
 
 	});//snapshots.forEach
 
-	// console.log('----------------------------------------------------------------');
-	// console.log(obj);
-	// console.log('----------------------------------------------------------------');
-	// console.log(objPtr);	
-	// console.log('----------------------------------------------------------------');
-	// console.log(snapshot);
+	// --------------------------------------------------------------------------------------------
 
-	// if (!objPtr) {
-	// 	console.error('ERROR | customizer.html.state.js | _saveSelectedObj | undefined objPtr.');
-	// 	return;
-	// }
+	State.setCurrentSnapshotsSession(snapshots);
 
-	// objPtr.render = obj.render;
-	// objPtr.html = obj.render.html;
-
-	// console.log('----------------------------------------------------------------');
-	// console.log(objPtr);
+	Documents.update(docId, { 
+		$set: { 
+			snapshots: snapshots
+		}
+	});
 
 	var snapshot  = (snapshots && obj.sid < snapshots.length) ? snapshots[obj.sid] : undefined;
 
 	app.appView.visualizer.show( snapshot );
-
 }
 
 // -------------------------------------------------------------------------------------------------

@@ -64,18 +64,24 @@ function _refresh() {
 
 function _highlight() {
 
-	//ToDo: highlight the required line & remove previous highlight ...
+    var editor 		= ace.edit("editor");
+    var Range 		= ace.require('ace/range').Range;
 
-    var editor = ace.edit("editor");
-    var Range = ace.require('ace/range').Range;
+	var docId 		= State.getDocumentId();
+	var snapshot 	= State.getCurrentSnapshot();
+	var line 		= snapshot.meta.line -1;
+	var marker 		= State.marker;
 
-    // Range(rowStart, columnStart, rowEnd, columnEnd)
-	// var range = new Range(3, 0, 3, 1);
+	if (marker) 
+		editor.getSession().removeMarker(marker);
 
-	// var marker = editor.session.addMarker(range, "highlightNextLineToExecute", "fullLine");
-	// var marker = editor.session.addMarker(range, "ace_active-line", "fullLine");
+	// Range(rowStart, columnStart, rowEnd, columnEnd)
+	var range 		= new Range(line, 0, line, 1);
 
-	// editor.getSession().removeMarker(marker);
+	var marker 		= editor.session.addMarker(range, "highlightNextLineToExecute", "fullLine");
+	// var marker 		= editor.session.addMarker(range, "ace_active-line", "fullLine");
+
+	State.marker 	= marker;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

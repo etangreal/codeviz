@@ -13,7 +13,7 @@ Meteor.startup(function() {
 		// initialization
 		// -------------------------------
 
-			init: _initExecuteButton,
+		init: _initExecuteButton,
 
 		// -------------------------------
 		// events
@@ -46,9 +46,9 @@ function _initExecuteButton() {
 	// console.log('_initExecuteButton');
 	var button = _getExecuteButton();
 
-	button.on('click', function() {
+	button.on('click', function(e) {
 		if (navbar.btnExecute.onClick)
-			navbar.btnExecute.onClick();
+			navbar.btnExecute.onClick(e);
 	}.bind(this));
 };
 
@@ -76,11 +76,17 @@ function _getDocumentId() {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-function _onClick() { 
-	//console.log('navbar.button-execute.js | _onClick');
+function _onClick(e) {
+	e.preventDefault();
 
 	var id = _getDocumentId.call(this);
-	Meteor.call('executeCode', id);
+
+	Meteor.call('executeCode', id, function(err, data) {
+	  if (err)
+	    console.log(err);
+
+	  State.setDocumentId(id);
+	});
 
 	//self.waitToVisualizeMode();
 

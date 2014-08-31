@@ -22,6 +22,9 @@ _.extend(this.State, {
 
 Meteor.startup(function () {
 
+	// Deps.autorun(function (c) {
+	// });
+
 });//Meteor.startup
 
 // -------------------------------------------------------------------------------------------------
@@ -43,6 +46,9 @@ function _getDocumentId() {
 function _setDocumentId(id) {
 	Session.set('ssn_documents._id', id);
 	State.setCurrentSnapshots(id);
+
+	navbar.slider.setSliderValue(0);
+	app.slide(0); //ToDo: Think about where to put this ... 
 }
 
 // -------------------------------------------------------------------------------------------------

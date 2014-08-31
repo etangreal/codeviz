@@ -74,7 +74,13 @@ App.prototype.showSnapshot = function() {
 // ---------------------------------------------------------------------------------------------------------------------
 
 App.prototype.onSlider = function(evt, ui) {
-    var i = ui.value;
+    var self = this;
+    self.slide(ui.value);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+App.prototype.slide = function(i) {
 
     navbar.slider.resize();
     editor.highlight();

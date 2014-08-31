@@ -107,37 +107,37 @@ def bbmAsStr(bb, moves):
 # EXAMPLE: KNIGHT-MOVES
 # =================================================================================================
 
-k 	= strToBin('0000000000000000000000000000000000010000000000000000000000000000')
-km 	= strToBin('0000000000000000001010000100010000000000010001000010100000000000')
-wp  = strToBin('0000000000000000000000000000000000010000000001000010000000000000')
-kkm = k | km
-kms = kkm ^ wp
+# k 	= strToBin('0000000000000000000000000000000000010000000000000000000000000000')
+# km 	= strToBin('0000000000000000001010000100010000000000010001000010100000000000')
+# wp  = strToBin('0000000000000000000000000000000000010000000001000010000000000000')
+# kkm = k | km
+# kms = kkm ^ wp
 
-print binToStr(kms)
+# print binToStr(kms)
 
 # -------------------------------------------------------------------------------------------------
 # TEST
 # -------------------------------------------------------------------------------------------------
 
-# k 	= bbAsStr(35)
-# km 	= bbmAsStr(k,KMS)
-# wp 	= bbAsStr([35,45,50])
+k 	= bbAsStr(35)
+km 	= bbmAsStr(k,KMS)
+wp 	= bbAsStr([35,45,52])
 
-# print k
-# print km
+print k
+print km
 
-# k 	= strToBin(k)
-# km 	= strToBin(km)
-# kkm = k | km
+k 	= strToBin(k)
+km 	= strToBin(km)
+kkm = k | km
 
-# print binToStr(kkm)
+print binToStr(kkm)
 
-# wp  = strToBin(wp)
-# print binToStr(wp)
+wp  = strToBin(wp)
+print binToStr(wp)
 
-# kms = kkm ^ wp
+kms = kkm ^ wp
 
-# print binToStr(kms)
+print binToStr(kms)
 
 # 0000000000000000000000000000000000010000000000000000000000000000
 # 0000000000000000001010000100010000010000010001000010100000000000
