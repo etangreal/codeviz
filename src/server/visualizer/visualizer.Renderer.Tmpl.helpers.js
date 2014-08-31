@@ -13,7 +13,7 @@ Visualizer.prototype.compile = function(data, code, tmpl){
 
   //code
   var func   = eval(code);
-      data   = func(data,helper);
+      data   = func(data,helper,PlainHandlebars);
 
   //tmpl
   var cmpl   = PlainHandlebars.compile(tmpl);

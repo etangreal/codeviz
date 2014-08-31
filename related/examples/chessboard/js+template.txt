@@ -1,0 +1,51 @@
+
+# -------------------------------------------------------------------------------------------------
+
+    data.values.forEach(function(value,i) {
+        value = helper.toBin64( value );
+
+        var board = [];    
+        for(var j=0; j<8; j++) {
+            board.push( value.slice(j*8,j*8+8).split("") );
+        }
+
+        data.values[i] = board;
+    });
+
+# -------------------------------------------------------------------------------------------------
+
+<div id="{{ duid }}" class="{{ cls }}">
+
+	<table>
+		<tr>
+			<td>{{ uid }}</td>
+			<td> {{ type }}</td>
+			<td colspan=10></td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			{{#each values}}
+			<td>
+			  <div class="_chess">
+			  <table class="_chess">
+			    {{#each this}}
+			    <tr>
+			      {{#each this}}
+			      <td>
+			          {{ this }}
+			      </td>
+			      {{/each}}
+			    </tr>
+			    {{/each}}
+			  </table>
+			  </div>
+			</td>
+			{{/each}}
+		</tr>
+	</table>
+
+</div>
+
+# -------------------------------------------------------------------------------------------------

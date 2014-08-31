@@ -52,7 +52,7 @@ Visualizer.prototype.renderFrameTmpl = function(frame) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
 
@@ -173,7 +173,7 @@ Visualizer.prototype.renderEmptyNodeTmpl = function() {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           return data;
       });
   */}).trim();
@@ -227,7 +227,7 @@ Visualizer.prototype.renderRefNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.value = helper.wrapUIDs(data.value);
@@ -297,7 +297,7 @@ Visualizer.prototype.renderFuncNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
 
@@ -379,7 +379,7 @@ Visualizer.prototype.renderClassNodeTmpl = function( node ) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -470,7 +470,7 @@ Visualizer.prototype.renderInstanceNodeTmpl = function( node ) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -554,7 +554,7 @@ Visualizer.prototype.renderListNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -630,7 +630,7 @@ Visualizer.prototype.renderTupleNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -712,7 +712,7 @@ Visualizer.prototype.renderSetNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -788,7 +788,7 @@ Visualizer.prototype.renderDictNodeTmpl = function(node) {
   var code = multiline.stripIndent(function(){/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           data.uid = helper.wrapUID(data.id, data.uid);
           data.uid = helper.reduceToSingleLine(data.uid);
           data.values = helper.wrapUIDs(data.values);
@@ -855,7 +855,7 @@ Visualizer.prototype.renderUnknownNodeTmpl = function(node) {
   var code = multiline.stripIndent(function() {/*
       "use strict";
 
-      (function (data,helper) {
+      (function (data,helper,handlebars) {
           return data;
       });
   */}).trim();

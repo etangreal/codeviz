@@ -4,17 +4,23 @@
 // ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 Visualizer.prototype.compile = function(data, code, tmpl) {
-  var me = Visualizer.prototype;
+  var me   = Visualizer.prototype;
   var self = this;
 
   var helper = me.getHelper(); 
 
-    //data (clone & redeclare)
+  //data (clone & redeclare)
   var data   = _clone(data);
 
-  //code
-  var func   = eval(code);
-      data   = func(data,helper);
+  try {
+
+    //code
+    var func   = eval(code);
+        data   = func(data,helper,PlainHandlebars);
+
+  } catch(e) {
+    console.log('error: ', e.message)
+  }
 
   //tmpl
   var cmpl   = PlainHandlebars.compile(tmpl);
@@ -39,10 +45,70 @@ Visualizer.prototype.getHelper = function(){
           htmlStrToStr: _encodeHtmlStrToStr,
     reduceToSingleLine: _reduceToSingleLine,
                wrapUID: _uid_ToHtmlUID,
-              wrapUIDs: _recurseValue_changingRefsToHtmlUID
+              wrapUIDs: _recurseValue_changingRefsToHtmlUID,
+                 toBin: _num2Bin,
+               toBin64: _toBin64,
+            chessboard: _chessboard
   }
 }
 
+// --------------------------------------------------------------------------------------------------------------------
+
+function _num2Bin(num) {
+
+    if(num >= 0) {
+        return num.toString(2);
+    
+    }else {
+        /* Here you could represent the number in 2s compliment but this is not what 
+           JS uses as its not sure how many bits are in your number range. There are 
+           some suggestions http://stackoverflow.com/questions/10936600/javascript-decimal-to-binary-64-bit 
+        */
+        return (~num).toString(2);
+    }
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+function _toBin64(num) {
+
+  function pad(len) {
+    var s = '00000000'+'00000000'+'00000000'+'00000000'+'00000000'+'00000000'+'00000000'+'00000000'
+    var l = s.length-len;
+    var sub = s.substr(0, l);
+
+    return sub;
+  }
+
+  var val = _num2Bin(num);
+  var len = val.length;
+
+  val = pad(len) + val;
+
+  return val;
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+function _chessboard(str) {
+
+  var bba = []
+  for(i=0; i<8; i++) {
+    bba.append( str.slice(0,7).split("") );
+  }
+
+  console.log(bba);
+
+  var tmpl = multiline.stripIndent(function(){/*
+    <table>
+        {{#each bits}}
+      <tr>
+      </tr>
+    </table>
+  */});
+
+
+}
 // --------------------------------------------------------------------------------------------------------------------
 
 function _encodeStrToHtmlStr(str) {
