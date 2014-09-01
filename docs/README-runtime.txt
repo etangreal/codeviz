@@ -39,7 +39,58 @@
 
 	# start the docker container
 
+		docker run -ti -p 3000:3000 -v $(pwd):/vagrant phusion/passenger-full bash -l
 		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant phusion/passenger-full bash -l
+
+# -------------------------------------------------------------------------------------------------
+# LINUX
+# -------------------------------------------------------------------------------------------------
+
+	Update:
+
+		sudo apt-get -y update
+
+	Python:
+		
+		sudo apt-get install -y python-dev
+
+	Env:
+
+		export USER=root
+
+# -------------------------------------------------------------------------------------------------
+# PYTHON: EASY_INSTALL & PIP
+# -------------------------------------------------------------------------------------------------
+
+	install easy_install:
+
+		curl https://bootstrap.pypa.io/ez_setup.py -o - | python
+
+	install pip:
+
+		sudo easy_install pip
+
+# -------------------------------------------------------------------------------------------------
+# NODE
+# -------------------------------------------------------------------------------------------------
+
+	export HOME=/tmp
+
+# -------------------------------------------------------------------------------------------------
+# ZERORPC
+# -------------------------------------------------------------------------------------------------
+
+	ZeroMQ:
+
+		apt-get install -y libzmq3-dev
+
+	Python-ZeroRPC
+
+		pip install zerorpc
+
+	NodeJS-ZeroRPC
+
+		npm install -g zerorpc
 
 # -------------------------------------------------------------------------------------------------
 # METEOR
@@ -50,7 +101,7 @@
 		curl https://install.meteor.com | /bin/sh
 
 	# Install Meteorite
-	
+
 		npm install -g meteorite
 
 # -------------------------------------------------------------------------------------------------
@@ -80,18 +131,22 @@
 		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant codeviz bash -l
 
 # -------------------------------------------------------------------------------------------------
-# GIT
-#		ARTICLE: Install gitk on Mac
-#				URL: 	stackoverflow.com/questions/17582685/install-gitk-on-mac
+# LINUX: SHELL-SCRIPT
 # -------------------------------------------------------------------------------------------------
 
-brew update
-brew install git
+	Question: How to get the process id to kill a nohup process
+		stackoverflow.com/questions/17385794/how-to-get-the-process-id-to-kill-a-nohup-process
 
-which git
-#> /usr/local/bin/git
+	command:
 
-brew doctor
+		nohup mrt > meteor.log 2>&1&
+		echo $! > save_pid.txt
+		kill -9 `cat save_id.txt`
+
+	<or>
+		nohup mrt
+		ps -ef | grep nohup
+		kill -9 <pid>
 
 # -------------------------------------------------------------------------------------------------
 # END

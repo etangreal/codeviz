@@ -26,48 +26,127 @@
 	CMD\> vagrant --version
 
 # -------------------------------------------------------------------------------------------------
-# PYTHON
+# LINUX
 # -------------------------------------------------------------------------------------------------
 
-	www.python.org
-
-		www.python.org/download/releases/3.4.1
-		www.python.org/downloads/release/python-341
-
-		www.python.org/download/releases/2.7.8
+	sudo apt-get -y update
+	apt-get install -y wget
 
 # -------------------------------------------------------------------------------------------------
 # METEOR
 # -------------------------------------------------------------------------------------------------
 
-	meteor.com
+	website:
+		meteor.com
 
-	curl https://install.meteor.com/ | sh
+	install:
+		curl https://install.meteor.com/ | sh
 
 # -------------------------------------------------------------------------------------------------
-# ZereRPC (& ZeroMQ)
+# NODE
 # -------------------------------------------------------------------------------------------------
 
-	zeromq.org
+	#echo 'prefix = /Users/ernst/.node' >> ~/.npmrc
 
-	brew install --universal zeromq
+	sudo apt-get update
+	sudo apt-get install nodejs npm
+
+	npm root
+	which npm
+
+	npm install -g node-gyp
+
+	mkdir /root/.node-gyp
+	ln -s /usr/lib/node_modules/node-gyp /root/.node-gyp/0.10.31
+
+	export USER=root
+
+	Article: How To Use npm to Manage Node.js Packages on a Linux Server
+		www.digitalocean.com/community/tutorials/how-to-use-npm-to-manage-node-js-packages-on-a-linux-server
+
+	Resource: techniques to install node and npm without having to sudo
+		gist.github.com/isaacs/579814
+
+# -------------------------------------------------------------------------------------------------
+# PYTHON: EASY_INSTALL & PIP
+# -------------------------------------------------------------------------------------------------
+
+	www.python.org
+	python --version
+
+	install easy_install:
+		pypi.python.org/pypi/setuptools#installation-instructions
+
+		curl https://bootstrap.pypa.io/ez_setup.py -o - | python
+
+	install pip:
+
+		sudo easy_install pip
+
+# -------------------------------------------------------------------------------------------------
+# ZeroMQ, MessagePack & ZeroRPC
+# -------------------------------------------------------------------------------------------------
+
+	# ---------------------------------------------------------------------------------------------
+	# ZeroMQ
+	# ---------------------------------------------------------------------------------------------
+
+		website:
+
+			zeromq.org
+
+		homebrew install:
+
+			brew install --universal zeromq
+
+		Installation:
+
+			zeromq.org/intro:get-the-software
+			zeromq.org/distro:debian
+
+			apt-get install -y libzmq3-dev
+
+		Install-Instructions:
+
+			Article:
+				maddigitiser.wordpress.com/2013/05/02/installing-zeromq-on-ubuntu-13-04
+
+			cd ~
+			sudo apt-get install libtool autoconf automake
+			wget http://download.zeromq.org/zeromq-4.0.4.tar.gz
+			tar zxvf zeromq-4.0.4.tar.gz
+			cd zeromq-4.0.4
+			./configure
+			make && make install
+
+	# ---------------------------------------------------------------------------------------------
+	# MessagePack
+	# ---------------------------------------------------------------------------------------------
+
+		msgpack.org
+
+		sudo apt-get install msgpack-python
 
 	# ---------------------------------------------------------------------------------------------
 	# ZeroRPC
 	# ---------------------------------------------------------------------------------------------
 
-	ARTICLE: Communicating between node.js and Python
-	    URL: ianhinsdale.com/code/2013/12/08/communicating-between-nodejs-and-python
-	    URL: zerorpc.dotcloud.com
-		
-	NodeJS-ZeroRPC
-		www.npmjs.org/package/zerorpc
-	
-		npm install zeropc
+		Website:
+			
+			zerorpc.dotcloud.com
 
-	Python-ZeroRPC
+		Python-ZeroRPC:
 
-		pip install zerorpc
+			pip install zerorpc
+
+		NodeJS-ZeroRPC:
+
+			www.npmjs.org/package/zerorpc
+			sudo npm install -g zerorpc
+
+		Article: Communicating between node.js and Python
+		    
+		    ianhinsdale.com/code/2013/12/08/communicating-between-nodejs-and-python
 
 # -------------------------------------------------------------------------------------------------
 # COREOS
@@ -76,9 +155,11 @@
 	coreos.com
 	coreos.com/docs/running-coreos/platforms/vagrant
 
-	github.com/coreos/coreos-vagrant
+	CoreOS Github
+		github.com/coreos/coreos-vagrant
 
-		CMD\> git clone https://github.com/coreos/coreos-vagrant.git
+	CoreOS-Vagrant Git Repo
+		git clone https://github.com/coreos/coreos-vagrant.git
 
 # -------------------------------------------------------------------------------------------------
 # DOCKER
@@ -86,10 +167,17 @@
 
 	www.docker.com
 
-	CMD\> sudo docker version
+	Check docker Version
+		sudo docker version
 
-	docs.docker.com/installation/mac
-	github.com/boot2docker/osx-installer/releases
+	Docker Install Mac
+		docs.docker.com/installation/mac
+
+	Boot2Docker
+		github.com/boot2docker/osx-installer/releases
+
+	Docker Cheat Sheet
+		github.com/wsargent/docker-cheat-sheet
 
 # -------------------------------------------------------------------------------------------------
 # PHUSION-PASSENGER-DOCKER
@@ -146,6 +234,20 @@
 	github.com/FredrikNoren/ungit
 
 	sudo -H npm update -g ungit
+
+# -------------------------------------------------------------------------------------------------
+# GIT
+#		ARTICLE: Install gitk on Mac
+#				URL: 	stackoverflow.com/questions/17582685/install-gitk-on-mac
+# -------------------------------------------------------------------------------------------------
+
+	brew update
+	brew install git
+
+	which git
+	#> /usr/local/bin/git
+
+	brew doctor
 
 # -------------------------------------------------------------------------------------------------
 # END

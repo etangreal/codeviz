@@ -15,7 +15,7 @@ BOX_URL     = "http://%alpha.release.core-os.net/amd64-usr/current/coreos_produc
 VM_NAME     = "CoreOS"
 
 $VB_GUI     = FALSE
-$VB_MEMORY  = 1024
+$VB_MEMORY  = 2048
 $VB_CPUS    = 1
 
 # ---------------------------------------------------------------------------------------------------------------------

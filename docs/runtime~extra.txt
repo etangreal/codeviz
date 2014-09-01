@@ -1,0 +1,21 @@
+# -------------------------------------------------------------------------------------------------
+# LINUX: SHELL-SCRIPT
+# -------------------------------------------------------------------------------------------------
+
+	Question: How to get the process id to kill a nohup process
+		stackoverflow.com/questions/17385794/how-to-get-the-process-id-to-kill-a-nohup-process
+
+	command:
+
+		nohup mrt > meteor.log 2>&1&
+		echo $! > save_pid.txt
+		kill -9 `cat save_id.txt`
+
+	<or>
+		nohup mrt
+		ps -ef | grep nohup
+		kill -9 <pid>
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------

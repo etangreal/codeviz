@@ -3,7 +3,7 @@
 # BUILD FROM IMAGE: phusion/passenger-full
 #
 #	DOCUMENTATION:
-# 					 URL: github.com/phusion/passenger-docker
+# 				 URL: github.com/phusion/passenger-docker
 #		VERSION-INFO: github.com/phusion/passenger-docker/blob/master/Changelog.md
 # -------------------------------------------------------------------------------------------------
 
