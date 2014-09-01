@@ -61,7 +61,7 @@
 
 	# next time we want to start our docker image
 
-		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant codeviz bash -l
+		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant etangreal/codeviz bash -l
 
 # -------------------------------------------------------------------------------------------------
 # END

@@ -14,4 +14,4 @@ echo "Starting Meteor Server ..."
 nohup mrt > mrt.log 2>&1 &
 echo $! > pid.log
 
-echo ps
+echo `ps`
