@@ -67,33 +67,39 @@ function _highlight() {
 	if (!State.highlight)
 		State.highlight = {};
 
-    var editor 		= ace.edit("editor");
+    var editor 		= ace.edit('editor');
     var Range 		= ace.require('ace/range').Range;
 
-	var docId 		= State.getDocumentId();
-	var snapshot 	= State.getCurrentSnapshot();
-	var line 		= snapshot.meta.line -1;
-	var current 	= State.highlight.current;
-	var previous 	= State.highlight.previous;
+	var curSnap 	= State.getCurrentSnapshot();
+	var prevSnap	= State.highlight.prevSnap;
 
-	if (previous) {
-		editor.getSession().removeMarker(previous);
-	}
+	var nextLine 	= undefined;
+	var prevLine 	= undefined;
 
-	if (current) {
-		editor.getSession().removeMarker(current);
-		previous = current;
-	}
+	var curMark 	= State.highlight.currentMarker;
+	var prevMark 	= State.highlight.previousMarker;
+
+	if (curSnap)
+		nextLine 	= curSnap.meta.line;
+
+	if (prevSnap)
+		prevLine 	= prevSnap.meta.line;
+
+	editor.getSession().removeMarker(prevMark);
+	editor.getSession().removeMarker(curMark);
+
+	State.highlight.currentMarker = addMarker(nextLine, "highlightNextLineToExecute");
+	State.highlight.previousMarker = addMarker(prevLine, "highlightPrevExecutedLine");
 
 	function addMarker(line,css) {
-		// Range(rowStart, columnStart, rowEnd, columnEnd)
-		var range = new Range(line, 0, line, 1);
+		if (!line || line < 0) return undefined;
+
+		line = line - 1;
+		var range = new Range(line, 0, line, 1); // Range(rowStart, columnStart, rowEnd, columnEnd)
 		return editor.session.addMarker(range, css, "fullLine");
 	}
 
-	State.highlight.current = addMarker(line, "highlightNextLineToExecute");
-	State.highlight.previous = addMarker(previous, "ace_active-line");
-}
+}//_highlight
 
 // ---------------------------------------------------------------------------------------------------------------------
 

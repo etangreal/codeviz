@@ -13,6 +13,7 @@ _.extend(this.State, {
  setCurrentSnapshotsSession: _setCurrentSnapshotsSession,
 
 		 getCurrentSnapshot: _getCurrentSnapshot,
+		 // getPreviousSnapshot: _getPreviousSnapshot,
 			 CountSnapshots: _countSnapshots,
 
 	 		 getCurrentData: _getCurrentData,
@@ -96,8 +97,26 @@ function _getCurrentSnapshot() {
 	if (!snapshots)
 		console.error('ERROR | snapshots.state.js | _getCurrentSnapshot | could not load current snapshot.');
 
-	return (snapshots && idx < snapshots.length) ? snapshots[idx] : undefined;
+	var current = (snapshots && idx < snapshots.length) ? snapshots[idx] : undefined;
+	var previous = (snapshots && (idx-1 >= 0) && (idx-1) < snapshots.length) ? snapshots[idx-1] : undefined;
+
+	State.highlight.prevSnap = previous;
+
+	return current;
 }
+
+// -------------------------------------------------------------------------------------------------
+
+// function _getPreviousSnapshot() {
+// 	var snapshots 	= _getCurrentSnapshots();
+// 	var current 	= _getCurrentSnapshot();
+// 	var previous 	= undefined;
+
+// 	if (current && snapshots && (current.sid-1 >= 0) && (snapshots.length > current.sid))
+// 		previous 	= snapshots[current.sid-1];
+
+// 	return previous;
+// }
 
 // -------------------------------------------------------------------------------------------------
 
