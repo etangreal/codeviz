@@ -1,0 +1,8 @@
+
+[1mStand back while Meteorite does its thing[22m
+[1m[32m✓[39m[22m[37m[1m iron-router[22m[39m
+    [90mtag: https://github.com/EventedMind/iron-router.git#v0.8.2[39m
+[1m[32m✓[39m[22m[37m[1m sharejs[22m[39m
+    [90mtag: https://github.com/mizzao/meteor-sharejs.git#v0.6.0[39m
+[1m[32m✓[39m[22m[37m[1m jquery-ui[22m[39m
+    [90mtag: https://github.com/TimHeckel/meteor-jquery-ui.git#v1.9.2[39m
