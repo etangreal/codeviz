@@ -36,7 +36,7 @@ _.extend(Editor.prototype, {
 	highlight: _highlight,
 	   config: _configure,
 
-})//_.extend(Editor.prototype
+});//_.extend(Editor.prototype
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PRIVATE | PROPERTIES / METHODS
@@ -64,24 +64,35 @@ function _refresh() {
 
 function _highlight() {
 
+	if (!State.highlight)
+		State.highlight = {};
+
     var editor 		= ace.edit("editor");
     var Range 		= ace.require('ace/range').Range;
 
 	var docId 		= State.getDocumentId();
 	var snapshot 	= State.getCurrentSnapshot();
 	var line 		= snapshot.meta.line -1;
-	var marker 		= State.marker;
+	var current 	= State.highlight.current;
+	var previous 	= State.highlight.previous;
 
-	if (marker) 
-		editor.getSession().removeMarker(marker);
+	if (previous) {
+		editor.getSession().removeMarker(previous);
+	}
 
-	// Range(rowStart, columnStart, rowEnd, columnEnd)
-	var range 		= new Range(line, 0, line, 1);
+	if (current) {
+		editor.getSession().removeMarker(current);
+		previous = current;
+	}
 
-	var marker 		= editor.session.addMarker(range, "highlightNextLineToExecute", "fullLine");
-	// var marker 		= editor.session.addMarker(range, "ace_active-line", "fullLine");
+	function addMarker(line,css) {
+		// Range(rowStart, columnStart, rowEnd, columnEnd)
+		var range = new Range(line, 0, line, 1);
+		return editor.session.addMarker(range, css, "fullLine");
+	}
 
-	State.marker 	= marker;
+	State.highlight.current = addMarker(line, "highlightNextLineToExecute");
+	State.highlight.previous = addMarker(previous, "ace_active-line");
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -20,7 +20,11 @@
         var self = this;
 
         // Call the super class constructor
-        famous.surfaces.ContainerSurface.apply(self, arguments);
+        famous.surfaces.ContainerSurface.apply(self, {
+            properties: {
+                overflow: 'scroll' //ToDo: scrolling doesn't work ...
+            }
+        });
 
         // --------------------------------------------------------------------------
         // RenderController
