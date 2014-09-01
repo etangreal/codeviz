@@ -33,93 +33,26 @@
 # DOCKER
 # -------------------------------------------------------------------------------------------------
 
-	# pull the phusion passenger-full docker image
+	# build the docker container
 
-		docker pull phusion/passenger-full:latest
-
-	# start the docker container
-
-		docker run -ti -p 3000:3000 -v $(pwd):/vagrant phusion/passenger-full bash -l
-		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant phusion/passenger-full bash -l
-
-# -------------------------------------------------------------------------------------------------
-# LINUX
-# -------------------------------------------------------------------------------------------------
-
-	Update:
-
-		sudo apt-get -y update
-
-	Python:
-		
-		sudo apt-get install -y python-dev
-
-	Env:
-
-		export USER=root
-
-# -------------------------------------------------------------------------------------------------
-# PYTHON: EASY_INSTALL & PIP
-# -------------------------------------------------------------------------------------------------
-
-	install easy_install:
-
-		curl https://bootstrap.pypa.io/ez_setup.py -o - | python
-
-	install pip:
-
-		sudo easy_install pip
-
-# -------------------------------------------------------------------------------------------------
-# NODE
-# -------------------------------------------------------------------------------------------------
-
-	export HOME=/tmp
-
-# -------------------------------------------------------------------------------------------------
-# ZERORPC
-# -------------------------------------------------------------------------------------------------
-
-	ZeroMQ:
-
-		apt-get install -y libzmq3-dev
-
-	Python-ZeroRPC
-
-		pip install zerorpc
-
-	NodeJS-ZeroRPC
-
-		npm install -g zerorpc
-
-# -------------------------------------------------------------------------------------------------
-# METEOR
-# -------------------------------------------------------------------------------------------------
-
-	# Install Meteor
-
-		curl https://install.meteor.com | /bin/sh
-
-	# Install Meteorite
-
-		npm install -g meteorite
+		docker build -t etangreal/codeviz .
+		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant etangreal/codeviz bash -l
 
 # -------------------------------------------------------------------------------------------------
 # RUN THE PROJECT
 # -------------------------------------------------------------------------------------------------
 
-	# change to the 'src' directory
-	# i.e: <path-to-project>/codeviz/src
+	# run the startup script
 
-		cd src
-
-	# check that the project works
-
-		mrt
+		./startup.sh
 
 	# open the project on the HOST(MAC-OSX) (in the browser)
 
 		http://localhost:3030
+
+# -------------------------------------------------------------------------------------------------
+# DOCKER
+# -------------------------------------------------------------------------------------------------
 
 	# create a re-runabble image (by commiting the container)
 
@@ -129,24 +62,6 @@
 	# next time we want to start our docker image
 
 		docker run --rm -ti -p 3000:3000 -v $(pwd):/vagrant codeviz bash -l
-
-# -------------------------------------------------------------------------------------------------
-# LINUX: SHELL-SCRIPT
-# -------------------------------------------------------------------------------------------------
-
-	Question: How to get the process id to kill a nohup process
-		stackoverflow.com/questions/17385794/how-to-get-the-process-id-to-kill-a-nohup-process
-
-	command:
-
-		nohup mrt > meteor.log 2>&1&
-		echo $! > save_pid.txt
-		kill -9 `cat save_id.txt`
-
-	<or>
-		nohup mrt
-		ps -ef | grep nohup
-		kill -9 <pid>
 
 # -------------------------------------------------------------------------------------------------
 # END
