@@ -15,4 +15,4 @@ echo "Shutdown Meteor Server ..."
 kill -9 `cat pid.log`
 echo '' > pid.log
 
-`ps`
+ps

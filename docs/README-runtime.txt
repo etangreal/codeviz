@@ -57,7 +57,7 @@
 	# create a re-runabble image (by commiting the container)
 
 		docker ps
-		docker commit <container-id> codeviz
+		docker commit <container-id> etangreal/codeviz
 
 	# next time we want to start our docker image
 

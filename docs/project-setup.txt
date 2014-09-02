@@ -85,5 +85,28 @@
 	# meteor remove handlebars
 
 # -------------------------------------------------------------------------------------------------
+# Setup ssh keys for github
+# -------------------------------------------------------------------------------------------------
+
+	Article: Generating SSH keys
+		help.github.com/articles/generating-ssh-keys
+
+	HowTo:
+
+		mkdir ~/.ssh
+		cd ~/.ssh
+		ssh-keygen -t rsa -C "etangreal@gmail.com"
+		> id_rsa_github
+
+		eval "$(ssh-agent -s)"
+		#ssh-add ~/.ssh/id_rsa_github
+
+		cat id_rsa_github.pub
+
+		github.com/settings/ssh
+
+		ssh -T git@github.com
+
+# -------------------------------------------------------------------------------------------------
 # END
 # -------------------------------------------------------------------------------------------------
