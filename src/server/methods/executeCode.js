@@ -204,9 +204,9 @@ function _getCode(id) {
 		code = res.snapshot;
 	});
 
-	code = code.trim();
+	// code = code.trim(); //DON'T TRIM -> not unless you trim the version also stored in the editor...
 
-	if (code == '')
+	if (code.trim() == '')
 		throw 'ERROR: _getCode | Code snippet is "" empty.';
 
 	return code;

@@ -85,8 +85,8 @@ function _highlight() {
 	if (prevSnap)
 		prevLine 	= prevSnap.meta.line;
 
-	editor.getSession().removeMarker(prevMark);
 	editor.getSession().removeMarker(curMark);
+	editor.getSession().removeMarker(prevMark);
 
 	State.highlight.currentMarker = addMarker(nextLine, "highlightNextLineToExecute");
 	State.highlight.previousMarker = addMarker(prevLine, "highlightPrevExecutedLine");
