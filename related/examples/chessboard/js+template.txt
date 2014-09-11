@@ -96,9 +96,8 @@
 
 # -------------------------------------------------------------------------------------------------
 
-    data.values.forEach(function(value,i) {
-        value = helper.toBin64( value );
-        data.values[i] = value;
+	data.values.forEach(function(value,i) {
+    	data.values[i] = helper.toBin64( value );
     });
 
 <div id="{{ duid }}" class="{{ cls }}">
