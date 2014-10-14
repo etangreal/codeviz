@@ -77,6 +77,9 @@ INSTALLATION:
 
 		ssh -i insecure_key root@<IPAddress>
 
+		#note: if you have an issue that the key is not secure enough do the following and retry:
+		chmod 600 insecure_key
+
 	# REPEAT-ONCE-MORE: *** SSH-ing INTO THE CONTAINER ***
 
 	# In the 1st console) start the meteor server
