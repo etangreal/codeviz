@@ -5,7 +5,7 @@
 
 	INSTALL: virtualbox & vagrant through -> brew install
 	ARTICLE: Docker Cheat Sheet
-	    URL: gist.github.com/wsargent/7049221
+	    URL: github.com/wsargent/docker-cheat-sheet
 
 # -------------------------------------------------------------------------------------------------
 # VIRTUALBOX

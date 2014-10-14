@@ -30,7 +30,7 @@ vagrant up
 #		URL: mmckeen.net/blog/2013/12/14/docker-all-the-things-nginx-and-supervisor
 # 
 # RESOURCES:
-# 	URL: 	github.com/phusion/passenger-docker
+# 		URL: 	github.com/phusion/passenger-docker
 #		URL:	github.com/phusion/baseimage-docker
 #
 #		URL:	index.docker.io/u/phusion/baseimage

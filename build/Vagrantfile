@@ -8,8 +8,8 @@ Vagrant.require_version ">= 1.6.0"
 API_VERSION = 2
 
 BOX_NAME    = "coreos-alpha"
-BOX_VERSION = ">= 367.0.0"
-BOX_URL     = "http://%alpha.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json"
+BOX_VERSION = ">= 459.0.0"
+BOX_URL     = "http://alpha.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json"
             # "http://storage.core-os.net/coreos/amd64-usr/alpha/coreos_production_vagrant.json"
 
 VM_NAME     = "CoreOS"
