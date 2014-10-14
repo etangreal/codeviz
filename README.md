@@ -47,8 +47,9 @@ INSTALLATION:
 
 	docker run --rm -ti -p 3000:3000 -v $(pwd)/..:/vagrant etangreal/codeviz
 
-	________________________________________________________________________________________________
-	# SSHing INTO THE CONTAINER
+# RUN
+
+	# ** SSHing INTO THE CONTAINER
 
 	# change directory to the CodeViz build folder:
 
@@ -79,13 +80,13 @@ INSTALLATION:
 		cd /vagrant/src
 		mrt
 
-	# Open another console and repeat: SSHing INTO THE CONTAINER
+	# Open another console and REPEAT: **SSHing INTO THE CONTAINER
 	# now start the backend
 
 		cd /vagrant/backend
 		python zrpc-opt-srv.py
 
-# DEV
+# DEVELOPMENT
 
 	# Open the browser with the following url:
 
