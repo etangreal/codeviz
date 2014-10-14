@@ -42,7 +42,7 @@ INSTALLATION:
 	vagrant up
 	vagrant ssh
 
-	cd share\build
+	cd share/build
 
 	# pull docker image
 	docker pull etangreal/codeviz
