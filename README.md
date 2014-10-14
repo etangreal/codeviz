@@ -12,7 +12,14 @@ Masters Thesis Defence (Youtube): http://www.youtube.com/watch?v=ABkGWu-QD7E
 Masters Thesis Presentation (PDF): https://github.com/etangreal/codeviz/raw/master/docs/Master%20Thesis%20Presentation%2C%20Ernst%20Salzmann%20Sept%202014.pdf
 
 # INSTALLATION:
-===============
+# =============
+
+	MacOS: These install instructions where designed & tested for the use with MacOS.
+	
+	Windows: On Windows one would download and install Virtualbox & Vagrant.
+
+	Linux: Recommended that you still use VirtualBox & Vagrant, for consistancy, however its not required. 
+	You could instead install docker on your Linux system and execute the container directly.
 
 # INSTALL HOMEBREW
 
