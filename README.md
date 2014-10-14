@@ -77,14 +77,14 @@ INSTALLATION:
 
 		ssh -i insecure_key root@<IPAddress>
 
-	# start the meteor server
+	# REPEAT-ONCE-MORE: *** SSH-ing INTO THE CONTAINER ***
+
+	# In the 1st console) start the meteor server
 
 		cd /vagrant/src
 		mrt
 
-	# REPEAT-ONCE-MORE: *** SSH-ing INTO THE CONTAINER ***
-
-	# now start the backend
+	# In the 2nd console) start the backend
 
 		cd /vagrant/backend
 		python zrpc-opt-srv.py
