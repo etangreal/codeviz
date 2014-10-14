@@ -1,4 +1,4 @@
-CodeViz - Code Visualizer (based off of OnlinePythonTutor - www.pythontutor.com)
+CodeViz - Code Visualizer
 ======= 
 
 Abstract: 
@@ -43,7 +43,7 @@ INSTALLATION:
 	# OR
 
 	# 2) build image from scratch
-		docker build -t etangreal/codeviz .	
+	docker build -t etangreal/codeviz .	
 
 	docker run --rm -ti -p 3000:3000 -v $(pwd)/..:/vagrant etangreal/codeviz
 
