@@ -30,7 +30,7 @@ INSTALLATION:
 
 # BUILD
 
-	cd codeviz\build
+	cd codeviz/build
 
 	vagrant up
 	vagrant ssh
