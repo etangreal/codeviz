@@ -49,7 +49,9 @@ INSTALLATION:
 
 # RUN
 
-	# ** SSHing INTO THE CONTAINER
+	# *** SSH-ing INTO THE CONTAINER ***
+
+	# Open a console
 
 	# change directory to the CodeViz build folder:
 
@@ -75,12 +77,13 @@ INSTALLATION:
 
 		ssh -i insecure_key root@<IPAddress>
 
-	# start meteor
+	# start the meteor server
 
 		cd /vagrant/src
 		mrt
 
-	# Open another console and REPEAT: **SSHing INTO THE CONTAINER
+	# REPEAT-ONCE-MORE: *** SSH-ing INTO THE CONTAINER ***
+
 	# now start the backend
 
 		cd /vagrant/backend
