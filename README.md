@@ -1,7 +1,8 @@
 CodeViz - Code Visualizer
-======= 
+=========================
 
-Abstract: 
+Abstract:
+
   In this thesis we look at the visualization of data structures derived from a program’s exe- cution context at each execution step, by which we aim to demonstrate that this approach is effective in facilitating the understanding and debugging of code. The first step being to pro- vide a default generated visualization of the underlying data structure, which can be viewed as a sequence of snapshots alongside the code. We then look at the customization of this visualization to facilitate a more concise understanding of the underlying conceptual-model with the idea of reducing the gulf of evaluation when looking at new or forgotten code. This customized view can then also provide a mechanism for aiding in debugging, thereby reduc- ing the gulf of execution. We demonstrate the usefulness of our approach through a case study.
 
 Masters Thesis (PDF): https://github.com/etangreal/codeviz/raw/master/docs/Masters%20Thesis%2C%20Ernst%20Salzmann%20Sept%202014.pdf
@@ -10,8 +11,8 @@ Masters Thesis Defence (Youtube): http://www.youtube.com/watch?v=ABkGWu-QD7E
 
 Masters Thesis Presentation (PDF): https://github.com/etangreal/codeviz/raw/master/docs/Master%20Thesis%20Presentation%2C%20Ernst%20Salzmann%20Sept%202014.pdf
 
-INSTALLATION:
-
+# INSTALLATION:
+===============
 
 # INSTALL HOMEBREW
 
@@ -37,13 +38,17 @@ INSTALLATION:
 
 	cd share/build
 
-	# 1) pull docker image
-	docker pull etangreal/codeviz
+	# 1) Pull docker image:
 
-	# OR
+		docker pull etangreal/codeviz
 
-	# 2) build image from scratch
-	docker build -t etangreal/codeviz .	
+	# <OR>
+
+	# 2) Build image from scratch:
+
+		docker build -t etangreal/codeviz .	
+
+	# Start the Linux Container (from the "share/build" folder):
 
 	docker run --rm -ti -p 3000:3000 -v $(pwd)/..:/vagrant etangreal/codeviz
 
@@ -53,15 +58,15 @@ INSTALLATION:
 
 	# Open a console
 
-	# change directory to the CodeViz build folder:
+	# Change directory to the CodeViz build folder:
 
 		cd codeviz/build
 
-	# connect to the VM (i.e CoreOS):
+	# Connect to the VM (i.e CoreOS):
 
 		vagrant ssh
 
-	# change directory to the project build folder inside of CoreOS:
+	# Change directory to the project build folder (inside of CoreOS):
 
 		cd share/build
 
@@ -77,17 +82,17 @@ INSTALLATION:
 
 		ssh -i insecure_key root@<IPAddress>
 
-		#note: if you have an issue that the key is not secure enough do the following and retry:
-		chmod 600 insecure_key
+		# NOTE: if you have an issue that the key is "not secure enough" do the following and retry:
+		# 	chmod 600 insecure_key
 
 	# REPEAT-ONCE-MORE: *** SSH-ing INTO THE CONTAINER ***
 
-	# In the 1st console) start the meteor server
+	# In the 1st console) start the meteor server:
 
 		cd /vagrant/src
 		mrt
 
-	# In the 2nd console) start the backend
+	# In the 2nd console) start the backend:
 
 		cd /vagrant/backend
 		python zrpc-opt-srv.py
