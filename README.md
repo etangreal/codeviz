@@ -10,4 +10,99 @@ Masters Thesis Defence (Youtube): http://www.youtube.com/watch?v=ABkGWu-QD7E
 
 Masters Thesis Presentation (PDF): https://github.com/etangreal/codeviz/raw/master/docs/Master%20Thesis%20Presentation%2C%20Ernst%20Salzmann%20Sept%202014.pdf
 
-//ToDo: How to Install.
+INSTALLATION:
+
+# -------------------------------------------------------------------------------------------------
+# INSTALL HOMEBREW
+# -------------------------------------------------------------------------------------------------
+
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# -------------------------------------------------------------------------------------------------
+# INSTALL VAGRANT & VIRTUALBOX
+# -------------------------------------------------------------------------------------------------
+
+	brew tap caskroom/homebrew-cask
+	brew install brew-cask
+	brew cask install virtualbox
+	brew cask install vagrant
+
+# -------------------------------------------------------------------------------------------------
+# CLONE THE CODEVIZ REPOSITORY
+# -------------------------------------------------------------------------------------------------
+
+	git clone https://github.com/etangreal/codeviz.git
+
+# -------------------------------------------------------------------------------------------------
+# BUILD
+# -------------------------------------------------------------------------------------------------
+
+	cd codeviz\build
+
+	vagrant up
+	vagrant ssh
+
+	cd share\build
+
+	# pull docker image
+	docker pull etangreal/codeviz
+<OR>
+	# build image from scratch
+	docker build -t etangreal/codeviz .	
+
+	docker run --rm -ti -p 3000:3000 -v $(pwd)/..:/vagrant etangreal/codeviz
+
+	________________________________________________________________________________________________
+	# SSHing INTO THE CONTAINER
+
+	# change directory to the CodeViz build folder:
+
+		cd codeviz\build
+
+	# connect to the VM (i.e CoreOS):
+
+		vagrant ssh
+
+	# change directory to the project build folder inside of CoreOS:
+
+		cd share\build
+
+	# Find out the ID of the container that you just ran:
+
+		docker ps
+
+	# Once you have the ID, look for its IP address with:
+
+		docker inspect <ID> | grep IPAddress
+
+	# Now SSH into the container:
+
+		ssh -i insecure_key root@<IPAddress>
+
+	# start meteor
+
+		cd /vagrant/src
+		mrt
+
+	# Open another console and repeat: SSHing INTO THE CONTAINER
+	# now start the backend
+
+		cd /vagrant/backend
+		python zrpc-opt-srv.py
+
+# -------------------------------------------------------------------------------------------------
+# DEV
+# -------------------------------------------------------------------------------------------------
+
+	# Open the browser with the following url:
+
+		http://localhost:3030
+
+	# Open the Code in your favorite IDE/Editor - e.g:
+
+		subl codeviz/src
+
+# -------------------------------------------------------------------------------------------------
+# END
+# -------------------------------------------------------------------------------------------------
+
