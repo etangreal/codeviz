@@ -55,7 +55,7 @@ INSTALLATION:
 
 	# change directory to the CodeViz build folder:
 
-		cd codeviz\build
+		cd codeviz/build
 
 	# connect to the VM (i.e CoreOS):
 
@@ -63,7 +63,7 @@ INSTALLATION:
 
 	# change directory to the project build folder inside of CoreOS:
 
-		cd share\build
+		cd share/build
 
 	# Find out the ID of the container that you just ran:
 
